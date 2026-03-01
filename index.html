@@ -26,13 +26,13 @@
       --accent: #0284c7;
       --success: #15803d;
       --danger: #b91c1c;
-      --bg: #f1f5f9;
+      --bg: #f0f4fa;
       --surface: #ffffff;
-      --border: #cbd5e1;
+      --border: #d1d9e6;
       --text: #1e293b;
       --muted: #475569;
-      --radius: 14px;
-      --shadow: 0 2px 16px rgba(0, 0, 0, .07);
+      --radius: 16px;
+      --shadow: 0 2px 12px rgba(0, 0, 0, .06), 0 1px 3px rgba(0, 0, 0, .04);
       --shadow-lg: 0 8px 32px rgba(0, 0, 0, .1);
     }
 
@@ -52,13 +52,13 @@
 
     /* ── Header ───────────────────────────────────────────────── */
     header {
-      background: linear-gradient(135deg, #1e40af 0%, #1a56db 60%, #2563eb 100%);
+      background: linear-gradient(135deg, #0f2a6e 0%, #1a56db 50%, #2563eb 100%);
       color: #fff;
-      padding: 1.5rem 2rem;
+      padding: 1.4rem 2rem;
       display: flex;
       align-items: center;
       gap: 1rem;
-      box-shadow: 0 4px 20px rgba(30, 64, 175, .3);
+      box-shadow: 0 4px 24px rgba(15, 42, 110, .35);
       position: sticky;
       top: 0;
       z-index: 100;
@@ -107,7 +107,12 @@
       border-radius: var(--radius);
       box-shadow: var(--shadow);
       padding: 1.75rem 2rem;
-      border: 1px solid rgba(0, 0, 0, .04);
+      border: 1px solid rgba(0, 0, 0, .05);
+      transition: box-shadow .25s ease;
+    }
+
+    .card:hover {
+      box-shadow: 0 4px 20px rgba(0, 0, 0, .08);
     }
 
     .card-title {
@@ -217,6 +222,7 @@
       position: relative;
     }
 
+    .type-option input[type="checkbox"],
     .type-option input[type="radio"] {
       position: absolute;
       opacity: 0;
@@ -241,23 +247,57 @@
       background: #fafbfc;
       min-height: 110px;
       justify-content: center;
+      position: relative;
     }
 
     .type-option label .icon {
       font-size: 1.8rem;
     }
 
-    .type-option input[type="radio"]:checked+label {
+    .type-option input:checked+label {
       border-color: var(--primary);
       background: var(--primary-light);
       color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(26, 86, 219, .1);
+      box-shadow: 0 0 0 3px rgba(26, 86, 219, .12);
+    }
+
+    .type-option input:checked+label::after {
+      content: '✓';
+      position: absolute;
+      top: 6px;
+      right: 8px;
+      width: 22px;
+      height: 22px;
+      background: var(--primary);
+      color: #fff;
+      border-radius: 50%;
+      font-size: .7rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: pop-in .2s ease;
+    }
+
+    @keyframes pop-in {
+      0% {
+        transform: scale(0);
+      }
+
+      80% {
+        transform: scale(1.15);
+      }
+
+      100% {
+        transform: scale(1);
+      }
     }
 
     .type-option label:hover {
       border-color: var(--accent);
       background: #f0f9ff;
-      transform: translateY(-1px);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, .06);
     }
 
     .type-desc {
@@ -268,7 +308,7 @@
       margin-top: .15rem;
     }
 
-    .type-option input[type="radio"]:checked+label .type-desc {
+    .type-option input:checked+label .type-desc {
       color: #3b82f6;
     }
 
@@ -449,6 +489,7 @@
     .level-chip label:hover {
       border-color: var(--accent);
       background: #f0f9ff;
+      transform: translateY(-1px);
     }
 
     .sub-lbl {
@@ -512,6 +553,7 @@
     .dur-chip label:hover {
       border-color: var(--accent);
       background: #f0f9ff;
+      transform: translateY(-1px);
     }
 
     /* ── Writing lines in output ──────────────────────────────── */
@@ -545,13 +587,22 @@
     }
 
     .btn-primary {
-      background: var(--primary);
+      background: linear-gradient(135deg, var(--primary) 0%, #2563eb 100%);
       color: #fff;
+      box-shadow: 0 2px 8px rgba(26, 86, 219, .2);
     }
 
     .btn-primary:hover:not(:disabled) {
-      background: var(--primary-h);
-      box-shadow: 0 4px 14px rgba(26, 86, 219, .35);
+      background: linear-gradient(135deg, var(--primary-h) 0%, #1a56db 100%);
+      box-shadow: 0 4px 18px rgba(26, 86, 219, .4);
+      transform: translateY(-1px);
+    }
+
+    /* ── Section break divider between material types ──────── */
+    hr.section-break {
+      border: none;
+      border-top: 3px solid #c7d2fe;
+      margin: 2.5rem 0;
     }
 
     .btn-secondary {
@@ -1003,10 +1054,89 @@
         display: block;
       }
 
+      #material-output .img-placeholder {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 72px;
+        height: 56px;
+        border: 2px dashed #bbb;
+        border-radius: 6px;
+        font-size: 1.4rem;
+        color: #bbb;
+        background: #f8f8f8;
+      }
+
       a {
         text-decoration: none;
         color: #000;
       }
+
+      hr.section-break {
+        border: none;
+        border-top: 3px solid #3b5fc0;
+        margin: 2rem 0;
+        page-break-before: always;
+      }
+    }
+
+    /* ── History panel ───────────────────────────────────────── */
+    #history-card {
+      display: none;
+    }
+
+    #history-list {
+      display: flex;
+      flex-direction: column;
+      gap: .6rem;
+      margin-top: .4rem;
+    }
+
+    .history-entry {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      padding: .65rem .9rem;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #fafbfc;
+      transition: background .15s;
+    }
+
+    .history-entry:hover {
+      background: var(--primary-light);
+      border-color: var(--primary);
+      box-shadow: 0 2px 8px rgba(26, 86, 219, .08);
+    }
+
+    .history-entry-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .history-entry-info strong {
+      display: block;
+      font-size: .9rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .history-entry-info span {
+      font-size: .78rem;
+      color: var(--muted);
+    }
+
+    .history-entry .btn {
+      padding: .35rem .75rem;
+      font-size: .82rem;
+    }
+
+    .history-empty {
+      color: var(--muted);
+      font-size: .9rem;
+      text-align: center;
+      padding: 1rem 0;
     }
   </style>
 </head>
@@ -1015,7 +1145,7 @@
 
   <!-- ── Header ─────────────────────────────────────────────── -->
   <header>
-    <div class="logo">A</div>
+    <div class="logo">DK</div>
     <div>
       <h1>DeutschKurs – Materialgenerator</h1>
       <p>Lernmaterialien automatisch erstellen und ausdrucken</p>
@@ -1140,10 +1270,10 @@
         </div>
 
         <div class="form-group">
-          <label>Materialtyp</label>
+          <label>Materialtyp <span class="hint">Mehrere möglich</span></label>
           <div class="type-grid">
             <div class="type-option">
-              <input type="radio" name="material-type" id="type-lueckentext" value="lueckentext" checked />
+              <input type="checkbox" name="material-type" id="type-lueckentext" value="lueckentext" checked />
               <label for="type-lueckentext">
                 <span class="icon">✏️</span>
                 Lückentext
@@ -1151,15 +1281,7 @@
               </label>
             </div>
             <div class="type-option">
-              <input type="radio" name="material-type" id="type-bildwoerter" value="bildwoerter" />
-              <label for="type-bildwoerter">
-                <span class="icon">🖼️</span>
-                Bildwörter
-                <span class="type-desc">Wörter zum Bilder-Kleben</span>
-              </label>
-            </div>
-            <div class="type-option">
-              <input type="radio" name="material-type" id="type-dialog" value="dialog" />
+              <input type="checkbox" name="material-type" id="type-dialog" value="dialog" />
               <label for="type-dialog">
                 <span class="icon">💬</span>
                 Dialog
@@ -1167,7 +1289,7 @@
               </label>
             </div>
             <div class="type-option">
-              <input type="radio" name="material-type" id="type-schreibuebung" value="schreibuebung" />
+              <input type="checkbox" name="material-type" id="type-schreibuebung" value="schreibuebung" />
               <label for="type-schreibuebung">
                 <span class="icon">📝</span>
                 Schreibübung
@@ -1175,7 +1297,7 @@
               </label>
             </div>
             <div class="type-option">
-              <input type="radio" name="material-type" id="type-wortschatz" value="wortschatz" />
+              <input type="checkbox" name="material-type" id="type-wortschatz" value="wortschatz" />
               <label for="type-wortschatz">
                 <span class="icon">📚</span>
                 Wortschatz
@@ -1335,15 +1457,19 @@
           </svg>
           Drucken
         </button>
-        <span style="font-size:.75rem;color:var(--muted);align-self:center;"
-          title="Im Druckdialog: Weitere Einstellungen → Kopf- und Fußzeilen deaktivieren">💡 Kopf-/Fußzeilen im
-          Druckdialog deaktivieren</span>
+
         <button class="btn btn-secondary" onclick="resetForm()" style="margin-left:auto;">
           Neu erstellen
         </button>
       </div>
 
       <div id="material-output" aria-live="polite"></div>
+    </div>
+
+    <!-- History Card -->
+    <div class="card" id="history-card">
+      <div class="card-title">📋 Verlauf</div>
+      <div id="history-list"></div>
     </div>
 
   </main>
@@ -1414,7 +1540,6 @@
     /* ── Material type config ─────────────────────────────────── */
     const MATERIAL_LABELS = {
       lueckentext: 'Lückentext',
-      bildwoerter: 'Bildwörter-Zuordnung',
       dialog: 'Einfacher Dialog',
       schreibuebung: 'Schreibübung',
       wortschatz: 'Wortschatz-Liste',
@@ -1460,37 +1585,6 @@ Format:
 
 ## Lösung
 [Nummerierte Liste mit den fehlenden Wörtern in der richtigen Reihenfolge]
-${optionalSection(details, lernziel)}`,
-
-      bildwoerter: (zielgruppe, thema, niveau, dauer, details = '', lernziel = '') => `
-Erstelle eine **Bildwörter-Zuordnung** auf Deutsch.
-
-Zielgruppe: ${zielgruppe}
-Thema: ${thema}
-Sprachniveau: ${niveau}
-Unterrichtsdauer: ${dauer} – passe die Anzahl der Wörter entsprechend an.
-
-Anweisungen:
-- Wähle 8–16 alltägliche Wörter zum Thema (je nach Dauer mehr oder weniger).
-- Für jedes Wort: schreibe das Wort, einen einfachen Beispielsatz (${niveau}-Niveau) und lasse Platz für ein Bild (markiert als [Bild]).
-- Die Lehrerin druckt das aus und klebt Bilder dazu.
-- Am Ende: eine Liste aller Wörter als Lernkontrolle.
-
-Format:
-## Bildwörter-Zuordnung: [Thema]
-**Niveau:** [Niveau] | **Zielgruppe:** [kurze Beschreibung]
-
----
-
-| Nr. | [Bild] | Wort | Beispielsatz |
-|-----|--------|------|-------------|
-| 1.  | [Bild] | [Wort] | [Satz] |
-...
-
----
-
-**Alle Wörter (Lernkontrolle):**
-[nummerierte Liste aller Wörter]
 ${optionalSection(details, lernziel)}`,
 
       dialog: (zielgruppe, thema, niveau, dauer, details = '', lernziel = '') => `
@@ -1759,6 +1853,19 @@ Lösung: 1. guter, 2. dafür, 3. das, 4. eines, 5. Hobbys, 6. Leute, 7. sich, 8.
       }, 500);
     }
 
+    /* ── Selection order tracking ───────────────────────────── */
+    const materialTypeOrder = ['lueckentext']; // pre-checked item
+    document.querySelectorAll('input[name="material-type"]').forEach(cb => {
+      cb.addEventListener('change', () => {
+        if (cb.checked) {
+          if (!materialTypeOrder.includes(cb.value)) materialTypeOrder.push(cb.value);
+        } else {
+          const idx = materialTypeOrder.indexOf(cb.value);
+          if (idx > -1) materialTypeOrder.splice(idx, 1);
+        }
+      });
+    });
+
     /* ── Generate ─────────────────────────────────────────────── */
     async function generateMaterial(e) {
       e.preventDefault();
@@ -1766,7 +1873,9 @@ Lösung: 1. guter, 2. dafür, 3. das, 4. eines, 5. Hobbys, 6. Leute, 7. sich, 8.
       const zielgruppe = document.getElementById('target-group').value.trim() || 'Erwachsene mit geringen Deutschkenntnissen';
       const thema = document.getElementById('topic').value.trim();
       const niveau = document.querySelector('input[name="niveau"]:checked').value;
-      const typeVal = document.querySelector('input[name="material-type"]:checked').value;
+      // Use selection order instead of DOM order
+      const checkedValues = new Set([...document.querySelectorAll('input[name="material-type"]:checked')].map(cb => cb.value));
+      const selectedTypes = materialTypeOrder.filter(v => checkedValues.has(v));
       const dauer = document.querySelector('input[name="duration"]:checked').value;
 
       const details = document.getElementById('details').value.trim();
@@ -1793,37 +1902,50 @@ Lösung: 1. guter, 2. dafür, 3. das, 4. eines, 5. Hobbys, 6. Leute, 7. sich, 8.
       }
 
       if (!thema) { showError('Bitte geben Sie ein Thema ein.'); return; }
+      if (!selectedTypes.length) { showError('Bitte wählen Sie mindestens einen Materialtyp aus.'); return; }
 
       hideError();
       setLoading(true);
       startProgress();
 
-      const userPrompt = MATERIAL_PROMPTS[typeVal](zielgruppe, thema, niveau, dauer, details, lernziel);
+      const loadingMsg = document.getElementById('loading-msg');
+      const results = [];
 
       try {
-        const response = await fetch(fetchUrl, {
-          method: 'POST',
-          headers: fetchHeaders,
-          body: JSON.stringify({
-            model: MODEL,
-            max_tokens: 8192,
-            system: SYSTEM_PROMPT,
-            messages: [{ role: 'user', content: userPrompt }],
-          }),
-        });
+        for (let i = 0; i < selectedTypes.length; i++) {
+          const typeVal = selectedTypes[i];
+          const typeLabel = MATERIAL_LABELS[typeVal];
+          if (selectedTypes.length > 1) {
+            loadingMsg.textContent = `Erstelle ${typeLabel} (${i + 1}/${selectedTypes.length}) …`;
+          }
 
-        if (!response.ok) {
-          const err = await response.json().catch(() => ({}));
-          const msg = err?.error?.message || `HTTP ${response.status}`;
-          if (response.status === 401) throw new Error('Der API-Schlüssel ist ungültig. Bitte prüfen Sie ihn.');
-          if (response.status === 429) throw new Error('Zu viele Anfragen. Bitte warten Sie einen Moment.');
-          throw new Error(`Fehler vom Server: ${msg}`);
+          const userPrompt = MATERIAL_PROMPTS[typeVal](zielgruppe, thema, niveau, dauer, details, lernziel);
+
+          const response = await fetch(fetchUrl, {
+            method: 'POST',
+            headers: fetchHeaders,
+            body: JSON.stringify({
+              model: MODEL,
+              max_tokens: 8192,
+              system: SYSTEM_PROMPT,
+              messages: [{ role: 'user', content: userPrompt }],
+            }),
+          });
+
+          if (!response.ok) {
+            const err = await response.json().catch(() => ({}));
+            const msg = err?.error?.message || `HTTP ${response.status}`;
+            if (response.status === 401) throw new Error('Der API-Schlüssel ist ungültig. Bitte prüfen Sie ihn.');
+            if (response.status === 429) throw new Error('Zu viele Anfragen. Bitte warten Sie einen Moment.');
+            throw new Error(`Fehler vom Server: ${msg}`);
+          }
+
+          const data = await response.json();
+          results.push({ typeVal, typeLabel, text: data?.content?.[0]?.text || '' });
         }
 
-        const data = await response.json();
-        const text = data?.content?.[0]?.text || '';
-
-        displayResult(text, MATERIAL_LABELS[typeVal], thema, niveau);
+        const typeLabels = results.map(r => r.typeLabel).join(' + ');
+        displayResult(results, typeLabels, thema, niveau);
 
       } catch (err) {
         showError(err.message || 'Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.');
@@ -1834,16 +1956,27 @@ Lösung: 1. guter, 2. dafür, 3. das, 4. eines, 5. Hobbys, 6. Leute, 7. sich, 8.
     }
 
     /* ── Display result ───────────────────────────────────────── */
-    function displayResult(markdown, typeLabel, thema, niveau) {
+    function displayResult(results, typeLabels, thema, niveau) {
+      // results is an array of { typeVal, typeLabel, text }
       const output = document.getElementById('material-output');
-      output.innerHTML = renderMarkdown(markdown);
+      const combinedHtml = results.map((r, i) => {
+        const section = renderMarkdown(r.text);
+        // Add a page-break separator between sections (not before the first)
+        const sep = i > 0 ? '<hr class="section-break">' : '';
+        return sep + section;
+      }).join('');
+
+      output.innerHTML = combinedHtml;
 
       document.getElementById('result-meta').textContent =
-        `${typeLabel} · ${thema} · ${niveau}`;
+        `${typeLabels} · ${thema} · ${niveau}`;
 
       const card = document.getElementById('result-card');
       card.style.display = 'block';
       card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+      const combinedMarkdown = results.map(r => r.text).join('\n\n---\n\n');
+      saveToHistory({ typeLabel: typeLabels, thema, niveau, markdown: combinedMarkdown, html: combinedHtml });
     }
 
     /* ── Minimal Markdown renderer ────────────────────────────── */
@@ -1856,6 +1989,9 @@ Lösung: 1. guter, 2. dafür, 3. das, 4. eines, 5. Hobbys, 6. Leute, 7. sich, 8.
         .replace(/>/g, '&gt;');
 
       html = html.replace(/%%WRITELINE%%/g, '<span class="write-line"></span>');
+
+      // [Bild] → visual image placeholder box
+      html = html.replace(/\[Bild\]/g, '<span class="img-placeholder">🖼</span>');
 
       html = html.replace(
         /(?:^\|.+\|\n)+/gm,
@@ -1884,10 +2020,36 @@ Lösung: 1. guter, 2. dafür, 3. das, 4. eines, 5. Hobbys, 6. Leute, 7. sich, 8.
         return `<ul>${items}</ul>`;
       });
 
-      html = html.replace(/((?:^\d+\. .+\n?)+)/gm, block => {
-        const items = block.trim().split('\n').map(l => `<li>${l.replace(/^\d+\. /, '').trim()}</li>`).join('');
-        return `<ol>${items}</ol>`;
-      });
+      // Ordered lists – deferred-open so blank lines & extra write-lines between items
+      // don't reset the counter back to 1
+      {
+        const lines = html.split('\n');
+        const out = [];
+        let olOpen = false, olNum = 1, pendingStart = null;
+        for (const line of lines) {
+          const m = line.match(/^(\d+)\. (.+)$/);
+          if (m) {
+            const itemNum = parseInt(m[1], 10);
+            if (!olOpen) {
+              out.push(`<ol start="${pendingStart !== null ? pendingStart : itemNum}">`);
+              olOpen = true; pendingStart = null;
+            }
+            out.push(`<li>${m[2]}</li>`);
+            olNum = itemNum + 1;
+          } else if (line.includes('write-line') && (olOpen || pendingStart !== null)) {
+            if (olOpen) { out.push('</ol>'); olOpen = false; pendingStart = olNum; }
+            out.push(line);
+          } else if (line.trim() === '' && (olOpen || pendingStart !== null)) {
+            out.push(line); // keep blank lines inside list context without closing
+          } else {
+            if (olOpen) { out.push('</ol>'); olOpen = false; }
+            if (line.trim()) pendingStart = null; // real content resets continuation
+            out.push(line);
+          }
+        }
+        if (olOpen) out.push('</ol>');
+        html = out.join('\n');
+      }
 
       html = html.replace(/^(?!<[htuo]).+$/gm, line => {
         if (line.trim() === '') return '';
@@ -1909,16 +2071,14 @@ Lösung: 1. guter, 2. dafür, 3. das, 4. eines, 5. Hobbys, 6. Leute, 7. sich, 8.
       }
     }
 
-    function fallbackCopy(text) {
-      const ta = document.createElement('textarea');
-      ta.value = text;
-      ta.style.position = 'fixed';
-      ta.style.opacity = '0';
-      document.body.appendChild(ta);
-      ta.select();
-      document.execCommand('copy');
-      document.body.removeChild(ta);
-      flashCopyBtn();
+    function fallbackCopy() {
+      const btn = document.querySelector('.result-toolbar .btn-secondary');
+      if (!btn) return;
+      const orig = btn.innerHTML;
+      btn.innerHTML = '&#9888; Strg+A dann Strg+C';
+      btn.style.background = '#fef9c3';
+      btn.style.color = '#854d0e';
+      setTimeout(() => { btn.innerHTML = orig; btn.style = ''; }, 3000);
     }
 
     function flashCopyBtn() {
@@ -1964,6 +2124,70 @@ Lösung: 1. guter, 2. dafür, 3. das, 4. eines, 5. Hobbys, 6. Leute, 7. sich, 8.
     function hideError() {
       document.getElementById('error-box').classList.remove('visible');
     }
+
+    /* ── History ──────────────────────────────────────────────── */
+    const HISTORY_KEY = 'deutschkurs_history';
+    const MAX_HISTORY = 20;
+
+    function saveToHistory({ typeLabel, thema, niveau, markdown, html }) {
+      const history = loadHistory();
+      const entry = {
+        id: Date.now(),
+        timestamp: new Date().toLocaleString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }),
+        typeLabel, thema, niveau, markdown, html
+      };
+      history.unshift(entry);
+      if (history.length > MAX_HISTORY) history.length = MAX_HISTORY;
+      try { localStorage.setItem(HISTORY_KEY, JSON.stringify(history)); } catch (e) { }
+      renderHistoryPanel();
+    }
+
+    function loadHistory() {
+      try { return JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]'); } catch { return []; }
+    }
+
+    function renderHistoryPanel() {
+      const history = loadHistory();
+      const card = document.getElementById('history-card');
+      const list = document.getElementById('history-list');
+      if (!history.length) { card.style.display = 'none'; return; }
+      card.style.display = 'block';
+      list.innerHTML = history.map(e => `
+        <div class="history-entry">
+          <div class="history-entry-info">
+            <strong>${escHtml(e.thema)}</strong>
+            <span>${escHtml(e.typeLabel)} · ${escHtml(e.niveau)} · ${escHtml(e.timestamp)}</span>
+          </div>
+          <button class="btn btn-secondary" onclick="loadHistoryItem(${e.id})">🔁 Laden</button>
+          <button class="btn btn-secondary" onclick="deleteHistoryItem(${e.id})" style="color:var(--danger)">🗑</button>
+        </div>
+      `).join('');
+    }
+
+    function escHtml(s) {
+      return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    function loadHistoryItem(id) {
+      const entry = loadHistory().find(e => e.id === id);
+      if (!entry) return;
+      const output = document.getElementById('material-output');
+      output.innerHTML = entry.html;
+      document.getElementById('result-meta').textContent = `${entry.typeLabel} · ${entry.thema} · ${entry.niveau}`;
+      const card = document.getElementById('result-card');
+      card.style.display = 'block';
+      card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function deleteHistoryItem(id) {
+      const history = loadHistory().filter(e => e.id !== id);
+      try { localStorage.setItem(HISTORY_KEY, JSON.stringify(history)); } catch (e) { }
+      renderHistoryPanel();
+    }
+
+    // Initialise history on page load
+    renderHistoryPanel();
+
   </script>
 
 </body>
