@@ -309,7 +309,7 @@
     }
 
     .type-option input:checked+label .type-desc {
-      color: #3b82f6;
+      color: var(--primary);
     }
 
     /* ── Goal Chips (multi-select) ────────────────────────────── */
@@ -558,7 +558,7 @@
 
     /* ── Writing lines in output ──────────────────────────────── */
     #material-output .write-line {
-      border-bottom: 1.5px solid #aaa;
+      border-bottom: 1.5px solid var(--border);
       min-height: 28px;
       margin: 5px 0 8px;
       display: block;
@@ -766,7 +766,7 @@
     }
 
     #material-output strong {
-      color: #1e3a8a;
+      color: var(--primary-h);
     }
 
     #material-output .word-bank {
@@ -944,7 +944,7 @@
     @media print {
       @page {
         size: A4 portrait;
-        margin: 2cm 2.5cm;
+        margin: 0; /* Removes browser-added URL/date headers and footers */
       }
 
       body {
@@ -953,6 +953,8 @@
         color: #000;
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
+        padding: 2cm 2.5cm;
+        box-sizing: border-box;
       }
 
       header,
@@ -992,18 +994,26 @@
         border-bottom: 1.5pt solid #333;
         padding-bottom: 4pt;
         margin: 0 0 10pt;
-        page-break-after: avoid;
+        page-break-after: avoid;  /* legacy */
+        page-break-inside: avoid; /* legacy – no mid-heading split */
+        break-after: avoid;       /* modern */
+        break-inside: avoid;      /* modern */
       }
 
       #material-output h3 {
         font-size: 12pt;
         color: #222;
         margin: 14pt 0 3pt;
-        page-break-after: avoid;
+        page-break-after: avoid;  /* legacy */
+        page-break-inside: avoid; /* legacy */
+        break-after: avoid;       /* modern */
+        break-inside: avoid;      /* modern */
       }
 
       #material-output p {
         margin: 3pt 0;
+        orphans: 3; /* min lines kept at bottom of page */
+        widows: 3;  /* min lines kept at top of page */
       }
 
       #material-output strong {
@@ -1020,7 +1030,8 @@
       #material-output ol {
         padding-left: 1.2cm;
         margin: 4pt 0;
-        page-break-inside: avoid;
+        page-break-inside: avoid; /* legacy */
+        break-inside: avoid;      /* modern */
       }
 
       #material-output li {
@@ -1032,7 +1043,8 @@
         border-collapse: collapse;
         font-size: 10pt;
         margin: 8pt 0;
-        page-break-inside: avoid;
+        page-break-inside: avoid; /* legacy */
+        break-inside: avoid;      /* modern */
       }
 
       #material-output th,
@@ -1052,6 +1064,11 @@
         min-height: .7cm;
         margin: 3pt 0;
         display: block;
+      }
+
+      #material-output .word-bank {
+        page-break-inside: avoid; /* keep word-box on one page */
+        break-inside: avoid;
       }
 
       #material-output .img-placeholder {
@@ -2013,6 +2030,10 @@ Lösung: 1. guter, 2. dafür, 3. das, 4. eines, 5. Hobbys, 6. Leute, 7. sich, 8.
       html = html.replace(/^# (.+)$/gm, '<h2>$1</h2>');
       html = html.replace(/^---+$/gm, '<hr>');
       html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+
+      // Wrap Wörterbox sections with the word-bank style
+      html = html.replace(/(<strong>Wörterbox:<\/strong>\n?)([^\n<][^\n]*)/g,
+        '<div class="word-bank"><strong>Wörterbox:</strong> $2</div>');
       html = html.replace(/\*(.+?)\*/g, '<em>$1</em>');
 
       html = html.replace(/((?:^- .+\n?)+)/gm, block => {
@@ -2093,6 +2114,7 @@ Lösung: 1. guter, 2. dafür, 3. das, 4. eines, 5. Hobbys, 6. Leute, 7. sich, 8.
 
     /* ── Reset ────────────────────────────────────────────────── */
     function resetForm() {
+      if (!window.confirm('Formular zurücksetzen? Alle Eingaben gehen verloren.')) return;
       document.getElementById('result-card').style.display = 'none';
       document.getElementById('topic').value = '';
       document.getElementById('target-group').value = '';
@@ -2112,6 +2134,8 @@ Lösung: 1. guter, 2. dafür, 3. das, 4. eines, 5. Hobbys, 6. Leute, 7. sich, 8.
       const btn = document.getElementById('generate-btn');
       btn.disabled = on;
       btn.classList.toggle('loading', on);
+      document.querySelectorAll('#generator-form input, #generator-form textarea, #generator-form button:not(#generate-btn)')
+        .forEach(el => { el.disabled = on; });
     }
 
     function showError(msg) {
