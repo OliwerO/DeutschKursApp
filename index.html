@@ -1,26 +1,33 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DeutschKurs – Materialgenerator</title>
   <style>
     /* ── Reset & Base ─────────────────────────────────────────── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
     :root {
-      --primary:   #2563eb;
+      --primary: #2563eb;
       --primary-h: #1d4ed8;
-      --accent:    #0ea5e9;
-      --success:   #16a34a;
-      --danger:    #dc2626;
-      --bg:        #f0f4f8;
-      --surface:   #ffffff;
-      --border:    #d1d5db;
-      --text:      #1e293b;
-      --muted:     #64748b;
-      --radius:    10px;
-      --shadow:    0 2px 12px rgba(0,0,0,.08);
+      --accent: #0ea5e9;
+      --success: #16a34a;
+      --danger: #dc2626;
+      --bg: #f0f4f8;
+      --surface: #ffffff;
+      --border: #d1d5db;
+      --text: #1e293b;
+      --muted: #64748b;
+      --radius: 10px;
+      --shadow: 0 2px 12px rgba(0, 0, 0, .08);
     }
 
     body {
@@ -40,11 +47,23 @@
       display: flex;
       align-items: center;
       gap: 1rem;
-      box-shadow: 0 2px 8px rgba(0,0,0,.18);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, .18);
     }
-    header svg { flex-shrink: 0; }
-    header h1 { font-size: 1.4rem; font-weight: 700; letter-spacing: -.5px; }
-    header p  { font-size: .85rem; opacity: .85; }
+
+    header svg {
+      flex-shrink: 0;
+    }
+
+    header h1 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: -.5px;
+    }
+
+    header p {
+      font-size: .85rem;
+      opacity: .85;
+    }
 
     /* ── Layout ───────────────────────────────────────────────── */
     main {
@@ -63,6 +82,7 @@
       box-shadow: var(--shadow);
       padding: 1.5rem 1.75rem;
     }
+
     .card-title {
       font-size: 1rem;
       font-weight: 700;
@@ -81,12 +101,14 @@
       margin-bottom: .35rem;
       color: var(--text);
     }
+
     label .hint {
       font-weight: 400;
       color: var(--muted);
       font-size: .8rem;
       margin-left: .4rem;
     }
+
     input[type="text"],
     input[type="password"],
     textarea,
@@ -102,21 +124,36 @@
       transition: border-color .2s, box-shadow .2s;
       outline: none;
     }
-    input:focus, textarea:focus, select:focus {
+
+    input:focus,
+    textarea:focus,
+    select:focus {
       border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(37,99,235,.15);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, .15);
       background: #fff;
     }
-    textarea { resize: vertical; min-height: 90px; }
+
+    textarea {
+      resize: vertical;
+      min-height: 90px;
+    }
 
     .form-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 1rem 1.5rem;
     }
-    @media (max-width: 600px) { .form-grid { grid-template-columns: 1fr; } }
 
-    .form-group { display: flex; flex-direction: column; }
+    @media (max-width: 600px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
 
     /* ── API Key row ──────────────────────────────────────────── */
     .api-row {
@@ -124,19 +161,27 @@
       gap: .5rem;
       align-items: flex-end;
     }
-    .api-row input { flex: 1; }
+
+    .api-row input {
+      flex: 1;
+    }
+
     .api-row button {
       white-space: nowrap;
       padding: .65rem 1rem;
       font-size: .85rem;
     }
+
     .api-saved {
       font-size: .8rem;
       color: var(--success);
       margin-top: .3rem;
       display: none;
     }
-    .api-saved.visible { display: block; }
+
+    .api-saved.visible {
+      display: block;
+    }
 
     /* ── Material Type Cards ──────────────────────────────────── */
     .type-grid {
@@ -145,14 +190,18 @@
       gap: .75rem;
       margin-top: .25rem;
     }
+
     .type-option {
       position: relative;
     }
+
     .type-option input[type="radio"] {
       position: absolute;
       opacity: 0;
-      width: 0; height: 0;
+      width: 0;
+      height: 0;
     }
+
     .type-option label {
       display: flex;
       flex-direction: column;
@@ -169,12 +218,17 @@
       line-height: 1.3;
       background: #fafafa;
     }
-    .type-option label .icon { font-size: 1.6rem; }
-    .type-option input[type="radio"]:checked + label {
+
+    .type-option label .icon {
+      font-size: 1.6rem;
+    }
+
+    .type-option input[type="radio"]:checked+label {
       border-color: var(--primary);
       background: #eff6ff;
       color: var(--primary);
     }
+
     .type-option label:hover {
       border-color: var(--accent);
       background: #f0f9ff;
@@ -187,12 +241,18 @@
       gap: .5rem;
       margin-top: .25rem;
     }
-    .goal-chip { position: relative; }
+
+    .goal-chip {
+      position: relative;
+    }
+
     .goal-chip input[type="checkbox"] {
       position: absolute;
       opacity: 0;
-      width: 0; height: 0;
+      width: 0;
+      height: 0;
     }
+
     .goal-chip label {
       display: inline-flex;
       align-items: center;
@@ -209,12 +269,14 @@
       white-space: nowrap;
       margin-bottom: 0;
     }
-    .goal-chip input[type="checkbox"]:checked + label {
+
+    .goal-chip input[type="checkbox"]:checked+label {
       border-color: var(--primary);
       background: #eff6ff;
       color: var(--primary);
       font-weight: 600;
     }
+
     .goal-chip label:hover {
       border-color: var(--accent);
       background: #f0f9ff;
@@ -226,6 +288,7 @@
       border-top: 1.5px dashed var(--border);
       margin: 1.4rem 0 1.1rem;
     }
+
     .section-label {
       font-size: .78rem;
       font-weight: 700;
@@ -245,8 +308,10 @@
       color: var(--text);
       margin-bottom: 1rem;
     }
+
     .step-num {
-      width: 26px; height: 26px;
+      width: 26px;
+      height: 26px;
       border-radius: 50%;
       background: var(--primary);
       color: #fff;
@@ -257,6 +322,7 @@
       justify-content: center;
       flex-shrink: 0;
     }
+
     .step-divider {
       border: none;
       border-top: 1.5px solid #e2e8f0;
@@ -270,6 +336,7 @@
       gap: .4rem;
       margin-bottom: .55rem;
     }
+
     .preset-chip {
       padding: .28rem .8rem;
       border: 1.5px solid var(--border);
@@ -282,7 +349,9 @@
       font-family: inherit;
       transition: background .15s, color .15s, border-color .15s;
     }
-    .preset-chip:hover, .preset-chip.active {
+
+    .preset-chip:hover,
+    .preset-chip.active {
       background: #eff6ff;
       border-color: var(--primary);
       color: var(--primary);
@@ -296,10 +365,18 @@
       gap: .5rem;
       margin-top: .25rem;
     }
-    .level-chip { position: relative; }
-    .level-chip input[type="radio"] {
-      position: absolute; opacity: 0; width: 0; height: 0;
+
+    .level-chip {
+      position: relative;
     }
+
+    .level-chip input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
     .level-chip label {
       display: inline-flex;
       flex-direction: column;
@@ -317,12 +394,17 @@
       text-align: center;
       margin-bottom: 0;
     }
-    .level-chip input[type="radio"]:checked + label {
+
+    .level-chip input[type="radio"]:checked+label {
       border-color: var(--primary);
       background: #eff6ff;
       color: var(--primary);
     }
-    .level-chip label:hover { border-color: var(--accent); background: #f0f9ff; }
+
+    .level-chip label:hover {
+      border-color: var(--accent);
+      background: #f0f9ff;
+    }
 
     /* ── Duration chips ───────────────────────────────────────── */
     .dur-chips {
@@ -331,10 +413,18 @@
       gap: .5rem;
       margin-top: .25rem;
     }
-    .dur-chip { position: relative; }
-    .dur-chip input[type="radio"] {
-      position: absolute; opacity: 0; width: 0; height: 0;
+
+    .dur-chip {
+      position: relative;
     }
+
+    .dur-chip input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
     .dur-chip label {
       display: inline-flex;
       flex-direction: column;
@@ -352,12 +442,17 @@
       text-align: center;
       margin-bottom: 0;
     }
-    .dur-chip input[type="radio"]:checked + label {
+
+    .dur-chip input[type="radio"]:checked+label {
       border-color: var(--primary);
       background: #eff6ff;
       color: var(--primary);
     }
-    .dur-chip label:hover { border-color: var(--accent); background: #f0f9ff; }
+
+    .dur-chip label:hover {
+      border-color: var(--accent);
+      background: #f0f9ff;
+    }
 
     /* ── Sub label (for level & duration chips) ───────────────── */
     .sub-lbl {
@@ -366,8 +461,9 @@
       color: var(--muted);
       margin-top: .1rem;
     }
-    .level-chip input[type="radio"]:checked + label .sub-lbl,
-    .dur-chip   input[type="radio"]:checked + label .sub-lbl {
+
+    .level-chip input[type="radio"]:checked+label .sub-lbl,
+    .dur-chip input[type="radio"]:checked+label .sub-lbl {
       color: #93c5fd;
     }
 
@@ -379,7 +475,10 @@
       line-height: 1.3;
       margin-top: .1rem;
     }
-    .type-option input[type="radio"]:checked + label .type-desc { color: #93c5fd; }
+
+    .type-option input[type="radio"]:checked+label .type-desc {
+      color: #93c5fd;
+    }
 
     /* ── Writing lines in output ──────────────────────────────── */
     #material-output .write-line {
@@ -404,15 +503,47 @@
       font-family: inherit;
       text-decoration: none;
     }
-    .btn:active { transform: scale(.97); }
-    .btn-primary { background: var(--primary); color: #fff; }
-    .btn-primary:hover:not(:disabled) { background: var(--primary-h); }
-    .btn-secondary { background: #e2e8f0; color: var(--text); }
-    .btn-secondary:hover:not(:disabled) { background: #cbd5e1; }
-    .btn-success  { background: var(--success); color: #fff; }
-    .btn-success:hover:not(:disabled)  { background: #15803d; }
-    .btn:disabled { opacity: .55; cursor: not-allowed; }
-    .btn-lg { padding: .9rem 2rem; font-size: 1.05rem; }
+
+    .btn:active {
+      transform: scale(.97);
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      background: var(--primary-h);
+    }
+
+    .btn-secondary {
+      background: #e2e8f0;
+      color: var(--text);
+    }
+
+    .btn-secondary:hover:not(:disabled) {
+      background: #cbd5e1;
+    }
+
+    .btn-success {
+      background: var(--success);
+      color: #fff;
+    }
+
+    .btn-success:hover:not(:disabled) {
+      background: #15803d;
+    }
+
+    .btn:disabled {
+      opacity: .55;
+      cursor: not-allowed;
+    }
+
+    .btn-lg {
+      padding: .9rem 2rem;
+      font-size: 1.05rem;
+    }
 
     .generate-row {
       display: flex;
@@ -422,22 +553,37 @@
 
     /* ── Spinner ──────────────────────────────────────────────── */
     .spinner {
-      width: 20px; height: 20px;
-      border: 3px solid rgba(255,255,255,.4);
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255, 255, 255, .4);
       border-top-color: #fff;
       border-radius: 50%;
       animation: spin .7s linear infinite;
       display: none;
     }
-    .loading .spinner { display: inline-block; }
-    .loading .btn-text { display: none; }
-    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .loading .spinner {
+      display: inline-block;
+    }
+
+    .loading .btn-text {
+      display: none;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
 
     /* ── Result Section ───────────────────────────────────────── */
     #result-section {
       display: none;
     }
-    #result-section.visible { display: block; }
+
+    #result-section.visible {
+      display: block;
+    }
 
     .result-toolbar {
       display: flex;
@@ -466,18 +612,31 @@
       padding-bottom: .2rem;
       border-bottom: 2px solid #e0eaff;
     }
+
     #material-output h3 {
       font-size: 1rem;
       color: #374151;
       margin: .8rem 0 .25rem;
     }
-    #material-output p  { margin: .4rem 0; }
-    #material-output ul, #material-output ol {
+
+    #material-output p {
+      margin: .4rem 0;
+    }
+
+    #material-output ul,
+    #material-output ol {
       padding-left: 1.4rem;
       margin: .4rem 0;
     }
-    #material-output li { margin: .25rem 0; }
-    #material-output strong { color: #1e3a8a; }
+
+    #material-output li {
+      margin: .25rem 0;
+    }
+
+    #material-output strong {
+      color: #1e3a8a;
+    }
+
     #material-output .word-bank {
       background: #f0f9ff;
       border: 1px solid #bae6fd;
@@ -485,17 +644,25 @@
       padding: .6rem 1rem;
       margin: .75rem 0;
     }
+
     #material-output table {
       border-collapse: collapse;
       width: 100%;
       margin: .75rem 0;
     }
-    #material-output th, #material-output td {
+
+    #material-output th,
+    #material-output td {
       border: 1px solid var(--border);
       padding: .45rem .75rem;
       text-align: left;
     }
-    #material-output th { background: #eff6ff; font-weight: 700; }
+
+    #material-output th {
+      background: #eff6ff;
+      font-weight: 700;
+    }
+
     #material-output hr {
       border: none;
       border-top: 1.5px solid #e2e8f0;
@@ -512,7 +679,10 @@
       font-size: .9rem;
       display: none;
     }
-    .error-box.visible { display: block; }
+
+    .error-box.visible {
+      display: block;
+    }
 
     /* ── Footer ───────────────────────────────────────────────── */
     footer {
@@ -526,7 +696,11 @@
        PRINT STYLES – A4 optimiert
     ══════════════════════════════════════════════════════════ */
     @media print {
-      @page { size: A4 portrait; margin: 2cm 2.5cm; }
+      @page {
+        size: A4 portrait;
+        margin: 2cm 2.5cm;
+      }
+
       body {
         background: #fff;
         font-size: 11pt;
@@ -534,10 +708,26 @@
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
       }
-      header, footer, .card:not(#result-card), .result-toolbar,
-      #error-box, .api-saved { display: none !important; }
-      #result-card { box-shadow: none; padding: 0; border: none; }
-      .card-title   { display: none !important; }
+
+      header,
+      footer,
+      .card:not(#result-card),
+      .result-toolbar,
+      #error-box,
+      .api-saved {
+        display: none !important;
+      }
+
+      #result-card {
+        box-shadow: none;
+        padding: 0;
+        border: none;
+      }
+
+      .card-title {
+        display: none !important;
+      }
+
       #material-output {
         border: none;
         padding: 0;
@@ -545,6 +735,7 @@
         line-height: 1.85;
         white-space: normal;
       }
+
       #material-output h2 {
         font-size: 15pt;
         color: #000;
@@ -553,21 +744,39 @@
         margin: 0 0 10pt;
         page-break-after: avoid;
       }
+
       #material-output h3 {
         font-size: 12pt;
         color: #222;
         margin: 14pt 0 3pt;
         page-break-after: avoid;
       }
-      #material-output p    { margin: 3pt 0; }
-      #material-output strong { color: #000; }
-      #material-output hr   { border: none; border-top: .75pt solid #bbb; margin: 10pt 0; }
-      #material-output ul, #material-output ol {
+
+      #material-output p {
+        margin: 3pt 0;
+      }
+
+      #material-output strong {
+        color: #000;
+      }
+
+      #material-output hr {
+        border: none;
+        border-top: .75pt solid #bbb;
+        margin: 10pt 0;
+      }
+
+      #material-output ul,
+      #material-output ol {
         padding-left: 1.2cm;
         margin: 4pt 0;
         page-break-inside: avoid;
       }
-      #material-output li   { margin: 2pt 0; }
+
+      #material-output li {
+        margin: 2pt 0;
+      }
+
       #material-output table {
         width: 100%;
         border-collapse: collapse;
@@ -575,400 +784,447 @@
         margin: 8pt 0;
         page-break-inside: avoid;
       }
-      #material-output th, #material-output td {
+
+      #material-output th,
+      #material-output td {
         border: .75pt solid #bbb;
         padding: 4pt 6pt;
         vertical-align: top;
       }
-      #material-output th { background: #f0f0f0 !important; font-weight: 700; }
+
+      #material-output th {
+        background: #f0f0f0 !important;
+        font-weight: 700;
+      }
+
       #material-output .write-line {
         border-bottom: 1pt solid #888;
         min-height: .7cm;
         margin: 3pt 0;
         display: block;
       }
-      a { text-decoration: none; color: #000; }
+
+      a {
+        text-decoration: none;
+        color: #000;
+      }
     }
   </style>
 </head>
+
 <body>
 
-<!-- ── Header ─────────────────────────────────────────────────── -->
-<header>
-  <svg width="36" height="36" viewBox="0 0 36 36" fill="none" aria-hidden="true">
-    <rect width="36" height="36" rx="8" fill="rgba(255,255,255,.2)"/>
-    <text x="18" y="26" text-anchor="middle" font-size="20" font-family="serif" fill="#fff">A</text>
-  </svg>
-  <div>
-    <h1>DeutschKurs – Materialgenerator</h1>
-    <p>Lernmaterialien für gering literalisierte Erwachsene automatisch erstellen</p>
-  </div>
-</header>
-
-<!-- ── Main ───────────────────────────────────────────────────── -->
-<main>
-
-  <!-- API Key Card -->
-  <div class="card">
-    <div class="card-title">
-      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z"/></svg>
-      Anthropic API-Schlüssel
+  <!-- ── Header ─────────────────────────────────────────────────── -->
+  <header>
+    <svg width="36" height="36" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+      <rect width="36" height="36" rx="8" fill="rgba(255,255,255,.2)" />
+      <text x="18" y="26" text-anchor="middle" font-size="20" font-family="serif" fill="#fff">A</text>
+    </svg>
+    <div>
+      <h1>DeutschKurs – Materialgenerator</h1>
+      <p>Lernmaterialien für gering literalisierte Erwachsene automatisch erstellen</p>
     </div>
-    <div class="form-group">
-      <label for="api-key">
-        API-Schlüssel
-        <span class="hint">(wird nur lokal im Browser gespeichert)</span>
-      </label>
-      <div class="api-row">
-        <input type="password" id="api-key" placeholder="sk-ant-..." autocomplete="off" spellcheck="false" />
-        <button class="btn btn-secondary" onclick="saveApiKey()">Speichern</button>
+  </header>
+
+  <!-- ── Main ───────────────────────────────────────────────────── -->
+  <main>
+
+    <!-- API Key Card -->
+    <div class="card">
+      <div class="card-title">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+          aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z" />
+        </svg>
+        Anthropic API-Schlüssel
       </div>
-      <span class="api-saved" id="api-saved-msg">&#10003; Schlüssel gespeichert</span>
-    </div>
-  </div>
-
-  <!-- Generator Form Card -->
-  <div class="card">
-    <div class="card-title">
-      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z"/></svg>
-      Material erstellen
+      <div class="form-group">
+        <label for="api-key">
+          API-Schlüssel
+          <span class="hint">(wird nur lokal im Browser gespeichert)</span>
+        </label>
+        <div class="api-row">
+          <input type="password" id="api-key" placeholder="sk-ant-..." autocomplete="off" spellcheck="false" />
+          <button class="btn btn-secondary" onclick="saveApiKey()">Speichern</button>
+        </div>
+        <span class="api-saved" id="api-saved-msg">&#10003; Schlüssel gespeichert</span>
+      </div>
     </div>
 
-    <form id="generator-form" onsubmit="generateMaterial(event)">
-
-      <!-- ══ Schritt 1 ══════════════════════════════════════════ -->
-      <div class="form-step">
-        <span class="step-num">1</span>
-        Wer lernt &amp; was ist das Thema?
+    <!-- Generator Form Card -->
+    <div class="card">
+      <div class="card-title">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+          aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z" />
+        </svg>
+        Material erstellen
       </div>
 
-      <div class="form-group" style="margin-bottom:.85rem;">
-        <label>
-          Zielgruppe
-          <span class="hint">Schnellauswahl oder eigene Beschreibung unten</span>
-        </label>
-        <div class="preset-chips">
-          <button type="button" class="preset-chip" data-val="Hausfrauen, 30–50 Jahre, Herkunft Türkei und Arabien, wenig Schulbildung, lernen Lateinschrift" onclick="setGroup(this)">Hausfrauen TK / AR</button>
-          <button type="button" class="preset-chip" data-val="Männer, 20–45 Jahre, Herkunft Nordafrika und Afghanistan, kaum Schulbildung" onclick="setGroup(this)">Männer Nordafrika / AF</button>
-          <button type="button" class="preset-chip" data-val="Gemischte Gruppe, 18–60 Jahre, verschiedene Herkünfte, gering literalisiert" onclick="setGroup(this)">Gemischte Gruppe</button>
-          <button type="button" class="preset-chip" data-val="Senioren, 55–70 Jahre, Herkunft Osteuropa, Grundkenntnisse Lateinschrift" onclick="setGroup(this)">Senioren</button>
-          <button type="button" class="preset-chip" data-val="Junge Erwachsene, 18–30 Jahre, Herkunft Syrien und Irak, wenig Schulbildung" onclick="setGroup(this)">Junge Erwachsene SY / IQ</button>
+      <form id="generator-form" onsubmit="generateMaterial(event)">
+
+        <!-- ══ Schritt 1 ══════════════════════════════════════════ -->
+        <div class="form-step">
+          <span class="step-num">1</span>
+          Wer lernt &amp; was ist das Thema?
         </div>
-        <textarea id="target-group" rows="2"
-          placeholder="z.B. Hausfrauen, 30–50 Jahre, Herkunft Türkei, kaum Schulbildung …"></textarea>
-      </div>
 
-      <div class="form-group">
-        <label for="topic">
-          Thema / Unterrichtssituation
-          <span class="hint">Was soll geübt werden?</span>
-        </label>
-        <input type="text" id="topic"
-          placeholder="z.B. Beim Arzt  ·  Einkaufen  ·  Kinder in der Schule  ·  Wohnung suchen …" required />
-      </div>
-
-      <hr class="step-divider" />
-
-      <!-- ══ Schritt 2 ══════════════════════════════════════════ -->
-      <div class="form-step">
-        <span class="step-num">2</span>
-        Sprachniveau &amp; Materialtyp
-      </div>
-
-      <div class="form-group" style="margin-bottom:1.25rem;">
-        <label>Sprachniveau der Gruppe</label>
-        <div class="level-chips">
-          <div class="level-chip">
-            <input type="radio" name="niveau" id="lvl-a1" value="A1" checked />
-            <label for="lvl-a1">A1<span class="sub-lbl">Anfänger</span></label>
+        <div class="form-group" style="margin-bottom:.85rem;">
+          <label>
+            Zielgruppe
+            <span class="hint">Schnellauswahl oder eigene Beschreibung unten</span>
+          </label>
+          <div class="preset-chips">
+            <button type="button" class="preset-chip"
+              data-val="Hausfrauen, 30–50 Jahre, Herkunft Türkei und Arabien, wenig Schulbildung, lernen Lateinschrift"
+              onclick="setGroup(this)">Hausfrauen TK / AR</button>
+            <button type="button" class="preset-chip"
+              data-val="Männer, 20–45 Jahre, Herkunft Nordafrika und Afghanistan, kaum Schulbildung"
+              onclick="setGroup(this)">Männer Nordafrika / AF</button>
+            <button type="button" class="preset-chip"
+              data-val="Gemischte Gruppe, 18–60 Jahre, verschiedene Herkünfte, gering literalisiert"
+              onclick="setGroup(this)">Gemischte Gruppe</button>
+            <button type="button" class="preset-chip"
+              data-val="Senioren, 55–70 Jahre, Herkunft Osteuropa, Grundkenntnisse Lateinschrift"
+              onclick="setGroup(this)">Senioren</button>
+            <button type="button" class="preset-chip"
+              data-val="Junge Erwachsene, 18–30 Jahre, Herkunft Syrien und Irak, wenig Schulbildung"
+              onclick="setGroup(this)">Junge Erwachsene SY / IQ</button>
           </div>
-          <div class="level-chip">
-            <input type="radio" name="niveau" id="lvl-a1p" value="A1+" />
-            <label for="lvl-a1p">A1+<span class="sub-lbl">Fortgeschr.</span></label>
-          </div>
-          <div class="level-chip">
-            <input type="radio" name="niveau" id="lvl-a2" value="A2" />
-            <label for="lvl-a2">A2<span class="sub-lbl">Grundkenntn.</span></label>
-          </div>
-          <div class="level-chip">
-            <input type="radio" name="niveau" id="lvl-b1" value="B1" />
-            <label for="lvl-b1">B1<span class="sub-lbl">Mittelstufe</span></label>
-          </div>
-          <div class="level-chip">
-            <input type="radio" name="niveau" id="lvl-b2" value="B2" />
-            <label for="lvl-b2">B2<span class="sub-lbl">Oberstufe</span></label>
-          </div>
+          <textarea id="target-group" rows="2"
+            placeholder="z.B. Hausfrauen, 30–50 Jahre, Herkunft Türkei, kaum Schulbildung …"></textarea>
         </div>
-      </div>
 
-      <!-- Materialtyp -->
-      <div class="form-group">
-        <label>Welche Art von Material brauche ich?</label>
-        <div class="type-grid">
-
-          <div class="type-option">
-            <input type="radio" name="material-type" id="type-lueckentext" value="lueckentext" checked />
-            <label for="type-lueckentext">
-              <span class="icon">✏️</span>
-              Lückentext
-              <span class="type-desc">Text mit Lücken + Wörterbox</span>
-            </label>
-          </div>
-
-          <div class="type-option">
-            <input type="radio" name="material-type" id="type-bildwoerter" value="bildwoerter" />
-            <label for="type-bildwoerter">
-              <span class="icon">🖼️</span>
-              Bildwörter-Zuordnung
-              <span class="type-desc">Wörter zum Bilder-Kleben</span>
-            </label>
-          </div>
-
-          <div class="type-option">
-            <input type="radio" name="material-type" id="type-dialog" value="dialog" />
-            <label for="type-dialog">
-              <span class="icon">💬</span>
-              Einfacher Dialog
-              <span class="type-desc">Alltagsgespräch + Vokabular</span>
-            </label>
-          </div>
-
-          <div class="type-option">
-            <input type="radio" name="material-type" id="type-schreibuebung" value="schreibuebung" />
-            <label for="type-schreibuebung">
-              <span class="icon">📝</span>
-              Schreibübung
-              <span class="type-desc">Geführte Schreibaufgaben</span>
-            </label>
-          </div>
-
-          <div class="type-option">
-            <input type="radio" name="material-type" id="type-wortschatz" value="wortschatz" />
-            <label for="type-wortschatz">
-              <span class="icon">📚</span>
-              Wortschatz-Liste
-              <span class="type-desc">Themenwörter + Übersetzungsspalte</span>
-            </label>
-          </div>
-
+        <div class="form-group">
+          <label for="topic">
+            Thema / Unterrichtssituation
+            <span class="hint">Was soll geübt werden?</span>
+          </label>
+          <input type="text" id="topic"
+            placeholder="z.B. Beim Arzt  ·  Einkaufen  ·  Kinder in der Schule  ·  Wohnung suchen …" required />
         </div>
-      </div>
 
-      <hr class="step-divider" />
+        <hr class="step-divider" />
 
-      <!-- ══ Schritt 3 ══════════════════════════════════════════ -->
-      <div class="form-step">
-        <span class="step-num">3</span>
-        Umfang &amp; Dauer
-      </div>
+        <!-- ══ Schritt 2 ══════════════════════════════════════════ -->
+        <div class="form-step">
+          <span class="step-num">2</span>
+          Sprachniveau &amp; Materialtyp
+        </div>
 
-      <div class="form-group">
-        <label>Für wie viel Unterrichtszeit soll das Material reichen?</label>
-        <div class="dur-chips">
-          <div class="dur-chip">
-            <input type="radio" name="duration" id="dur-15" value="15 Minuten (kurze Einstiegsübung)" />
-            <label for="dur-15">⏱ 15 min<span class="sub-lbl">Einstieg</span></label>
-          </div>
-          <div class="dur-chip">
-            <input type="radio" name="duration" id="dur-30" value="30 Minuten" />
-            <label for="dur-30">⏱ 30 min<span class="sub-lbl">Übungsphase</span></label>
-          </div>
-          <div class="dur-chip">
-            <input type="radio" name="duration" id="dur-45" value="45 Minuten (eine Unterrichtsstunde)" />
-            <label for="dur-45">⏱ 45 min<span class="sub-lbl">Eine Stunde</span></label>
-          </div>
-          <div class="dur-chip">
-            <input type="radio" name="duration" id="dur-90" value="90 Minuten (Doppelstunde)" checked />
-            <label for="dur-90">⏱ 90 min ★<span class="sub-lbl">Doppelstunde</span></label>
-          </div>
-          <div class="dur-chip">
-            <input type="radio" name="duration" id="dur-hw" value="Hausaufgabe (selbstständiges Arbeiten zu Hause, ca. 20–30 Minuten)" />
-            <label for="dur-hw">🏠 Hausaufgabe<span class="sub-lbl">Zu Hause</span></label>
+        <div class="form-group" style="margin-bottom:1.25rem;">
+          <label>Sprachniveau der Gruppe</label>
+          <div class="level-chips">
+            <div class="level-chip">
+              <input type="radio" name="niveau" id="lvl-a1" value="A1" checked />
+              <label for="lvl-a1">A1<span class="sub-lbl">Anfänger</span></label>
+            </div>
+            <div class="level-chip">
+              <input type="radio" name="niveau" id="lvl-a1p" value="A1+" />
+              <label for="lvl-a1p">A1+<span class="sub-lbl">Fortgeschr.</span></label>
+            </div>
+            <div class="level-chip">
+              <input type="radio" name="niveau" id="lvl-a2" value="A2" />
+              <label for="lvl-a2">A2<span class="sub-lbl">Grundkenntn.</span></label>
+            </div>
+            <div class="level-chip">
+              <input type="radio" name="niveau" id="lvl-b1" value="B1" />
+              <label for="lvl-b1">B1<span class="sub-lbl">Mittelstufe</span></label>
+            </div>
+            <div class="level-chip">
+              <input type="radio" name="niveau" id="lvl-b2" value="B2" />
+              <label for="lvl-b2">B2<span class="sub-lbl">Oberstufe</span></label>
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- ── Optional section ───────────────────────────────── -->
-      <hr class="section-divider" />
-      <div class="section-label">⚙ Optionale Angaben</div>
+        <!-- Materialtyp -->
+        <div class="form-group">
+          <label>Welche Art von Material brauche ich?</label>
+          <div class="type-grid">
 
-      <!-- Details & Schwerpunkte -->
-      <div class="form-group" style="margin-bottom: 1.1rem;">
-        <label for="details">
-          Details &amp; Schwerpunkte
-          <span class="hint">z.B. bestimmte Vokabeln, Unterthemen, Grammatikfokus</span>
-        </label>
-        <textarea id="details" rows="2"
-          placeholder="z.B. Vokabeln: kaufen, bezahlen, Kasse; Unterthema: Obst und Gemüse; Fokus auf W-Fragen …"></textarea>
-      </div>
+            <div class="type-option">
+              <input type="radio" name="material-type" id="type-lueckentext" value="lueckentext" checked />
+              <label for="type-lueckentext">
+                <span class="icon">✏️</span>
+                Lückentext
+                <span class="type-desc">Text mit Lücken + Wörterbox</span>
+              </label>
+            </div>
 
-      <!-- Lernziel der Lehrerin -->
-      <div class="form-group">
-        <label>
-          Lernziel der Lehrerin
-          <span class="hint">Was soll das Material erreichen? (Mehrfachauswahl möglich)</span>
-        </label>
-        <div class="goal-chips" id="goal-chips">
-          <div class="goal-chip">
-            <input type="checkbox" id="goal-staerken" value="Stärken und Kompetenzen der Lernenden sichtbar machen" />
-            <label for="goal-staerken">📊 Stärken erfassen</label>
-          </div>
-          <div class="goal-chip">
-            <input type="checkbox" id="goal-lesen" value="Lesekompetenz fördern" />
-            <label for="goal-lesen">📖 Lesekompetenz</label>
-          </div>
-          <div class="goal-chip">
-            <input type="checkbox" id="goal-schreiben" value="Schreibkompetenz und Schreibfluss fördern" />
-            <label for="goal-schreiben">✍️ Schreibkompetenz</label>
-          </div>
-          <div class="goal-chip">
-            <input type="checkbox" id="goal-sprechen" value="Mündliche Kommunikation und Alltagsgespräche üben" />
-            <label for="goal-sprechen">💬 Mündliche Kommunikation</label>
-          </div>
-          <div class="goal-chip">
-            <input type="checkbox" id="goal-vokabular" value="Wortschatz aufbauen und festigen" />
-            <label for="goal-vokabular">🔤 Vokabular aufbauen</label>
-          </div>
-          <div class="goal-chip">
-            <input type="checkbox" id="goal-grammatik" value="Grammatik im Kontext üben (z.B. Verbkonjugation, Artikel)" />
-            <label for="goal-grammatik">🧱 Grammatik üben</label>
-          </div>
-          <div class="goal-chip">
-            <input type="checkbox" id="goal-selbst" value="Selbstvertrauen stärken – einfache Erfolgserlebnisse ermöglichen" />
-            <label for="goal-selbst">💪 Selbstvertrauen stärken</label>
-          </div>
-          <div class="goal-chip">
-            <input type="checkbox" id="goal-wiederholung" value="Wiederholung und Festigung bereits gelernter Inhalte" />
-            <label for="goal-wiederholung">🔄 Wiederholung</label>
+            <div class="type-option">
+              <input type="radio" name="material-type" id="type-bildwoerter" value="bildwoerter" />
+              <label for="type-bildwoerter">
+                <span class="icon">🖼️</span>
+                Bildwörter-Zuordnung
+                <span class="type-desc">Wörter zum Bilder-Kleben</span>
+              </label>
+            </div>
+
+            <div class="type-option">
+              <input type="radio" name="material-type" id="type-dialog" value="dialog" />
+              <label for="type-dialog">
+                <span class="icon">💬</span>
+                Einfacher Dialog
+                <span class="type-desc">Alltagsgespräch + Vokabular</span>
+              </label>
+            </div>
+
+            <div class="type-option">
+              <input type="radio" name="material-type" id="type-schreibuebung" value="schreibuebung" />
+              <label for="type-schreibuebung">
+                <span class="icon">📝</span>
+                Schreibübung
+                <span class="type-desc">Geführte Schreibaufgaben</span>
+              </label>
+            </div>
+
+            <div class="type-option">
+              <input type="radio" name="material-type" id="type-wortschatz" value="wortschatz" />
+              <label for="type-wortschatz">
+                <span class="icon">📚</span>
+                Wortschatz-Liste
+                <span class="type-desc">Themenwörter + Übersetzungsspalte</span>
+              </label>
+            </div>
+
           </div>
         </div>
-        <textarea id="goal-custom" rows="2" style="margin-top:.65rem;"
-          placeholder="Eigenes Ziel oder weitere Hinweise … (optional)"></textarea>
+
+        <hr class="step-divider" />
+
+        <!-- ══ Schritt 3 ══════════════════════════════════════════ -->
+        <div class="form-step">
+          <span class="step-num">3</span>
+          Umfang &amp; Dauer
+        </div>
+
+        <div class="form-group">
+          <label>Für wie viel Unterrichtszeit soll das Material reichen?</label>
+          <div class="dur-chips">
+            <div class="dur-chip">
+              <input type="radio" name="duration" id="dur-15" value="15 Minuten (kurze Einstiegsübung)" />
+              <label for="dur-15">⏱ 15 min<span class="sub-lbl">Einstieg</span></label>
+            </div>
+            <div class="dur-chip">
+              <input type="radio" name="duration" id="dur-30" value="30 Minuten" />
+              <label for="dur-30">⏱ 30 min<span class="sub-lbl">Übungsphase</span></label>
+            </div>
+            <div class="dur-chip">
+              <input type="radio" name="duration" id="dur-45" value="45 Minuten (eine Unterrichtsstunde)" />
+              <label for="dur-45">⏱ 45 min<span class="sub-lbl">Eine Stunde</span></label>
+            </div>
+            <div class="dur-chip">
+              <input type="radio" name="duration" id="dur-90" value="90 Minuten (Doppelstunde)" checked />
+              <label for="dur-90">⏱ 90 min ★<span class="sub-lbl">Doppelstunde</span></label>
+            </div>
+            <div class="dur-chip">
+              <input type="radio" name="duration" id="dur-hw"
+                value="Hausaufgabe (selbstständiges Arbeiten zu Hause, ca. 20–30 Minuten)" />
+              <label for="dur-hw">🏠 Hausaufgabe<span class="sub-lbl">Zu Hause</span></label>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Optional section ───────────────────────────────── -->
+        <hr class="section-divider" />
+        <div class="section-label">⚙ Optionale Angaben</div>
+
+        <!-- Details & Schwerpunkte -->
+        <div class="form-group" style="margin-bottom: 1.1rem;">
+          <label for="details">
+            Details &amp; Schwerpunkte
+            <span class="hint">z.B. bestimmte Vokabeln, Unterthemen, Grammatikfokus</span>
+          </label>
+          <textarea id="details" rows="2"
+            placeholder="z.B. Vokabeln: kaufen, bezahlen, Kasse; Unterthema: Obst und Gemüse; Fokus auf W-Fragen …"></textarea>
+        </div>
+
+        <!-- Lernziel der Lehrerin -->
+        <div class="form-group">
+          <label>
+            Lernziel der Lehrerin
+            <span class="hint">Was soll das Material erreichen? (Mehrfachauswahl möglich)</span>
+          </label>
+          <div class="goal-chips" id="goal-chips">
+            <div class="goal-chip">
+              <input type="checkbox" id="goal-staerken" value="Stärken und Kompetenzen der Lernenden sichtbar machen" />
+              <label for="goal-staerken">📊 Stärken erfassen</label>
+            </div>
+            <div class="goal-chip">
+              <input type="checkbox" id="goal-lesen" value="Lesekompetenz fördern" />
+              <label for="goal-lesen">📖 Lesekompetenz</label>
+            </div>
+            <div class="goal-chip">
+              <input type="checkbox" id="goal-schreiben" value="Schreibkompetenz und Schreibfluss fördern" />
+              <label for="goal-schreiben">✍️ Schreibkompetenz</label>
+            </div>
+            <div class="goal-chip">
+              <input type="checkbox" id="goal-sprechen" value="Mündliche Kommunikation und Alltagsgespräche üben" />
+              <label for="goal-sprechen">💬 Mündliche Kommunikation</label>
+            </div>
+            <div class="goal-chip">
+              <input type="checkbox" id="goal-vokabular" value="Wortschatz aufbauen und festigen" />
+              <label for="goal-vokabular">🔤 Vokabular aufbauen</label>
+            </div>
+            <div class="goal-chip">
+              <input type="checkbox" id="goal-grammatik"
+                value="Grammatik im Kontext üben (z.B. Verbkonjugation, Artikel)" />
+              <label for="goal-grammatik">🧱 Grammatik üben</label>
+            </div>
+            <div class="goal-chip">
+              <input type="checkbox" id="goal-selbst"
+                value="Selbstvertrauen stärken – einfache Erfolgserlebnisse ermöglichen" />
+              <label for="goal-selbst">💪 Selbstvertrauen stärken</label>
+            </div>
+            <div class="goal-chip">
+              <input type="checkbox" id="goal-wiederholung"
+                value="Wiederholung und Festigung bereits gelernter Inhalte" />
+              <label for="goal-wiederholung">🔄 Wiederholung</label>
+            </div>
+          </div>
+          <textarea id="goal-custom" rows="2" style="margin-top:.65rem;"
+            placeholder="Eigenes Ziel oder weitere Hinweise … (optional)"></textarea>
+        </div>
+
+        <!-- Submit -->
+        <div class="generate-row" style="margin-top: 1.5rem;">
+          <button type="submit" class="btn btn-primary btn-lg" id="generate-btn">
+            <span class="btn-text">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"
+                style="vertical-align:middle;margin-right:.2rem" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 010 1.972l-11.54 6.347a1.125 1.125 0 01-1.667-.986V5.653z" />
+              </svg>
+              Material erstellen
+            </span>
+            <span class="spinner" aria-hidden="true"></span>
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Error Box -->
+    <div class="error-box" id="error-box" role="alert" aria-live="polite"></div>
+
+    <!-- Result Card -->
+    <div class="card" id="result-card" style="display:none;">
+      <div class="card-title">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+          aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z" />
+        </svg>
+        Generiertes Material
+        <span id="result-meta" style="font-weight:400;color:var(--muted);font-size:.82rem;margin-left:.5rem;"></span>
       </div>
 
-      <!-- Submit -->
-      <div class="generate-row" style="margin-top: 1.5rem;">
-        <button type="submit" class="btn btn-primary btn-lg" id="generate-btn">
-          <span class="btn-text">
-            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2"
-                 viewBox="0 0 24 24" style="vertical-align:middle;margin-right:.2rem" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round"
-                    d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 010 1.972l-11.54 6.347a1.125 1.125 0 01-1.667-.986V5.653z"/>
-            </svg>
-            Material erstellen
-          </span>
-          <span class="spinner" aria-hidden="true"></span>
+      <div class="result-toolbar">
+        <button class="btn btn-secondary" onclick="copyMaterial()">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+            aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M15.666 3.888A2.25 2.25 0 0013.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 01-.75.75H9a.75.75 0 01-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 01-2.25 2.25H6.75A2.25 2.25 0 014.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 011.927-.184" />
+          </svg>
+          Kopieren
+        </button>
+        <button class="btn btn-primary" onclick="window.print()">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+            aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0110.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0l.229 2.523a1.125 1.125 0 01-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0021 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 00-1.913-.247M6.34 18H5.25A2.25 2.25 0 013 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 011.913-.247m10.5 0a48.536 48.536 0 00-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5zm-3 0h.008v.008H15V10.5z" />
+          </svg>
+          Drucken
+        </button>
+        <button class="btn btn-secondary" onclick="resetForm()" style="margin-left:auto;">
+          Neu erstellen
         </button>
       </div>
-    </form>
-  </div>
 
-  <!-- Error Box -->
-  <div class="error-box" id="error-box" role="alert" aria-live="polite"></div>
-
-  <!-- Result Card -->
-  <div class="card" id="result-card" style="display:none;">
-    <div class="card-title">
-      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z"/></svg>
-      Generiertes Material
-      <span id="result-meta" style="font-weight:400;color:var(--muted);font-size:.82rem;margin-left:.5rem;"></span>
+      <div id="material-output" aria-live="polite"></div>
     </div>
 
-    <div class="result-toolbar">
-      <button class="btn btn-secondary" onclick="copyMaterial()">
-        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15.666 3.888A2.25 2.25 0 0013.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 01-.75.75H9a.75.75 0 01-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 01-2.25 2.25H6.75A2.25 2.25 0 014.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 011.927-.184"/></svg>
-        Kopieren
-      </button>
-      <button class="btn btn-primary" onclick="window.print()">
-        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0110.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0l.229 2.523a1.125 1.125 0 01-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0021 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 00-1.913-.247M6.34 18H5.25A2.25 2.25 0 013 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 011.913-.247m10.5 0a48.536 48.536 0 00-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5zm-3 0h.008v.008H15V10.5z"/></svg>
-        Drucken
-      </button>
-      <button class="btn btn-secondary" onclick="resetForm()" style="margin-left:auto;">
-        Neu erstellen
-      </button>
-    </div>
+  </main>
 
-    <div id="material-output" aria-live="polite"></div>
-  </div>
+  <footer>
+    DeutschKurs Materialgenerator &mdash; Powered by Anthropic Claude API &mdash; Daten werden nicht gespeichert oder
+    weitergegeben.
+  </footer>
 
-</main>
+  <!-- ── JavaScript ──────────────────────────────────────────────── -->
+  <script>
+    /* ── Constants ───────────────────────────────────────────── */
+    const API_URL = 'https://api.anthropic.com/v1/messages';
+    const MODEL = 'claude-sonnet-4-20250514';
 
-<footer>
-  DeutschKurs Materialgenerator &mdash; Powered by Anthropic Claude API &mdash; Daten werden nicht gespeichert oder weitergegeben.
-</footer>
+    /**
+     * WORKER_URL
+     * ──────────────────────────────────────────────────────────
+     * Leave empty ('') for the teacher's version (she enters her own API key).
+     * Set to your Cloudflare Worker URL for the shared version (no key needed).
+     * Example: 'https://deutsch-kurs.yourname.workers.dev'
+     */
+    const WORKER_URL = 'https://deutschkurs-api.owczarekoliwer.workers.dev/';
 
-<!-- ── JavaScript ──────────────────────────────────────────────── -->
-<script>
-  /* ── Constants ───────────────────────────────────────────── */
-  const API_URL = 'https://api.anthropic.com/v1/messages';
-  const MODEL   = 'claude-sonnet-4-20250514';
+    /* ── API Key card: hide when worker mode is active ───────── */
+    const apiKeyCard = document.querySelector('.card:has(#api-key)') ||
+      document.getElementById('api-key')?.closest('.card');
+    const apiKeyInput = document.getElementById('api-key');
+    const savedMsg = document.getElementById('api-saved-msg');
 
-  /**
-   * WORKER_URL
-   * ──────────────────────────────────────────────────────────
-   * Leave empty ('') for the teacher's version (she enters her own API key).
-   * Set to your Cloudflare Worker URL for the shared version (no key needed).
-   * Example: 'https://deutsch-kurs.yourname.workers.dev'
-   */
-  const WORKER_URL = '';
-
-  /* ── API Key card: hide when worker mode is active ───────── */
-  const apiKeyCard  = document.querySelector('.card:has(#api-key)') ||
-                      document.getElementById('api-key')?.closest('.card');
-  const apiKeyInput = document.getElementById('api-key');
-  const savedMsg    = document.getElementById('api-saved-msg');
-
-  (function initMode() {
-    if (WORKER_URL) {
-      // Worker mode: no API key needed → hide the key card
-      if (apiKeyCard) {
-        apiKeyCard.style.display = 'none';
+    (function initMode() {
+      if (WORKER_URL) {
+        // Worker mode: no API key needed → hide the key card
+        if (apiKeyCard) {
+          apiKeyCard.style.display = 'none';
+        }
+      } else {
+        // Direct mode: load saved key
+        const saved = localStorage.getItem('anthropic_api_key');
+        if (saved) {
+          apiKeyInput.value = saved;
+          savedMsg.classList.add('visible');
+        }
       }
-    } else {
-      // Direct mode: load saved key
-      const saved = localStorage.getItem('anthropic_api_key');
-      if (saved) {
-        apiKeyInput.value = saved;
-        savedMsg.classList.add('visible');
-      }
+    })();
+
+    /* ── Group preset quick-fill ──────────────────────────────── */
+    function setGroup(btn) {
+      document.getElementById('target-group').value = btn.dataset.val;
+      document.querySelectorAll('.preset-chip').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
     }
-  })();
 
-  /* ── Group preset quick-fill ──────────────────────────────── */
-  function setGroup(btn) {
-    document.getElementById('target-group').value = btn.dataset.val;
-    document.querySelectorAll('.preset-chip').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-  }
+    function saveApiKey() {
+      const key = apiKeyInput.value.trim();
+      if (!key) { showError('Bitte geben Sie einen API-Schlüssel ein.'); return; }
+      localStorage.setItem('anthropic_api_key', key);
+      savedMsg.classList.add('visible');
+      hideError();
+    }
 
-  function saveApiKey() {
-    const key = apiKeyInput.value.trim();
-    if (!key) { showError('Bitte geben Sie einen API-Schlüssel ein.'); return; }
-    localStorage.setItem('anthropic_api_key', key);
-    savedMsg.classList.add('visible');
-    hideError();
-  }
+    /* ── Material type config ─────────────────────────────────── */
+    const MATERIAL_LABELS = {
+      lueckentext: 'Lückentext',
+      bildwoerter: 'Bildwörter-Zuordnung',
+      dialog: 'Einfacher Dialog',
+      schreibuebung: 'Schreibübung',
+      wortschatz: 'Wortschatz-Liste',
+    };
 
-  /* ── Material type config ─────────────────────────────────── */
-  const MATERIAL_LABELS = {
-    lueckentext:   'Lückentext',
-    bildwoerter:   'Bildwörter-Zuordnung',
-    dialog:        'Einfacher Dialog',
-    schreibuebung: 'Schreibübung',
-    wortschatz:    'Wortschatz-Liste',
-  };
+    // Builds the optional tail appended to every prompt when extra fields are filled in
+    function optionalSection(details, lernziel) {
+      let s = '';
+      if (details) s += `\nZusätzliche Anforderungen / Schwerpunkte:\n${details}\n`;
+      if (lernziel) s += `\nLernziel der Lehrerin:\n${lernziel}\n`;
+      if (s) s = '\n---\n' + s + '\nBitte berücksichtige diese Angaben bei der Erstellung des Materials.';
+      return s;
+    }
 
-  // Builds the optional tail appended to every prompt when extra fields are filled in
-  function optionalSection(details, lernziel) {
-    let s = '';
-    if (details)  s += `\nZusätzliche Anforderungen / Schwerpunkte:\n${details}\n`;
-    if (lernziel) s += `\nLernziel der Lehrerin:\n${lernziel}\n`;
-    if (s) s = '\n---\n' + s + '\nBitte berücksichtige diese Angaben bei der Erstellung des Materials.';
-    return s;
-  }
-
-  const MATERIAL_PROMPTS = {
-    lueckentext: (zielgruppe, thema, niveau, dauer, details = '', lernziel = '') => `
+    const MATERIAL_PROMPTS = {
+      lueckentext: (zielgruppe, thema, niveau, dauer, details = '', lernziel = '') => `
 Erstelle einen **Lückentext** auf Deutsch.
 
 Zielgruppe: ${zielgruppe}
@@ -1001,7 +1257,7 @@ Format:
 [Nummerierte Liste mit den fehlenden Wörtern in der richtigen Reihenfolge]
 ${optionalSection(details, lernziel)}`,
 
-    bildwoerter: (zielgruppe, thema, niveau, dauer, details = '', lernziel = '') => `
+      bildwoerter: (zielgruppe, thema, niveau, dauer, details = '', lernziel = '') => `
 Erstelle eine **Bildwörter-Zuordnung** auf Deutsch.
 
 Zielgruppe: ${zielgruppe}
@@ -1032,7 +1288,7 @@ Format:
 [nummerierte Liste aller Wörter]
 ${optionalSection(details, lernziel)}`,
 
-    dialog: (zielgruppe, thema, niveau, dauer, details = '', lernziel = '') => `
+      dialog: (zielgruppe, thema, niveau, dauer, details = '', lernziel = '') => `
 Erstelle einen **einfachen Dialog** auf Deutsch.
 
 Zielgruppe: ${zielgruppe}
@@ -1068,7 +1324,7 @@ Format:
 - "[Phrase]"
 ${optionalSection(details, lernziel)}`,
 
-    schreibuebung: (zielgruppe, thema, niveau, dauer, details = '', lernziel = '') => `
+      schreibuebung: (zielgruppe, thema, niveau, dauer, details = '', lernziel = '') => `
 Erstelle eine **Schreibübung** auf Deutsch.
 
 Zielgruppe: ${zielgruppe}
@@ -1110,7 +1366,7 @@ _______________________________________________
 [Wortliste]
 ${optionalSection(details, lernziel)}`,
 
-    wortschatz: (zielgruppe, thema, niveau, dauer, details = '', lernziel = '') => `
+      wortschatz: (zielgruppe, thema, niveau, dauer, details = '', lernziel = '') => `
 Erstelle eine **Wortschatz-Liste** auf Deutsch.
 
 Zielgruppe: ${zielgruppe}
@@ -1145,10 +1401,10 @@ Format:
 2. _________________
 3. _________________
 ${optionalSection(details, lernziel)}`,
-  };
+    };
 
-  /* ── System prompt ────────────────────────────────────────── */
-  const SYSTEM_PROMPT = `Du bist ein erfahrener DaZ-Didaktiker (Deutsch als Zweitsprache) spezialisiert auf Erwachsenenbildung.
+    /* ── System prompt ────────────────────────────────────────── */
+    const SYSTEM_PROMPT = `Du bist ein erfahrener DaZ-Didaktiker (Deutsch als Zweitsprache) spezialisiert auf Erwachsenenbildung.
 
 PFLICHTREGELN – immer einhalten:
 - Sprachniveau: exakt das angegebene Niveau einhalten (A1 / A1+ / A2 / B1 / B2)
@@ -1163,229 +1419,230 @@ PFLICHTREGELN – immer einhalten:
 - Sprache der Materialien: Deutsch. Anweisungen für Lernende auf dem angegebenen Niveau.
 - Umfang: an die angegebene Unterrichtsdauer anpassen`;
 
-  /* ── Generate ─────────────────────────────────────────────── */
-  async function generateMaterial(e) {
-    e.preventDefault();
+    /* ── Generate ─────────────────────────────────────────────── */
+    async function generateMaterial(e) {
+      e.preventDefault();
 
-    const zielgruppe = document.getElementById('target-group').value.trim() || 'Erwachsene mit geringen Deutschkenntnissen';
-    const thema      = document.getElementById('topic').value.trim();
-    const niveau     = document.querySelector('input[name="niveau"]:checked').value;
-    const typeVal    = document.querySelector('input[name="material-type"]:checked').value;
-    const dauer      = document.querySelector('input[name="duration"]:checked').value;
+      const zielgruppe = document.getElementById('target-group').value.trim() || 'Erwachsene mit geringen Deutschkenntnissen';
+      const thema = document.getElementById('topic').value.trim();
+      const niveau = document.querySelector('input[name="niveau"]:checked').value;
+      const typeVal = document.querySelector('input[name="material-type"]:checked').value;
+      const dauer = document.querySelector('input[name="duration"]:checked').value;
 
-    // Optional fields
-    const details    = document.getElementById('details').value.trim();
-    const goalChips  = [...document.querySelectorAll('#goal-chips input[type="checkbox"]:checked')]
-                         .map(cb => cb.value);
-    const goalCustom = document.getElementById('goal-custom').value.trim();
-    const lernzielParts = [...goalChips, ...(goalCustom ? [goalCustom] : [])];
-    const lernziel   = lernzielParts.join('; ');
+      // Optional fields
+      const details = document.getElementById('details').value.trim();
+      const goalChips = [...document.querySelectorAll('#goal-chips input[type="checkbox"]:checked')]
+        .map(cb => cb.value);
+      const goalCustom = document.getElementById('goal-custom').value.trim();
+      const lernzielParts = [...goalChips, ...(goalCustom ? [goalCustom] : [])];
+      const lernziel = lernzielParts.join('; ');
 
-    // Determine endpoint: Cloudflare Worker or direct Anthropic API
-    let fetchUrl, fetchHeaders;
-    if (WORKER_URL) {
-      fetchUrl    = WORKER_URL;
-      fetchHeaders = { 'Content-Type': 'application/json' };
-    } else {
-      const apiKey = (localStorage.getItem('anthropic_api_key') || apiKeyInput.value).trim();
-      if (!apiKey) { showError('Bitte geben Sie zuerst Ihren Anthropic API-Schlüssel ein und speichern Sie ihn.'); return; }
-      fetchUrl    = API_URL;
-      fetchHeaders = {
-        'Content-Type':            'application/json',
-        'x-api-key':               apiKey,
-        'anthropic-version':       '2023-06-01',
-        'anthropic-dangerous-direct-browser-access': 'true',
-      };
+      // Determine endpoint: Cloudflare Worker or direct Anthropic API
+      let fetchUrl, fetchHeaders;
+      if (WORKER_URL) {
+        fetchUrl = WORKER_URL;
+        fetchHeaders = { 'Content-Type': 'application/json' };
+      } else {
+        const apiKey = (localStorage.getItem('anthropic_api_key') || apiKeyInput.value).trim();
+        if (!apiKey) { showError('Bitte geben Sie zuerst Ihren Anthropic API-Schlüssel ein und speichern Sie ihn.'); return; }
+        fetchUrl = API_URL;
+        fetchHeaders = {
+          'Content-Type': 'application/json',
+          'x-api-key': apiKey,
+          'anthropic-version': '2023-06-01',
+          'anthropic-dangerous-direct-browser-access': 'true',
+        };
+      }
+
+      if (!thema) { showError('Bitte geben Sie ein Thema ein.'); return; }
+
+      hideError();
+      setLoading(true);
+
+      const userPrompt = MATERIAL_PROMPTS[typeVal](zielgruppe, thema, niveau, dauer, details, lernziel);
+
+      try {
+        const response = await fetch(fetchUrl, {
+          method: 'POST',
+          headers: fetchHeaders,
+          body: JSON.stringify({
+            model: MODEL,
+            max_tokens: 2048,
+            system: SYSTEM_PROMPT,
+            messages: [{ role: 'user', content: userPrompt }],
+          }),
+        });
+
+        if (!response.ok) {
+          const err = await response.json().catch(() => ({}));
+          const msg = err?.error?.message || `HTTP ${response.status}`;
+          if (response.status === 401) throw new Error('Ungültiger API-Schlüssel. Bitte überprüfen Sie Ihren Schlüssel.');
+          if (response.status === 429) throw new Error('Anfragelimit erreicht. Bitte warten Sie einen Moment und versuchen Sie es erneut.');
+          throw new Error(`API-Fehler: ${msg}`);
+        }
+
+        const data = await response.json();
+        const text = data?.content?.[0]?.text || '';
+
+        displayResult(text, MATERIAL_LABELS[typeVal], thema, niveau);
+
+      } catch (err) {
+        showError(err.message || 'Ein unbekannter Fehler ist aufgetreten.');
+      } finally {
+        setLoading(false);
+      }
     }
 
-    if (!thema)  { showError('Bitte geben Sie ein Thema ein.'); return; }
+    /* ── Display result ───────────────────────────────────────── */
+    function displayResult(markdown, typeLabel, thema, niveau) {
+      const output = document.getElementById('material-output');
+      output.innerHTML = renderMarkdown(markdown);
 
-    hideError();
-    setLoading(true);
+      document.getElementById('result-meta').textContent =
+        `${typeLabel} · ${thema} · ${niveau}`;
 
-    const userPrompt = MATERIAL_PROMPTS[typeVal](zielgruppe, thema, niveau, dauer, details, lernziel);
+      const card = document.getElementById('result-card');
+      card.style.display = 'block';
+      card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
 
-    try {
-      const response = await fetch(fetchUrl, {
-        method: 'POST',
-        headers: fetchHeaders,
-        body: JSON.stringify({
-          model: MODEL,
-          max_tokens: 2048,
-          system: SYSTEM_PROMPT,
-          messages: [{ role: 'user', content: userPrompt }],
-        }),
+    /* ── Minimal Markdown renderer ────────────────────────────── */
+    function renderMarkdown(md) {
+      // Writing lines: convert lines of underscores to styled elements (before escaping)
+      md = md.replace(/^_{5,}\s*$/gm, '%%WRITELINE%%');
+
+      // Escape HTML
+      let html = md
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+
+      // Restore writing lines as styled divs
+      html = html.replace(/%%WRITELINE%%/g, '<span class="write-line"></span>');
+
+      // Tables (GFM)
+      html = html.replace(
+        /(?:^\|.+\|\n)+/gm,
+        block => {
+          const rows = block.trim().split('\n');
+          let table = '<table>';
+          rows.forEach((row, i) => {
+            if (/^\|[-| :]+\|$/.test(row.trim())) return; // separator row
+            const cells = row.trim().replace(/^\||\|$/g, '').split('|');
+            const tag = (i === 0) ? 'th' : 'td';
+            table += '<tr>' + cells.map(c => `<${tag}>${c.trim()}</${tag}>`).join('') + '</tr>';
+          });
+          return table + '</table>';
+        }
+      );
+
+      // Headings
+      html = html.replace(/^### (.+)$/gm, '<h3>$1</h3>');
+      html = html.replace(/^## (.+)$/gm, '<h2>$1</h2>');
+      html = html.replace(/^# (.+)$/gm, '<h2>$1</h2>');
+
+      // Horizontal rule
+      html = html.replace(/^---+$/gm, '<hr>');
+
+      // Bold
+      html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+
+      // Italic
+      html = html.replace(/\*(.+?)\*/g, '<em>$1</em>');
+
+      // Unordered lists (handle blocks)
+      html = html.replace(/((?:^- .+\n?)+)/gm, block => {
+        const items = block.trim().split('\n').map(l => `<li>${l.replace(/^- /, '').trim()}</li>`).join('');
+        return `<ul>${items}</ul>`;
       });
 
-      if (!response.ok) {
-        const err = await response.json().catch(() => ({}));
-        const msg = err?.error?.message || `HTTP ${response.status}`;
-        if (response.status === 401) throw new Error('Ungültiger API-Schlüssel. Bitte überprüfen Sie Ihren Schlüssel.');
-        if (response.status === 429) throw new Error('Anfragelimit erreicht. Bitte warten Sie einen Moment und versuchen Sie es erneut.');
-        throw new Error(`API-Fehler: ${msg}`);
-      }
+      // Ordered lists
+      html = html.replace(/((?:^\d+\. .+\n?)+)/gm, block => {
+        const items = block.trim().split('\n').map(l => `<li>${l.replace(/^\d+\. /, '').trim()}</li>`).join('');
+        return `<ol>${items}</ol>`;
+      });
 
-      const data = await response.json();
-      const text = data?.content?.[0]?.text || '';
+      // Paragraphs (lines not already wrapped)
+      html = html.replace(/^(?!<[htuo]).+$/gm, line => {
+        if (line.trim() === '') return '';
+        return `<p>${line}</p>`;
+      });
 
-      displayResult(text, MATERIAL_LABELS[typeVal], thema, niveau);
+      // Line breaks between block elements
+      html = html.replace(/\n{2,}/g, '\n');
 
-    } catch (err) {
-      showError(err.message || 'Ein unbekannter Fehler ist aufgetreten.');
-    } finally {
-      setLoading(false);
+      return html;
     }
-  }
 
-  /* ── Display result ───────────────────────────────────────── */
-  function displayResult(markdown, typeLabel, thema, niveau) {
-    const output = document.getElementById('material-output');
-    output.innerHTML = renderMarkdown(markdown);
+    /* ── Copy to clipboard ────────────────────────────────────── */
+    function copyMaterial() {
+      const output = document.getElementById('material-output');
+      const text = output.innerText;
 
-    document.getElementById('result-meta').textContent =
-      `${typeLabel} · ${thema} · ${niveau}`;
-
-    const card = document.getElementById('result-card');
-    card.style.display = 'block';
-    card.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-
-  /* ── Minimal Markdown renderer ────────────────────────────── */
-  function renderMarkdown(md) {
-    // Writing lines: convert lines of underscores to styled elements (before escaping)
-    md = md.replace(/^_{5,}\s*$/gm, '%%WRITELINE%%');
-
-    // Escape HTML
-    let html = md
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;');
-
-    // Restore writing lines as styled divs
-    html = html.replace(/%%WRITELINE%%/g, '<span class="write-line"></span>');
-
-    // Tables (GFM)
-    html = html.replace(
-      /(?:^\|.+\|\n)+/gm,
-      block => {
-        const rows = block.trim().split('\n');
-        let table = '<table>';
-        rows.forEach((row, i) => {
-          if (/^\|[-| :]+\|$/.test(row.trim())) return; // separator row
-          const cells = row.trim().replace(/^\||\|$/g, '').split('|');
-          const tag = (i === 0) ? 'th' : 'td';
-          table += '<tr>' + cells.map(c => `<${tag}>${c.trim()}</${tag}>`).join('') + '</tr>';
-        });
-        return table + '</table>';
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(text).then(() => flashCopyBtn()).catch(fallbackCopy.bind(null, text));
+      } else {
+        fallbackCopy(text);
       }
-    );
-
-    // Headings
-    html = html.replace(/^### (.+)$/gm, '<h3>$1</h3>');
-    html = html.replace(/^## (.+)$/gm,  '<h2>$1</h2>');
-    html = html.replace(/^# (.+)$/gm,   '<h2>$1</h2>');
-
-    // Horizontal rule
-    html = html.replace(/^---+$/gm, '<hr>');
-
-    // Bold
-    html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-
-    // Italic
-    html = html.replace(/\*(.+?)\*/g, '<em>$1</em>');
-
-    // Unordered lists (handle blocks)
-    html = html.replace(/((?:^- .+\n?)+)/gm, block => {
-      const items = block.trim().split('\n').map(l => `<li>${l.replace(/^- /, '').trim()}</li>`).join('');
-      return `<ul>${items}</ul>`;
-    });
-
-    // Ordered lists
-    html = html.replace(/((?:^\d+\. .+\n?)+)/gm, block => {
-      const items = block.trim().split('\n').map(l => `<li>${l.replace(/^\d+\. /, '').trim()}</li>`).join('');
-      return `<ol>${items}</ol>`;
-    });
-
-    // Paragraphs (lines not already wrapped)
-    html = html.replace(/^(?!<[htuo]).+$/gm, line => {
-      if (line.trim() === '') return '';
-      return `<p>${line}</p>`;
-    });
-
-    // Line breaks between block elements
-    html = html.replace(/\n{2,}/g, '\n');
-
-    return html;
-  }
-
-  /* ── Copy to clipboard ────────────────────────────────────── */
-  function copyMaterial() {
-    const output = document.getElementById('material-output');
-    const text   = output.innerText;
-
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(text).then(() => flashCopyBtn()).catch(fallbackCopy.bind(null, text));
-    } else {
-      fallbackCopy(text);
     }
-  }
 
-  function fallbackCopy(text) {
-    const ta = document.createElement('textarea');
-    ta.value = text;
-    ta.style.position = 'fixed';
-    ta.style.opacity = '0';
-    document.body.appendChild(ta);
-    ta.select();
-    document.execCommand('copy');
-    document.body.removeChild(ta);
-    flashCopyBtn();
-  }
+    function fallbackCopy(text) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      flashCopyBtn();
+    }
 
-  function flashCopyBtn() {
-    const btn = document.querySelector('.result-toolbar .btn-secondary');
-    if (!btn) return;
-    const orig = btn.innerHTML;
-    btn.innerHTML = '&#10003; Kopiert!';
-    btn.style.background = '#dcfce7';
-    btn.style.color = '#16a34a';
-    setTimeout(() => { btn.innerHTML = orig; btn.style.background = ''; btn.style.color = ''; }, 1800);
-  }
+    function flashCopyBtn() {
+      const btn = document.querySelector('.result-toolbar .btn-secondary');
+      if (!btn) return;
+      const orig = btn.innerHTML;
+      btn.innerHTML = '&#10003; Kopiert!';
+      btn.style.background = '#dcfce7';
+      btn.style.color = '#16a34a';
+      setTimeout(() => { btn.innerHTML = orig; btn.style.background = ''; btn.style.color = ''; }, 1800);
+    }
 
-  /* ── Reset ────────────────────────────────────────────────── */
-  function resetForm() {
-    document.getElementById('result-card').style.display = 'none';
-    document.getElementById('topic').value = '';
-    document.getElementById('target-group').value = '';
-    document.getElementById('details').value = '';
-    document.getElementById('goal-custom').value = '';
-    document.querySelectorAll('#goal-chips input[type="checkbox"]').forEach(cb => cb.checked = false);
-    document.querySelectorAll('.preset-chip').forEach(b => b.classList.remove('active'));
-    document.querySelector('input[name="niveau"][value="A1"]').checked = true;
-    document.querySelector('input[name="duration"][value="90 Minuten (Doppelstunde)"]').checked = true;
-    document.querySelector('input[name="material-type"][value="lueckentext"]').checked = true;
-    document.getElementById('topic').focus();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
+    /* ── Reset ────────────────────────────────────────────────── */
+    function resetForm() {
+      document.getElementById('result-card').style.display = 'none';
+      document.getElementById('topic').value = '';
+      document.getElementById('target-group').value = '';
+      document.getElementById('details').value = '';
+      document.getElementById('goal-custom').value = '';
+      document.querySelectorAll('#goal-chips input[type="checkbox"]').forEach(cb => cb.checked = false);
+      document.querySelectorAll('.preset-chip').forEach(b => b.classList.remove('active'));
+      document.querySelector('input[name="niveau"][value="A1"]').checked = true;
+      document.querySelector('input[name="duration"][value="90 Minuten (Doppelstunde)"]').checked = true;
+      document.querySelector('input[name="material-type"][value="lueckentext"]').checked = true;
+      document.getElementById('topic').focus();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 
-  /* ── UI helpers ───────────────────────────────────────────── */
-  function setLoading(on) {
-    const btn = document.getElementById('generate-btn');
-    btn.disabled = on;
-    btn.classList.toggle('loading', on);
-  }
+    /* ── UI helpers ───────────────────────────────────────────── */
+    function setLoading(on) {
+      const btn = document.getElementById('generate-btn');
+      btn.disabled = on;
+      btn.classList.toggle('loading', on);
+    }
 
-  function showError(msg) {
-    const box = document.getElementById('error-box');
-    box.textContent = '⚠ ' + msg;
-    box.classList.add('visible');
-    box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  }
+    function showError(msg) {
+      const box = document.getElementById('error-box');
+      box.textContent = '⚠ ' + msg;
+      box.classList.add('visible');
+      box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
 
-  function hideError() {
-    document.getElementById('error-box').classList.remove('visible');
-  }
-</script>
+    function hideError() {
+      document.getElementById('error-box').classList.remove('visible');
+    }
+  </script>
 
 </body>
+
 </html>
