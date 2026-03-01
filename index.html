@@ -5,6 +5,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DeutschKurs – Materialgenerator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;800&display=swap" rel="stylesheet" />
   <style>
     /* ── Reset & Base ─────────────────────────────────────────── */
     *,
@@ -16,60 +19,82 @@
     }
 
     :root {
-      --primary: #2563eb;
-      --primary-h: #1d4ed8;
-      --accent: #0ea5e9;
-      --success: #16a34a;
-      --danger: #dc2626;
-      --bg: #f0f4f8;
+      --primary: #1a56db;
+      --primary-h: #1444b0;
+      --primary-light: #dbeafe;
+      --accent: #0284c7;
+      --success: #15803d;
+      --danger: #b91c1c;
+      --bg: #f1f5f9;
       --surface: #ffffff;
-      --border: #d1d5db;
+      --border: #cbd5e1;
       --text: #1e293b;
-      --muted: #64748b;
-      --radius: 10px;
-      --shadow: 0 2px 12px rgba(0, 0, 0, .08);
+      --muted: #475569;
+      --radius: 14px;
+      --shadow: 0 2px 16px rgba(0, 0, 0, .07);
+      --shadow-lg: 0 8px 32px rgba(0, 0, 0, .1);
+    }
+
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
-      font-family: 'Segoe UI', Arial, sans-serif;
-      font-size: 16px;
-      line-height: 1.6;
+      font-family: 'Source Sans 3', 'Segoe UI', Arial, sans-serif;
+      font-size: 17px;
+      line-height: 1.65;
       background: var(--bg);
       color: var(--text);
       min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
     }
 
     /* ── Header ───────────────────────────────────────────────── */
     header {
-      background: var(--primary);
+      background: linear-gradient(135deg, #1e40af 0%, #1a56db 60%, #2563eb 100%);
       color: #fff;
-      padding: 1.25rem 2rem;
+      padding: 1.5rem 2rem;
       display: flex;
       align-items: center;
       gap: 1rem;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, .18);
+      box-shadow: 0 4px 20px rgba(30, 64, 175, .3);
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
 
-    header svg {
+    header .logo {
+      width: 44px;
+      height: 44px;
+      background: rgba(255,255,255,.18);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: 800;
       flex-shrink: 0;
+      font-family: 'Georgia', serif;
+      letter-spacing: -1px;
     }
 
     header h1 {
-      font-size: 1.4rem;
-      font-weight: 700;
+      font-size: 1.45rem;
+      font-weight: 800;
       letter-spacing: -.5px;
     }
 
     header p {
-      font-size: .85rem;
+      font-size: .92rem;
       opacity: .85;
+      font-weight: 400;
     }
 
     /* ── Layout ───────────────────────────────────────────────── */
     main {
-      max-width: 860px;
-      margin: 2rem auto;
-      padding: 0 1rem 4rem;
+      max-width: 880px;
+      margin: 1.75rem auto;
+      padding: 0 1.25rem 5rem;
       display: flex;
       flex-direction: column;
       gap: 1.5rem;
@@ -80,33 +105,38 @@
       background: var(--surface);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
-      padding: 1.5rem 1.75rem;
+      padding: 1.75rem 2rem;
+      border: 1px solid rgba(0,0,0,.04);
     }
 
     .card-title {
-      font-size: 1rem;
+      font-size: 1.05rem;
       font-weight: 700;
       color: var(--primary);
-      margin-bottom: 1rem;
+      margin-bottom: 1.2rem;
       display: flex;
       align-items: center;
-      gap: .5rem;
+      gap: .6rem;
+    }
+
+    .card-title svg {
+      flex-shrink: 0;
     }
 
     /* ── Form Elements ────────────────────────────────────────── */
     label {
       display: block;
-      font-weight: 600;
-      font-size: .9rem;
-      margin-bottom: .35rem;
+      font-weight: 700;
+      font-size: .95rem;
+      margin-bottom: .4rem;
       color: var(--text);
     }
 
     label .hint {
       font-weight: 400;
       color: var(--muted);
-      font-size: .8rem;
-      margin-left: .4rem;
+      font-size: .82rem;
+      margin-left: .35rem;
     }
 
     input[type="text"],
@@ -114,22 +144,23 @@
     textarea,
     select {
       width: 100%;
-      padding: .65rem .85rem;
-      border: 1.5px solid var(--border);
-      border-radius: 7px;
-      font-size: .95rem;
+      padding: .8rem 1rem;
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      font-size: 1rem;
       font-family: inherit;
       color: var(--text);
-      background: #fafafa;
-      transition: border-color .2s, box-shadow .2s;
+      background: #fafbfc;
+      transition: border-color .2s, box-shadow .2s, background .2s;
       outline: none;
+      min-height: 50px;
     }
 
     input:focus,
     textarea:focus,
     select:focus {
       border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(37, 99, 235, .15);
+      box-shadow: 0 0 0 4px rgba(26, 86, 219, .12);
       background: #fff;
     }
 
@@ -138,21 +169,10 @@
       min-height: 90px;
     }
 
-    .form-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem 1.5rem;
-    }
-
-    @media (max-width: 600px) {
-      .form-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
     .form-group {
       display: flex;
       flex-direction: column;
+      margin-bottom: .85rem;
     }
 
     /* ── API Key row ──────────────────────────────────────────── */
@@ -168,15 +188,16 @@
 
     .api-row button {
       white-space: nowrap;
-      padding: .65rem 1rem;
-      font-size: .85rem;
+      padding: .8rem 1.2rem;
+      font-size: .9rem;
     }
 
     .api-saved {
-      font-size: .8rem;
+      font-size: .85rem;
       color: var(--success);
-      margin-top: .3rem;
+      margin-top: .35rem;
       display: none;
+      font-weight: 600;
     }
 
     .api-saved.visible {
@@ -186,9 +207,9 @@
     /* ── Material Type Cards ──────────────────────────────────── */
     .type-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
       gap: .75rem;
-      margin-top: .25rem;
+      margin-top: .3rem;
     }
 
     .type-option {
@@ -207,39 +228,55 @@
       flex-direction: column;
       align-items: center;
       text-align: center;
-      gap: .35rem;
-      padding: .85rem .5rem;
-      border: 2px solid var(--border);
-      border-radius: 9px;
+      gap: .4rem;
+      padding: 1rem .7rem;
+      border: 2.5px solid var(--border);
+      border-radius: 12px;
       cursor: pointer;
-      font-weight: 600;
-      font-size: .82rem;
-      transition: border-color .2s, background .2s, color .2s;
+      font-weight: 700;
+      font-size: .88rem;
+      transition: all .2s ease;
       line-height: 1.3;
-      background: #fafafa;
+      background: #fafbfc;
+      min-height: 110px;
+      justify-content: center;
     }
 
     .type-option label .icon {
-      font-size: 1.6rem;
+      font-size: 1.8rem;
     }
 
-    .type-option input[type="radio"]:checked+label {
+    .type-option input[type="radio"]:checked + label {
       border-color: var(--primary);
-      background: #eff6ff;
+      background: var(--primary-light);
       color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(26, 86, 219, .1);
     }
 
     .type-option label:hover {
       border-color: var(--accent);
       background: #f0f9ff;
+      transform: translateY(-1px);
+    }
+
+    .type-desc {
+      font-size: .72rem;
+      font-weight: 400;
+      color: var(--muted);
+      line-height: 1.3;
+      margin-top: .15rem;
+    }
+
+    .type-option input[type="radio"]:checked + label .type-desc {
+      color: #3b82f6;
     }
 
     /* ── Goal Chips (multi-select) ────────────────────────────── */
     .goal-chips {
       display: flex;
       flex-wrap: wrap;
-      gap: .5rem;
-      margin-top: .25rem;
+      gap: .55rem;
+      margin-top: .3rem;
     }
 
     .goal-chip {
@@ -256,25 +293,26 @@
     .goal-chip label {
       display: inline-flex;
       align-items: center;
-      gap: .3rem;
-      padding: .38rem .85rem;
-      border: 1.5px solid var(--border);
-      border-radius: 20px;
+      gap: .35rem;
+      padding: .5rem 1rem;
+      border: 2px solid var(--border);
+      border-radius: 24px;
       cursor: pointer;
-      font-size: .82rem;
+      font-size: .88rem;
       font-weight: 500;
-      background: #fafafa;
+      background: #fafbfc;
       color: var(--text);
-      transition: border-color .2s, background .2s, color .2s;
+      transition: all .2s ease;
       white-space: nowrap;
       margin-bottom: 0;
+      min-height: 42px;
     }
 
-    .goal-chip input[type="checkbox"]:checked+label {
+    .goal-chip input[type="checkbox"]:checked + label {
       border-color: var(--primary);
-      background: #eff6ff;
+      background: var(--primary-light);
       color: var(--primary);
-      font-weight: 600;
+      font-weight: 700;
     }
 
     .goal-chip label:hover {
@@ -282,41 +320,41 @@
       background: #f0f9ff;
     }
 
-    /* ── Optional section divider ─────────────────────────────── */
+    /* ── Section divider ──────────────────────────────────────── */
     .section-divider {
       border: none;
-      border-top: 1.5px dashed var(--border);
-      margin: 1.4rem 0 1.1rem;
+      border-top: 2px dashed #e2e8f0;
+      margin: 1.5rem 0 1.2rem;
     }
 
     .section-label {
-      font-size: .78rem;
-      font-weight: 700;
+      font-size: .82rem;
+      font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: .06em;
+      letter-spacing: .08em;
       color: var(--muted);
-      margin-bottom: .85rem;
+      margin-bottom: .9rem;
     }
 
     /* ── Form Steps ───────────────────────────────────────────── */
     .form-step {
       display: flex;
       align-items: center;
-      gap: .65rem;
-      font-size: 1rem;
-      font-weight: 700;
+      gap: .75rem;
+      font-size: 1.1rem;
+      font-weight: 800;
       color: var(--text);
-      margin-bottom: 1rem;
+      margin-bottom: 1.1rem;
     }
 
     .step-num {
-      width: 26px;
-      height: 26px;
+      width: 34px;
+      height: 34px;
       border-radius: 50%;
       background: var(--primary);
       color: #fff;
-      font-size: .8rem;
-      font-weight: 700;
+      font-size: .95rem;
+      font-weight: 800;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -325,45 +363,48 @@
 
     .step-divider {
       border: none;
-      border-top: 1.5px solid #e2e8f0;
-      margin: 1.5rem 0 1.25rem;
+      border-top: 2px solid #e2e8f0;
+      margin: 1.75rem 0 1.5rem;
     }
 
     /* ── Group preset chips ───────────────────────────────────── */
     .preset-chips {
       display: flex;
       flex-wrap: wrap;
-      gap: .4rem;
-      margin-bottom: .55rem;
+      gap: .45rem;
+      margin-bottom: .6rem;
     }
 
     .preset-chip {
-      padding: .28rem .8rem;
-      border: 1.5px solid var(--border);
-      border-radius: 14px;
-      background: #f0f4f8;
-      font-size: .78rem;
+      padding: .4rem .9rem;
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      background: #f1f5f9;
+      font-size: .85rem;
       cursor: pointer;
       color: var(--muted);
-      font-weight: 500;
+      font-weight: 600;
       font-family: inherit;
-      transition: background .15s, color .15s, border-color .15s;
+      transition: all .15s ease;
+      min-height: 40px;
+      display: inline-flex;
+      align-items: center;
     }
 
     .preset-chip:hover,
     .preset-chip.active {
-      background: #eff6ff;
+      background: var(--primary-light);
       border-color: var(--primary);
       color: var(--primary);
-      font-weight: 600;
+      font-weight: 700;
     }
 
     /* ── Level chips ──────────────────────────────────────────── */
     .level-chips {
       display: flex;
       flex-wrap: wrap;
-      gap: .5rem;
-      margin-top: .25rem;
+      gap: .55rem;
+      margin-top: .3rem;
     }
 
     .level-chip {
@@ -381,24 +422,27 @@
       display: inline-flex;
       flex-direction: column;
       align-items: center;
-      padding: .55rem 1.1rem;
-      border: 1.5px solid var(--border);
-      border-radius: 10px;
+      padding: .7rem 1.2rem;
+      border: 2.5px solid var(--border);
+      border-radius: 12px;
       cursor: pointer;
-      font-size: .95rem;
-      font-weight: 700;
-      background: #fafafa;
+      font-size: 1.05rem;
+      font-weight: 800;
+      background: #fafbfc;
       color: var(--text);
-      transition: border-color .2s, background .2s, color .2s;
-      min-width: 66px;
+      transition: all .2s ease;
+      min-width: 72px;
       text-align: center;
       margin-bottom: 0;
+      min-height: 60px;
+      justify-content: center;
     }
 
-    .level-chip input[type="radio"]:checked+label {
+    .level-chip input[type="radio"]:checked + label {
       border-color: var(--primary);
-      background: #eff6ff;
+      background: var(--primary-light);
       color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(26, 86, 219, .1);
     }
 
     .level-chip label:hover {
@@ -406,12 +450,24 @@
       background: #f0f9ff;
     }
 
+    .sub-lbl {
+      font-size: .7rem;
+      font-weight: 500;
+      color: var(--muted);
+      margin-top: .15rem;
+    }
+
+    .level-chip input[type="radio"]:checked + label .sub-lbl,
+    .dur-chip input[type="radio"]:checked + label .sub-lbl {
+      color: #60a5fa;
+    }
+
     /* ── Duration chips ───────────────────────────────────────── */
     .dur-chips {
       display: flex;
       flex-wrap: wrap;
-      gap: .5rem;
-      margin-top: .25rem;
+      gap: .55rem;
+      margin-top: .3rem;
     }
 
     .dur-chip {
@@ -429,55 +485,32 @@
       display: inline-flex;
       flex-direction: column;
       align-items: center;
-      padding: .55rem 1rem;
-      border: 1.5px solid var(--border);
-      border-radius: 10px;
+      padding: .7rem 1.1rem;
+      border: 2.5px solid var(--border);
+      border-radius: 12px;
       cursor: pointer;
-      font-size: .88rem;
-      font-weight: 600;
-      background: #fafafa;
+      font-size: .95rem;
+      font-weight: 700;
+      background: #fafbfc;
       color: var(--text);
-      transition: border-color .2s, background .2s, color .2s;
-      min-width: 88px;
+      transition: all .2s ease;
+      min-width: 95px;
       text-align: center;
       margin-bottom: 0;
+      min-height: 60px;
+      justify-content: center;
     }
 
-    .dur-chip input[type="radio"]:checked+label {
+    .dur-chip input[type="radio"]:checked + label {
       border-color: var(--primary);
-      background: #eff6ff;
+      background: var(--primary-light);
       color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(26, 86, 219, .1);
     }
 
     .dur-chip label:hover {
       border-color: var(--accent);
       background: #f0f9ff;
-    }
-
-    /* ── Sub label (for level & duration chips) ───────────────── */
-    .sub-lbl {
-      font-size: .66rem;
-      font-weight: 400;
-      color: var(--muted);
-      margin-top: .1rem;
-    }
-
-    .level-chip input[type="radio"]:checked+label .sub-lbl,
-    .dur-chip input[type="radio"]:checked+label .sub-lbl {
-      color: #93c5fd;
-    }
-
-    /* ── Material type description ────────────────────────────── */
-    .type-desc {
-      font-size: .7rem;
-      font-weight: 400;
-      color: var(--muted);
-      line-height: 1.3;
-      margin-top: .1rem;
-    }
-
-    .type-option input[type="radio"]:checked+label .type-desc {
-      color: #93c5fd;
     }
 
     /* ── Writing lines in output ──────────────────────────────── */
@@ -492,16 +525,18 @@
     .btn {
       display: inline-flex;
       align-items: center;
-      gap: .45rem;
-      padding: .7rem 1.4rem;
+      justify-content: center;
+      gap: .5rem;
+      padding: .85rem 1.5rem;
       border: none;
-      border-radius: 7px;
-      font-size: .95rem;
-      font-weight: 600;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 700;
       cursor: pointer;
-      transition: background .2s, transform .1s, opacity .2s;
+      transition: all .2s ease;
       font-family: inherit;
       text-decoration: none;
+      min-height: 50px;
     }
 
     .btn:active {
@@ -515,6 +550,7 @@
 
     .btn-primary:hover:not(:disabled) {
       background: var(--primary-h);
+      box-shadow: 0 4px 14px rgba(26, 86, 219, .35);
     }
 
     .btn-secondary {
@@ -532,30 +568,32 @@
     }
 
     .btn-success:hover:not(:disabled) {
-      background: #15803d;
+      background: #166534;
     }
 
     .btn:disabled {
-      opacity: .55;
+      opacity: .5;
       cursor: not-allowed;
     }
 
     .btn-lg {
-      padding: .9rem 2rem;
-      font-size: 1.05rem;
+      padding: 1rem 2.5rem;
+      font-size: 1.15rem;
+      min-height: 58px;
+      border-radius: 12px;
     }
 
     .generate-row {
       display: flex;
       justify-content: center;
-      margin-top: .5rem;
+      margin-top: .75rem;
     }
 
-    /* ── Spinner ──────────────────────────────────────────────── */
+    /* ── Spinner & Progress ───────────────────────────────────── */
     .spinner {
-      width: 20px;
-      height: 20px;
-      border: 3px solid rgba(255, 255, 255, .4);
+      width: 22px;
+      height: 22px;
+      border: 3px solid rgba(255, 255, 255, .35);
       border-top-color: #fff;
       border-radius: 50%;
       animation: spin .7s linear infinite;
@@ -571,90 +609,116 @@
     }
 
     @keyframes spin {
-      to {
-        transform: rotate(360deg);
-      }
+      to { transform: rotate(360deg); }
+    }
+
+    .progress-bar-container {
+      display: none;
+      margin-top: 1rem;
+      background: #e2e8f0;
+      border-radius: 8px;
+      height: 8px;
+      overflow: hidden;
+    }
+
+    .progress-bar-container.visible {
+      display: block;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      border-radius: 8px;
+      width: 0%;
+      transition: width .4s ease;
+      animation: progress-pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes progress-pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: .7; }
+    }
+
+    .loading-message {
+      display: none;
+      text-align: center;
+      font-size: .9rem;
+      color: var(--muted);
+      margin-top: .6rem;
+      font-weight: 500;
+    }
+
+    .loading-message.visible {
+      display: block;
     }
 
     /* ── Result Section ───────────────────────────────────────── */
-    #result-section {
+    #result-card {
       display: none;
-    }
-
-    #result-section.visible {
-      display: block;
     }
 
     .result-toolbar {
       display: flex;
-      gap: .6rem;
+      gap: .65rem;
       flex-wrap: wrap;
-      margin-bottom: 1rem;
+      margin-bottom: 1.2rem;
     }
 
     #material-output {
-      border: 1.5px solid var(--border);
-      border-radius: 8px;
-      padding: 1.5rem;
-      font-size: .95rem;
-      line-height: 1.75;
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      padding: 1.75rem;
+      font-size: 1rem;
+      line-height: 1.8;
       min-height: 200px;
       background: #fdfdfd;
       white-space: pre-wrap;
-      font-family: 'Segoe UI', Arial, sans-serif;
+      font-family: 'Source Sans 3', 'Segoe UI', Arial, sans-serif;
     }
 
-    /* Formatted output elements */
     #material-output h2 {
-      font-size: 1.1rem;
+      font-size: 1.15rem;
       color: var(--primary);
-      margin: 1rem 0 .4rem;
-      padding-bottom: .2rem;
-      border-bottom: 2px solid #e0eaff;
+      margin: 1.1rem 0 .45rem;
+      padding-bottom: .25rem;
+      border-bottom: 2.5px solid #dbeafe;
     }
 
     #material-output h3 {
-      font-size: 1rem;
+      font-size: 1.05rem;
       color: #374151;
-      margin: .8rem 0 .25rem;
+      margin: .85rem 0 .3rem;
     }
 
-    #material-output p {
-      margin: .4rem 0;
-    }
+    #material-output p { margin: .45rem 0; }
 
     #material-output ul,
     #material-output ol {
-      padding-left: 1.4rem;
-      margin: .4rem 0;
+      padding-left: 1.5rem;
+      margin: .45rem 0;
     }
 
-    #material-output li {
-      margin: .25rem 0;
-    }
-
-    #material-output strong {
-      color: #1e3a8a;
-    }
+    #material-output li { margin: .3rem 0; }
+    #material-output strong { color: #1e3a8a; }
 
     #material-output .word-bank {
       background: #f0f9ff;
-      border: 1px solid #bae6fd;
-      border-radius: 6px;
-      padding: .6rem 1rem;
-      margin: .75rem 0;
+      border: 1.5px solid #bae6fd;
+      border-radius: 8px;
+      padding: .7rem 1.1rem;
+      margin: .8rem 0;
     }
 
     #material-output table {
       border-collapse: collapse;
       width: 100%;
-      margin: .75rem 0;
+      margin: .8rem 0;
     }
 
     #material-output th,
     #material-output td {
-      border: 1px solid var(--border);
-      padding: .45rem .75rem;
+      border: 1.5px solid var(--border);
+      padding: .55rem .85rem;
       text-align: left;
     }
 
@@ -665,18 +729,19 @@
 
     #material-output hr {
       border: none;
-      border-top: 1.5px solid #e2e8f0;
-      margin: 1rem 0;
+      border-top: 2px solid #e2e8f0;
+      margin: 1.1rem 0;
     }
 
     /* ── Error ────────────────────────────────────────────────── */
     .error-box {
       background: #fef2f2;
-      border: 1.5px solid #fca5a5;
-      border-radius: 8px;
-      padding: 1rem 1.25rem;
+      border: 2px solid #fca5a5;
+      border-radius: 10px;
+      padding: 1.1rem 1.4rem;
       color: var(--danger);
-      font-size: .9rem;
+      font-size: .95rem;
+      font-weight: 600;
       display: none;
     }
 
@@ -684,17 +749,125 @@
       display: block;
     }
 
+    /* ── Help Tooltip ─────────────────────────────────────────── */
+    .help-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #e2e8f0;
+      color: var(--muted);
+      font-size: .75rem;
+      font-weight: 800;
+      cursor: help;
+      margin-left: .4rem;
+      position: relative;
+      vertical-align: middle;
+      transition: background .15s;
+      flex-shrink: 0;
+    }
+
+    .help-icon:hover {
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+
+    .help-icon .tooltip {
+      display: none;
+      position: absolute;
+      bottom: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: #1e293b;
+      color: #fff;
+      font-size: .82rem;
+      font-weight: 400;
+      padding: .65rem .9rem;
+      border-radius: 8px;
+      white-space: normal;
+      width: 240px;
+      line-height: 1.4;
+      z-index: 50;
+      box-shadow: 0 4px 16px rgba(0,0,0,.2);
+    }
+
+    .help-icon .tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 6px solid transparent;
+      border-top-color: #1e293b;
+    }
+
+    .help-icon:hover .tooltip,
+    .help-icon:focus .tooltip {
+      display: block;
+    }
+
+    /* ── Back to top ──────────────────────────────────────────── */
+    .back-to-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      font-size: 1.3rem;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 16px rgba(26, 86, 219, .35);
+      z-index: 90;
+      transition: opacity .2s, transform .2s;
+    }
+
+    .back-to-top:hover {
+      transform: translateY(-2px);
+    }
+
+    .back-to-top.visible {
+      display: flex;
+    }
+
     /* ── Footer ───────────────────────────────────────────────── */
     footer {
       text-align: center;
       color: var(--muted);
-      font-size: .8rem;
-      padding: 1rem;
+      font-size: .82rem;
+      padding: 1.2rem;
     }
 
-    /* ══════════════════════════════════════════════════════════
-       PRINT STYLES – A4 optimiert
-    ══════════════════════════════════════════════════════════ */
+    /* ── Mobile ───────────────────────────────────────────────── */
+    @media (max-width: 600px) {
+      header {
+        padding: 1.1rem 1rem;
+      }
+      header h1 {
+        font-size: 1.2rem;
+      }
+      main {
+        padding: 0 .75rem 4rem;
+      }
+      .card {
+        padding: 1.25rem 1.1rem;
+      }
+      .type-grid {
+        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      }
+      .btn-lg {
+        width: 100%;
+      }
+    }
+
+    /* ══ PRINT STYLES – A4 ═════════════════════════════════════ */
     @media print {
       @page {
         size: A4 portrait;
@@ -714,7 +887,10 @@
       .card:not(#result-card),
       .result-toolbar,
       #error-box,
-      .api-saved {
+      .api-saved,
+      .back-to-top,
+      .progress-bar-container,
+      .loading-message {
         display: none !important;
       }
 
@@ -722,6 +898,7 @@
         box-shadow: none;
         padding: 0;
         border: none;
+        display: block !important;
       }
 
       .card-title {
@@ -752,13 +929,8 @@
         page-break-after: avoid;
       }
 
-      #material-output p {
-        margin: 3pt 0;
-      }
-
-      #material-output strong {
-        color: #000;
-      }
+      #material-output p { margin: 3pt 0; }
+      #material-output strong { color: #000; }
 
       #material-output hr {
         border: none;
@@ -773,9 +945,7 @@
         page-break-inside: avoid;
       }
 
-      #material-output li {
-        margin: 2pt 0;
-      }
+      #material-output li { margin: 2pt 0; }
 
       #material-output table {
         width: 100%;
@@ -814,108 +984,90 @@
 
 <body>
 
-  <!-- ── Header ─────────────────────────────────────────────────── -->
+  <!-- ── Header ─────────────────────────────────────────────── -->
   <header>
-    <svg width="36" height="36" viewBox="0 0 36 36" fill="none" aria-hidden="true">
-      <rect width="36" height="36" rx="8" fill="rgba(255,255,255,.2)" />
-      <text x="18" y="26" text-anchor="middle" font-size="20" font-family="serif" fill="#fff">A</text>
-    </svg>
+    <div class="logo">A</div>
     <div>
       <h1>DeutschKurs – Materialgenerator</h1>
-      <p>Lernmaterialien für gering literalisierte Erwachsene automatisch erstellen</p>
+      <p>Lernmaterialien automatisch erstellen und ausdrucken</p>
     </div>
   </header>
 
-  <!-- ── Main ───────────────────────────────────────────────────── -->
+  <!-- ── Main ───────────────────────────────────────────────── -->
   <main>
 
     <!-- API Key Card -->
-    <div class="card">
+    <div class="card" id="api-card">
       <div class="card-title">
-        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
-          aria-hidden="true">
-          <path stroke-linecap="round" stroke-linejoin="round"
-            d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z" />
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z" />
         </svg>
-        Anthropic API-Schlüssel
+        API-Schlüssel
       </div>
       <div class="form-group">
         <label for="api-key">
-          API-Schlüssel
-          <span class="hint">(wird nur lokal im Browser gespeichert)</span>
+          Anthropic API-Schlüssel
+          <span class="hint">(bleibt nur auf diesem Gerät)</span>
         </label>
         <div class="api-row">
           <input type="password" id="api-key" placeholder="sk-ant-..." autocomplete="off" spellcheck="false" />
           <button class="btn btn-secondary" onclick="saveApiKey()">Speichern</button>
         </div>
-        <span class="api-saved" id="api-saved-msg">&#10003; Schlüssel gespeichert</span>
+        <span class="api-saved" id="api-saved-msg">&#10003; Gespeichert</span>
       </div>
     </div>
 
     <!-- Generator Form Card -->
     <div class="card">
       <div class="card-title">
-        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
-          aria-hidden="true">
-          <path stroke-linecap="round" stroke-linejoin="round"
-            d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z" />
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z" />
         </svg>
-        Material erstellen
+        Neues Material erstellen
       </div>
 
       <form id="generator-form" onsubmit="generateMaterial(event)">
 
-        <!-- ══ Schritt 1 ══════════════════════════════════════════ -->
+        <!-- ═══ Schritt 1 ═══ -->
         <div class="form-step">
           <span class="step-num">1</span>
-          Wer lernt &amp; was ist das Thema?
+          Zielgruppe und Thema
         </div>
 
-        <div class="form-group" style="margin-bottom:.85rem;">
+        <div class="form-group">
           <label>
             Zielgruppe
-            <span class="hint">Schnellauswahl oder eigene Beschreibung unten</span>
+            <span class="hint">Auswählen oder unten selbst beschreiben</span>
+            <span class="help-icon" tabindex="0">?<span class="tooltip">Beschreiben Sie kurz, wer in Ihrem Kurs lernt – Alter, Herkunft und Vorwissen helfen der KI, passende Materialien zu erstellen.</span></span>
           </label>
           <div class="preset-chips">
-            <button type="button" class="preset-chip"
-              data-val="Hausfrauen, 30–50 Jahre, Herkunft Türkei und Arabien, wenig Schulbildung, lernen Lateinschrift"
-              onclick="setGroup(this)">Hausfrauen TK / AR</button>
-            <button type="button" class="preset-chip"
-              data-val="Männer, 20–45 Jahre, Herkunft Nordafrika und Afghanistan, kaum Schulbildung"
-              onclick="setGroup(this)">Männer Nordafrika / AF</button>
-            <button type="button" class="preset-chip"
-              data-val="Gemischte Gruppe, 18–60 Jahre, verschiedene Herkünfte, gering literalisiert"
-              onclick="setGroup(this)">Gemischte Gruppe</button>
-            <button type="button" class="preset-chip"
-              data-val="Senioren, 55–70 Jahre, Herkunft Osteuropa, Grundkenntnisse Lateinschrift"
-              onclick="setGroup(this)">Senioren</button>
-            <button type="button" class="preset-chip"
-              data-val="Junge Erwachsene, 18–30 Jahre, Herkunft Syrien und Irak, wenig Schulbildung"
-              onclick="setGroup(this)">Junge Erwachsene SY / IQ</button>
+            <button type="button" class="preset-chip" data-val="Hausfrauen, 30–50 Jahre, Herkunft Türkei und Arabien, wenig Schulbildung, lernen Lateinschrift" onclick="setGroup(this)">Hausfrauen TK / AR</button>
+            <button type="button" class="preset-chip" data-val="Männer, 20–45 Jahre, Herkunft Nordafrika und Afghanistan, kaum Schulbildung" onclick="setGroup(this)">Männer Nordafrika / AF</button>
+            <button type="button" class="preset-chip" data-val="Gemischte Gruppe, 18–60 Jahre, verschiedene Herkünfte, gering literalisiert" onclick="setGroup(this)">Gemischte Gruppe</button>
+            <button type="button" class="preset-chip" data-val="Senioren, 55–70 Jahre, Herkunft Osteuropa, Grundkenntnisse Lateinschrift" onclick="setGroup(this)">Senioren</button>
+            <button type="button" class="preset-chip" data-val="Junge Erwachsene, 18–30 Jahre, Herkunft Syrien und Irak, wenig Schulbildung" onclick="setGroup(this)">Junge Erwachsene SY / IQ</button>
           </div>
-          <textarea id="target-group" rows="2"
-            placeholder="z.B. Hausfrauen, 30–50 Jahre, Herkunft Türkei, kaum Schulbildung …"></textarea>
+          <textarea id="target-group" rows="2" placeholder="z.B. Hausfrauen, 30–50 Jahre, Herkunft Türkei, kaum Schulbildung …"></textarea>
         </div>
 
         <div class="form-group">
           <label for="topic">
-            Thema / Unterrichtssituation
-            <span class="hint">Was soll geübt werden?</span>
+            Thema
+            <span class="help-icon" tabindex="0">?<span class="tooltip">Was sollen die Teilnehmer üben? Z.B. "Beim Arzt", "Einkaufen", "Wohnung suchen".</span></span>
           </label>
-          <input type="text" id="topic"
-            placeholder="z.B. Beim Arzt  ·  Einkaufen  ·  Kinder in der Schule  ·  Wohnung suchen …" required />
+          <input type="text" id="topic" placeholder="z.B. Beim Arzt  ·  Einkaufen  ·  Kinder in der Schule …" required />
         </div>
 
         <hr class="step-divider" />
 
-        <!-- ══ Schritt 2 ══════════════════════════════════════════ -->
+        <!-- ═══ Schritt 2 ═══ -->
         <div class="form-step">
           <span class="step-num">2</span>
-          Sprachniveau &amp; Materialtyp
+          Niveau und Art des Materials
         </div>
 
-        <div class="form-group" style="margin-bottom:1.25rem;">
-          <label>Sprachniveau der Gruppe</label>
+        <div class="form-group" style="margin-bottom:1.3rem;">
+          <label>Sprachniveau</label>
           <div class="level-chips">
             <div class="level-chip">
               <input type="radio" name="niveau" id="lvl-a1" value="A1" checked />
@@ -940,11 +1092,9 @@
           </div>
         </div>
 
-        <!-- Materialtyp -->
         <div class="form-group">
-          <label>Welche Art von Material brauche ich?</label>
+          <label>Materialtyp</label>
           <div class="type-grid">
-
             <div class="type-option">
               <input type="radio" name="material-type" id="type-lueckentext" value="lueckentext" checked />
               <label for="type-lueckentext">
@@ -953,25 +1103,22 @@
                 <span class="type-desc">Text mit Lücken + Wörterbox</span>
               </label>
             </div>
-
             <div class="type-option">
               <input type="radio" name="material-type" id="type-bildwoerter" value="bildwoerter" />
               <label for="type-bildwoerter">
                 <span class="icon">🖼️</span>
-                Bildwörter-Zuordnung
+                Bildwörter
                 <span class="type-desc">Wörter zum Bilder-Kleben</span>
               </label>
             </div>
-
             <div class="type-option">
               <input type="radio" name="material-type" id="type-dialog" value="dialog" />
               <label for="type-dialog">
                 <span class="icon">💬</span>
-                Einfacher Dialog
+                Dialog
                 <span class="type-desc">Alltagsgespräch + Vokabular</span>
               </label>
             </div>
-
             <div class="type-option">
               <input type="radio" name="material-type" id="type-schreibuebung" value="schreibuebung" />
               <label for="type-schreibuebung">
@@ -980,29 +1127,27 @@
                 <span class="type-desc">Geführte Schreibaufgaben</span>
               </label>
             </div>
-
             <div class="type-option">
               <input type="radio" name="material-type" id="type-wortschatz" value="wortschatz" />
               <label for="type-wortschatz">
                 <span class="icon">📚</span>
-                Wortschatz-Liste
-                <span class="type-desc">Themenwörter + Übersetzungsspalte</span>
+                Wortschatz
+                <span class="type-desc">Wörter + Übersetzungsspalte</span>
               </label>
             </div>
-
           </div>
         </div>
 
         <hr class="step-divider" />
 
-        <!-- ══ Schritt 3 ══════════════════════════════════════════ -->
+        <!-- ═══ Schritt 3 ═══ -->
         <div class="form-step">
           <span class="step-num">3</span>
-          Umfang &amp; Dauer
+          Unterrichtsdauer
         </div>
 
         <div class="form-group">
-          <label>Für wie viel Unterrichtszeit soll das Material reichen?</label>
+          <label>Wie lange soll das Material reichen?</label>
           <div class="dur-chips">
             <div class="dur-chip">
               <input type="radio" name="duration" id="dur-15" value="15 Minuten (kurze Einstiegsübung)" />
@@ -1021,32 +1166,28 @@
               <label for="dur-90">⏱ 90 min ★<span class="sub-lbl">Doppelstunde</span></label>
             </div>
             <div class="dur-chip">
-              <input type="radio" name="duration" id="dur-hw"
-                value="Hausaufgabe (selbstständiges Arbeiten zu Hause, ca. 20–30 Minuten)" />
+              <input type="radio" name="duration" id="dur-hw" value="Hausaufgabe (selbstständiges Arbeiten zu Hause, ca. 20–30 Minuten)" />
               <label for="dur-hw">🏠 Hausaufgabe<span class="sub-lbl">Zu Hause</span></label>
             </div>
           </div>
         </div>
 
-        <!-- ── Optional section ───────────────────────────────── -->
+        <!-- ── Optional section ──────────────────────────────── -->
         <hr class="section-divider" />
-        <div class="section-label">⚙ Optionale Angaben</div>
+        <div class="section-label">⚙ Weitere Optionen (nicht Pflicht)</div>
 
-        <!-- Details & Schwerpunkte -->
-        <div class="form-group" style="margin-bottom: 1.1rem;">
+        <div class="form-group">
           <label for="details">
-            Details &amp; Schwerpunkte
-            <span class="hint">z.B. bestimmte Vokabeln, Unterthemen, Grammatikfokus</span>
+            Details und Schwerpunkte
+            <span class="help-icon" tabindex="0">?<span class="tooltip">Hier können Sie bestimmte Vokabeln, Grammatikthemen oder Unterthemen angeben, die im Material vorkommen sollen.</span></span>
           </label>
-          <textarea id="details" rows="2"
-            placeholder="z.B. Vokabeln: kaufen, bezahlen, Kasse; Unterthema: Obst und Gemüse; Fokus auf W-Fragen …"></textarea>
+          <textarea id="details" rows="2" placeholder="z.B. Vokabeln: kaufen, bezahlen; Fokus auf W-Fragen …"></textarea>
         </div>
 
-        <!-- Lernziel der Lehrerin -->
         <div class="form-group">
           <label>
-            Lernziel der Lehrerin
-            <span class="hint">Was soll das Material erreichen? (Mehrfachauswahl möglich)</span>
+            Lernziel
+            <span class="hint">(Mehrfachauswahl möglich)</span>
           </label>
           <div class="goal-chips" id="goal-chips">
             <div class="goal-chip">
@@ -1063,46 +1204,46 @@
             </div>
             <div class="goal-chip">
               <input type="checkbox" id="goal-sprechen" value="Mündliche Kommunikation und Alltagsgespräche üben" />
-              <label for="goal-sprechen">💬 Mündliche Kommunikation</label>
+              <label for="goal-sprechen">💬 Mündl. Kommunikation</label>
             </div>
             <div class="goal-chip">
               <input type="checkbox" id="goal-vokabular" value="Wortschatz aufbauen und festigen" />
               <label for="goal-vokabular">🔤 Vokabular aufbauen</label>
             </div>
             <div class="goal-chip">
-              <input type="checkbox" id="goal-grammatik"
-                value="Grammatik im Kontext üben (z.B. Verbkonjugation, Artikel)" />
+              <input type="checkbox" id="goal-grammatik" value="Grammatik im Kontext üben (z.B. Verbkonjugation, Artikel)" />
               <label for="goal-grammatik">🧱 Grammatik üben</label>
             </div>
             <div class="goal-chip">
-              <input type="checkbox" id="goal-selbst"
-                value="Selbstvertrauen stärken – einfache Erfolgserlebnisse ermöglichen" />
-              <label for="goal-selbst">💪 Selbstvertrauen stärken</label>
+              <input type="checkbox" id="goal-selbst" value="Selbstvertrauen stärken – einfache Erfolgserlebnisse ermöglichen" />
+              <label for="goal-selbst">💪 Selbstvertrauen</label>
             </div>
             <div class="goal-chip">
-              <input type="checkbox" id="goal-wiederholung"
-                value="Wiederholung und Festigung bereits gelernter Inhalte" />
+              <input type="checkbox" id="goal-wiederholung" value="Wiederholung und Festigung bereits gelernter Inhalte" />
               <label for="goal-wiederholung">🔄 Wiederholung</label>
             </div>
           </div>
-          <textarea id="goal-custom" rows="2" style="margin-top:.65rem;"
-            placeholder="Eigenes Ziel oder weitere Hinweise … (optional)"></textarea>
+          <textarea id="goal-custom" rows="2" style="margin-top:.7rem;" placeholder="Eigenes Lernziel oder Hinweise … (nicht Pflicht)"></textarea>
         </div>
 
         <!-- Submit -->
-        <div class="generate-row" style="margin-top: 1.5rem;">
+        <div class="generate-row" style="margin-top: 1.75rem;">
           <button type="submit" class="btn btn-primary btn-lg" id="generate-btn">
             <span class="btn-text">
-              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"
-                style="vertical-align:middle;margin-right:.2rem" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                  d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 010 1.972l-11.54 6.347a1.125 1.125 0 01-1.667-.986V5.653z" />
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" style="vertical-align:middle;margin-right:.25rem" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 010 1.972l-11.54 6.347a1.125 1.125 0 01-1.667-.986V5.653z" />
               </svg>
               Material erstellen
             </span>
             <span class="spinner" aria-hidden="true"></span>
           </button>
         </div>
+
+        <div class="progress-bar-container" id="progress-container">
+          <div class="progress-bar" id="progress-bar"></div>
+        </div>
+        <div class="loading-message" id="loading-msg">Einen Moment bitte – das Material wird gerade erstellt …</div>
+
       </form>
     </div>
 
@@ -1110,31 +1251,25 @@
     <div class="error-box" id="error-box" role="alert" aria-live="polite"></div>
 
     <!-- Result Card -->
-    <div class="card" id="result-card" style="display:none;">
+    <div class="card" id="result-card">
       <div class="card-title">
-        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
-          aria-hidden="true">
-          <path stroke-linecap="round" stroke-linejoin="round"
-            d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z" />
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z" />
         </svg>
-        Generiertes Material
-        <span id="result-meta" style="font-weight:400;color:var(--muted);font-size:.82rem;margin-left:.5rem;"></span>
+        Fertiges Material
+        <span id="result-meta" style="font-weight:400;color:var(--muted);font-size:.85rem;margin-left:.6rem;"></span>
       </div>
 
       <div class="result-toolbar">
         <button class="btn btn-secondary" onclick="copyMaterial()">
-          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
-            aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round"
-              d="M15.666 3.888A2.25 2.25 0 0013.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 01-.75.75H9a.75.75 0 01-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 01-2.25 2.25H6.75A2.25 2.25 0 014.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 011.927-.184" />
+          <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.666 3.888A2.25 2.25 0 0013.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 01-.75.75H9a.75.75 0 01-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 01-2.25 2.25H6.75A2.25 2.25 0 014.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 011.927-.184" />
           </svg>
           Kopieren
         </button>
         <button class="btn btn-primary" onclick="window.print()">
-          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
-            aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round"
-              d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0110.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0l.229 2.523a1.125 1.125 0 01-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0021 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 00-1.913-.247M6.34 18H5.25A2.25 2.25 0 013 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 011.913-.247m10.5 0a48.536 48.536 0 00-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5zm-3 0h.008v.008H15V10.5z" />
+          <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0110.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0l.229 2.523a1.125 1.125 0 01-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0021 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 00-1.913-.247M6.34 18H5.25A2.25 2.25 0 013 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 011.913-.247m10.5 0a48.536 48.536 0 00-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5zm-3 0h.008v.008H15V10.5z" />
           </svg>
           Drucken
         </button>
@@ -1148,12 +1283,14 @@
 
   </main>
 
+  <!-- Back to Top -->
+  <button class="back-to-top" id="back-to-top" onclick="window.scrollTo({top:0, behavior:'smooth'})" aria-label="Nach oben scrollen">↑</button>
+
   <footer>
-    DeutschKurs Materialgenerator &mdash; Powered by Anthropic Claude API &mdash; Daten werden nicht gespeichert oder
-    weitergegeben.
+    DeutschKurs Materialgenerator &mdash; Powered by Claude &mdash; Daten werden nicht gespeichert.
   </footer>
 
-  <!-- ── JavaScript ──────────────────────────────────────────────── -->
+  <!-- ── JavaScript ──────────────────────────────────────────── -->
   <script>
     /* ── Constants ───────────────────────────────────────────── */
     const API_URL = 'https://api.anthropic.com/v1/messages';
@@ -1161,27 +1298,20 @@
 
     /**
      * WORKER_URL
-     * ──────────────────────────────────────────────────────────
      * Leave empty ('') for the teacher's version (she enters her own API key).
      * Set to your Cloudflare Worker URL for the shared version (no key needed).
-     * Example: 'https://deutsch-kurs.yourname.workers.dev'
      */
     const WORKER_URL = 'https://deutschkurs-api.owczarekoliwer.workers.dev/';
 
     /* ── API Key card: hide when worker mode is active ───────── */
-    const apiKeyCard = document.querySelector('.card:has(#api-key)') ||
-      document.getElementById('api-key')?.closest('.card');
+    const apiKeyCard = document.getElementById('api-card');
     const apiKeyInput = document.getElementById('api-key');
     const savedMsg = document.getElementById('api-saved-msg');
 
     (function initMode() {
       if (WORKER_URL) {
-        // Worker mode: no API key needed → hide the key card
-        if (apiKeyCard) {
-          apiKeyCard.style.display = 'none';
-        }
+        if (apiKeyCard) apiKeyCard.style.display = 'none';
       } else {
-        // Direct mode: load saved key
         const saved = localStorage.getItem('anthropic_api_key');
         if (saved) {
           apiKeyInput.value = saved;
@@ -1189,6 +1319,16 @@
         }
       }
     })();
+
+    /* ── Back to top button ───────────────────────────────────── */
+    window.addEventListener('scroll', () => {
+      const btn = document.getElementById('back-to-top');
+      if (window.scrollY > 400) {
+        btn.classList.add('visible');
+      } else {
+        btn.classList.remove('visible');
+      }
+    });
 
     /* ── Group preset quick-fill ──────────────────────────────── */
     function setGroup(btn) {
@@ -1214,7 +1354,6 @@
       wortschatz: 'Wortschatz-Liste',
     };
 
-    // Builds the optional tail appended to every prompt when extra fields are filled in
     function optionalSection(details, lernziel) {
       let s = '';
       if (details) s += `\nZusätzliche Anforderungen / Schwerpunkte:\n${details}\n`;
@@ -1269,7 +1408,7 @@ Anweisungen:
 - Wähle 8–16 alltägliche Wörter zum Thema (je nach Dauer mehr oder weniger).
 - Für jedes Wort: schreibe das Wort, einen einfachen Beispielsatz (${niveau}-Niveau) und lasse Platz für ein Bild (markiert als [Bild]).
 - Die Lehrerin druckt das aus und klebt Bilder dazu.
-- Am Ende: eine Liste aller Wörter als Lernkontrolle (Wörter und Sätze getrennt zum Abdecken).
+- Am Ende: eine Liste aller Wörter als Lernkontrolle.
 
 Format:
 ## Bildwörter-Zuordnung: [Thema]
@@ -1300,7 +1439,7 @@ Anweisungen:
 - Schreibe einen alltäglichen Dialog (Länge passend zu ${dauer}), 2 Personen.
 - Sprachlich passend zu ${niveau}: korrekte Satzlänge und Grammatik für dieses Niveau.
 - Gib jedem Sprecher einen klaren Namen passend zur Zielgruppe.
-- Füge bei A1/A2 **phonetische Hinweise** in eckigen Klammern hinzu (z.B. [sprich: Doktoh]).
+- Füge bei A1/A2 **phonetische Hinweise** in eckigen Klammern hinzu.
 - Füge nach dem Dialog ein **Vokabular** mit Erklärungen auf Deutsch hinzu.
 - Füge 2–4 **Redemittel** (nützliche Phrasen zum Üben) hinzu.
 - Bei längerer Dauer: füge Rollenspiel-Variationen oder Lückendialog als Übung hinzu.
@@ -1333,12 +1472,12 @@ Sprachniveau: ${niveau}
 Unterrichtsdauer: ${dauer} – passe die Anzahl der Aufgaben entsprechend an.
 
 Anweisungen:
-- Erstelle geführte Schreibaufgaben passend zu ${dauer} (bei 15 min: 1–2 Aufgaben, bei 90 min: 4–6 Aufgaben).
+- Erstelle geführte Schreibaufgaben passend zu ${dauer}.
 - Jede Aufgabe soll konkret und alltagsnah sein, passend zu ${niveau}.
 - Gib zu jeder Aufgabe **2–3 Beispielsätze** als Hilfe.
-- Füge Schreiblinien hinzu: für jede Schreiblinie eine Zeile mit "_______________________________________________".
-- Am Ende: **Hilfreiche Wörter** – Wortliste zum Thema.
-- Schreibe die Anweisungen direkt an die Lernenden (Sie empfohlen).
+- Füge Schreiblinien hinzu: "_______________________________________________".
+- Am Ende: **Hilfreiche Wörter** und **Musterlösung für Lehrkräfte**.
+- Schreibe die Anweisungen direkt an die Lernenden (Sie-Form).
 
 Format:
 ## Schreibübung: [Thema]
@@ -1364,6 +1503,11 @@ _______________________________________________
 
 **Hilfreiche Wörter:**
 [Wortliste]
+
+---
+
+## Musterlösung (für Lehrkräfte)
+[Musterlösung]
 ${optionalSection(details, lernziel)}`,
 
       wortschatz: (zielgruppe, thema, niveau, dauer, details = '', lernziel = '') => `
@@ -1375,11 +1519,11 @@ Sprachniveau: ${niveau}
 Unterrichtsdauer: ${dauer} – passe die Anzahl der Wörter entsprechend an.
 
 Anweisungen:
-- Wähle 10–25 wichtige Wörter zum Thema (je nach Dauer: 10 für 15 min, 25 für 90 min).
-- Für jedes Wort: das Wort mit Artikel (bei Nomen), ein Beispielsatz auf ${niveau}-Niveau, und eine leere Spalte für die Übersetzung.
-- Sortiere thematisch.
-- Schreibe am Anfang eine kurze Einleitung für die Lernenden.
-- Am Ende: Übungssätze mit Lücken (Anzahl passend zur Dauer).
+- Wähle 10–25 wichtige Wörter zum Thema (je nach Dauer).
+- Für jedes Wort: Wort mit Artikel (bei Nomen), Beispielsatz auf ${niveau}-Niveau, leere Spalte für Übersetzung.
+- Sortiere thematisch in Cluster.
+- Kurze Einleitung für die Lernenden.
+- Am Ende: Übungssätze mit Lücken.
 
 Format:
 ## Wortschatz: [Thema]
@@ -1404,20 +1548,149 @@ ${optionalSection(details, lernziel)}`,
     };
 
     /* ── System prompt ────────────────────────────────────────── */
-    const SYSTEM_PROMPT = `Du bist ein erfahrener DaZ-Didaktiker (Deutsch als Zweitsprache) spezialisiert auf Erwachsenenbildung.
+    const SYSTEM_PROMPT = `Du bist ein erfahrener DaZ-Didaktiker (Deutsch als Zweitsprache) mit Spezialisierung auf Erwachsenenbildung für gering literalisierte Lernende. Du generierst ausschließlich Materialien, die exakt dem angegebenen GER-Niveau (A1, A1+, A2, B1, B2) entsprechen, kulturell sensibel auf die jeweilige Zielgruppe abgestimmt sind, kognitionswissenschaftlichen Prinzipien folgen und sofort ausdruckbar sind.
 
-PFLICHTREGELN – immer einhalten:
-- Sprachniveau: exakt das angegebene Niveau einhalten (A1 / A1+ / A2 / B1 / B2)
-  · A1/A1+: max. 6–8 Wörter pro Satz, nur häufigste Grundwörter, Präsens
-  · A2: bis 10 Wörter pro Satz, einfache Konjunktionen (und, aber, weil), Perfekt erlaubt
-  · B1: normale Satzlänge, Nebensätze erlaubt, Präteritum, gängige Redewendungen
-  · B2: komplexere Satzstrukturen, Passiv und Konjunktiv II erlaubt, idiomatische Ausdrücke
-- Kein Niveau übersteigen – lieber einfacher als zu schwer
-- Alltägliches Vokabular bevorzugen
-- Kulturelle Sensibilität: Themen und Namen sollen für die genannte Zielgruppe passend sein
-- Formatierung: Benutze Markdown für klare Struktur (Überschriften, Tabellen, Listen)
-- Sprache der Materialien: Deutsch. Anweisungen für Lernende auf dem angegebenen Niveau.
-- Umfang: an die angegebene Unterrichtsdauer anpassen`;
+== KOGNITIONSWISSENSCHAFTLICHE LEITPRINZIPIEN ==
+
+Befolge diese Prinzipien bei JEDER Materialerstellung:
+
+1. Retrieval Practice (Aktives Abruftraining): Materialien müssen den aktiven Abruf aus dem Gedächtnis erzwingen. Vermeide rein passive Formate. Bevorzuge Lücken, freie Schreibaufgaben und Zuordnungen. Wenn eine Wörterbox gegeben wird, darf sie optional Ablenkungswörter (Distraktoren) enthalten.
+
+2. Spaced Practice (Verteiltes Lernen): Wenn "Wiederholung" als Lernziel gewählt wird, integriere bereits bekannten Wortschatz aus verwandten Themenfeldern in neuen Kontexten.
+
+3. Interleaving (Verschachteltes Üben): Ab Niveau B1 verschränke verschiedene grammatikalische Phänomene innerhalb einer Übung. Mische verwandte Strukturen (z.B. Perfekt und Präteritum, Dativ und Akkusativ).
+
+4. Chunking und Dual Coding: Präsentiere Vokabeln nie isoliert, sondern in thematischen Clustern und natürlichen Kollokationen (z.B. "einen Termin machen" statt nur "Termin").
+
+5. Cognitive Load Management: Halte die irrelevante kognitive Belastung minimal. Klare Anweisungen, keine Überladung. Fettdruck statt Kursiv oder Unterstreichungen. Niemals Blockschrift (All Caps).
+
+== GER-NIVEAUPARAMETER – STRIKTE EINHALTUNG ==
+
+NIVEAU A1 (Anfänger):
+ERLAUBT: Max. 6–8 Wörter pro Satz. Nur Präsens. Verben: sein, haben, einfache regelmäßige Verben, "möchten". Bestimmte und unbestimmte Artikel. Präpositionen: in, auf, unter, mit, ohne, bei. W-Fragen: Wer? Was? Wo? Wie? Wann? Konnektoren: und, oder. Nur hochfrequente Grundwörter: Familie, Einkaufen, Zahlen, Farben, Wochentage, Uhrzeiten, Essen. Textsorten: Schilder, kurze Notizen, Postkarten, Formulare.
+VERBOTEN: Nebensätze jeder Art (kein "weil", "dass", "wenn", "obwohl"). Passiv. Konjunktiv I oder II. Präteritum oder Perfekt. Adjektivdeklination (nur prädikativ: "Das ist schön"). Abstrakte Begriffe oder Metaphern. Komposita mit mehr als 2 Teilen.
+
+NIVEAU A1+ (Fortgeschrittene Anfänger):
+Wie A1, zusätzlich erlaubt: Perfekt mit "haben" für regelmäßige Verben. Modalverben: können, müssen. Einfache Negation mit "nicht" und "kein". Temporale Adverbien: gestern, morgen, heute, jetzt. Max. 8–9 Wörter pro Satz.
+WEITERHIN VERBOTEN: Nebensätze, Passiv, Konjunktiv. Perfekt mit "sein". Präteritum (außer "war"/"hatte").
+
+NIVEAU A2 (Grundlegende Kenntnisse):
+ERLAUBT (zusätzlich): Max. 10 Wörter pro Satz. Perfekt mit "haben" und "sein". Einfaches Präteritum: war, hatte, es gab. Modalverben: müssen, können, wollen, sollen, dürfen. Konnektoren: und, aber, weil, dass, wenn. Trennbare Verben. Dativ und Akkusativ (grundlegend). Erste Adjektivdeklination. Imperativ. Themen: Beruf, Gesundheit, Wohnung, Transport, Freizeit, Behörden. Textsorten: persönliche E-Mails, kurze Beschreibungen, SMS.
+VERBOTEN: Relativsätze. Konjunktiv II (außer "möchte"/"hätte gern"). Passiv. Partizipialattribute. Indirekte Rede.
+
+NIVEAU B1 (Fortgeschrittene Sprachverwendung):
+ERLAUBT (zusätzlich): Normale Satzlänge, Nebensätze erwartet. Konjunktiv II (würde, könnte, sollte). Plusquamperfekt. Relativsätze. Infinitiv mit "zu". Finale Nebensätze (damit, um...zu). Passiv im Präsens. Konnektoren: obwohl, trotzdem, deshalb, außerdem. Gängige Redewendungen. Textsorten: Erfahrungsberichte, E-Mails, Forenbeiträge, Ratschläge.
+VERBOTEN: Konjunktiv I. Partizipialattribute. Vorgangspassiv in allen Zeiten. Hochspezialisierter Fachwortschatz.
+C-TEST-FORMAT: Ab B1 kann der C-Test eingesetzt werden. Erster und letzter Satz bleiben intakt. Ab dem zweiten Satz fehlt bei jedem zweiten Wort die exakte zweite Hälfte (bei ungerader Buchstabenanzahl ein Buchstabe mehr tilgen). KEINE Wortliste.
+
+NIVEAU B2 (Selbstständige Sprachverwendung):
+ERLAUBT (zusätzlich): Komplexe Satzgefüge. Zweiteilige Konnektoren (weder...noch, je...desto, zwar...aber, einerseits...andererseits). N-Deklination. Irreale Bedingungssätze. Vorgangspassiv in allen Zeiten. Partizipialattribute. Konjunktiv I (indirekte Rede). Idiomatische Ausdrücke, Registerwechsel. Fachwortschatz: Wirtschaft, Umwelt, Gesellschaft, Digitalisierung. Textsorten: Erörterungen, formelle Beschwerdebriefe, Zeitungsartikel, Stellungnahmen.
+
+== MATERIALTYP-SPEZIFIKATIONEN ==
+
+LÜCKENTEXT:
+A1/A1+/A2: Klassischer Lückentext mit 6–14 Lücken (je nach Dauer). Immer mit Wörterbox (Word Bank) in zufälliger Reihenfolge. Optional 1–2 Distraktoren. Lücken als durchgehende Unterstriche. Immer Lösungsschlüssel am Ende.
+B1/B2: C-Test (bevorzugt) oder erweiterter Lückentext. C-Test: Erster und letzter Satz intakt, ab dem zweiten Satz fehlt bei jedem zweiten Wort die zweite Hälfte. Keine Wortliste beim C-Test. Immer Lösungsschlüssel.
+
+BILDWÖRTER-ZUORDNUNG:
+A1/A2: 8–16 Wörter je nach Dauer. Tabelle mit: Nr., Bild-Platzhalter [Bild], Wort (mit Artikel), Beispielsatz. Am Ende: Wörterliste als Lernkontrolle.
+B1/B2: Bildbeschreibung mit Scaffolding-Redemitteln und Musterlösung für die Lehrkraft.
+
+DIALOG:
+A1/A2: Halboffener Transaktionsdialog, 2 Sprecher mit kulturell passenden Namen. Eine Rolle vollständig, andere hat Lücken mit Hinweisen in Klammern. Phonetische Hinweise bei A1. Vokabular + 2–4 Redemittel.
+B1/B2: Rollenkarten für Diskussions-/Konfliktgespräche. Zwei separate Rollenkarten mit klarem Ziel und 3–4 Redemitteln pro Rolle.
+
+SCHREIBÜBUNG:
+A1/A2: Geführte Schreibaufgabe mit 3 klaren Leitpunkten. 2–3 Beispielsätze. Schreiblinien. Musterlösung. Ziel: 30–50 Wörter.
+B1/B2: 4 komplexe Leitpunkte mit logischem Aufbau. Strukturierungshilfen (Konnektoren-Box). Musterlösung. Ziel: 80–200 Wörter.
+
+WORTSCHATZ-LISTE:
+A1/A2: Tabelle: Wort (mit Artikel/Plural), Beispielsatz, leere Spalte "Meine Übersetzung". Thematisch sortiert. Einleitung + Übungssätze am Ende.
+B1/B2: Tabelle: Begriff, typische Kollokation, einfacheres Synonym, Beispielsatz. Übungssätze am Ende.
+
+== UMFANG NACH UNTERRICHTSDAUER ==
+
+15 min: Lückentext 6 Lücken / Bildwörter 6–8 / Dialog 4–6 Zeilen / Schreibübung 1 Aufgabe / Wortschatz 8–10 Wörter
+30 min: Lückentext 8–10 / Bildwörter 8–10 / Dialog 8–10 Zeilen / Schreibübung 2 Aufgaben / Wortschatz 12–15 Wörter
+45 min: Lückentext 10–12 / Bildwörter 10–12 / Dialog 10–14 Zeilen + Vokabular / Schreibübung 2–3 Aufgaben / Wortschatz 15–18 Wörter
+90 min: Lückentext 12–14 + Bonusübung / Bildwörter 14–16 + Lernkontrolle / Dialog + Rollenspiel + Vokabular / Schreibübung 4–6 Aufgaben / Wortschatz 20–25 + Übungssätze
+Hausaufgabe: Lückentext 8–10 / Bildwörter 8–10 / Dialog 6–8 Zeilen / Schreibübung 1–2 Aufgaben / Wortschatz 10–12 Wörter
+
+== KULTURELLE SENSIBILITÄT ==
+
+Verwende kulturell passende Namen (z.B. Fatma, Ahmed, Olga, Sergej, Maria). Vermeide Alkohol, Schweinefleisch oder religiös sensible Inhalte bei muslimisch geprägter Zielgruppe. Wähle relevante Alltagssituationen. Sieze die Lernenden (Sie-Form).
+
+== LAYOUT- UND FORMATIERUNGSREGELN ==
+
+Alle Texte linksbündig. Fettdruck für Hervorhebungen (kein Kursiv, keine Unterstreichung). Keine durchgehenden Großbuchstaben. Klare visuelle Hierarchie durch Überschriften (##, ###). Tabellen für strukturierte Inhalte. Horizontale Trennlinien (---) zwischen Aufgabenteilen. Lösungsschlüssel IMMER am Ende, visuell getrennt.
+
+== REFERENZBEISPIELE ==
+
+BEISPIEL A1 – Lückentext "Ein Wochenende mit der Familie":
+Arbeitsanweisung: Lesen Sie den Text. Welches Wort passt? Schreiben Sie die Wörter aus der Liste.
+Wörterbox: Auto | Sonntag | Großeltern | essen | Kuchen | schön
+Text: Heute ist (1) _______________. Ich habe frei. Meine Familie und ich fahren heute zu meinen (2) _______________. Sie wohnen in Frankfurt. Wir fahren mit dem (3) _______________. Die Fahrt dauert eine Stunde. Am Nachmittag (4) _______________ wir zusammen (5) _______________ und trinken Kaffee. Das Wetter ist sehr (6) _______________.
+Lösung: 1. Sonntag, 2. Großeltern, 3. Auto, 4. essen, 5. Kuchen, 6. schön
+
+BEISPIEL A2 – Dialog "Einen Termin vereinbaren":
+Arztpraxis: Praxis Dr. Müller, guten Morgen.
+Patient: Guten Morgen, mein Name ist Schmidt. Ich (1) _______________ bitte einen Termin.
+Arztpraxis: Haben Sie Schmerzen?
+Patient: Ja, mein Bauch (2) _______________ weh. Kann ich heute noch kommen?
+Arztpraxis: Heute ist es sehr voll. Geht es morgen Vormittag um 10 Uhr?
+Patient: Nein, morgen (3) _______________ ich leider arbeiten. Geht es am Nachmittag?
+Arztpraxis: Ja, um 15 Uhr haben wir Zeit.
+Patient: Das (4) _______________ super. Vielen Dank!
+Lösung: 1. brauche/möchte, 2. tut, 3. muss, 4. ist/passt
+
+BEISPIEL B1 – C-Test "Ein neues Hobby":
+Arbeitsanweisung: Ergänzen Sie die fehlenden Wortteile.
+Text: Immer mehr Menschen suchen einen Ausgleich zu ihrem stressigen Berufsalltag. Ein gu_____ (1) Weg da_____ (2) ist d_____ (3) Erlernen ein_____ (4) neuen Hob_____. (5) Viele Leu_____ (6) melden si_____ (7) für ei_____ (8) Sprachkurs a_____ (9) oder begin_____ (10) mit ei_____ (11) Mannschaftssport. Am Ende profitiert man körperlich und mental davon.
+Lösung: 1. guter, 2. dafür, 3. das, 4. eines, 5. Hobbys, 6. Leute, 7. sich, 8. einen, 9. an, 10. beginnen, 11. einem
+
+== QUALITÄTSCHECKLISTE (vor jeder Ausgabe intern prüfen) ==
+- Kein Wort/keine Struktur übersteigt das angegebene Niveau
+- Satzlänge entspricht den Niveauvorgaben
+- Kulturell angemessene Namen und Themen
+- Arbeitsanweisung auf dem Niveau der Lernenden formuliert
+- Lösungsschlüssel vorhanden und korrekt
+- Umfang passt zur angegebenen Unterrichtsdauer
+- Markdown-Formatierung ist konsistent und druckfreundlich
+- Lernziele der Lehrerin wurden berücksichtigt (falls angegeben)`;
+
+    /* ── Progress simulation ──────────────────────────────────── */
+    let progressInterval;
+
+    function startProgress() {
+      const container = document.getElementById('progress-container');
+      const bar = document.getElementById('progress-bar');
+      const msg = document.getElementById('loading-msg');
+      container.classList.add('visible');
+      msg.classList.add('visible');
+      bar.style.width = '0%';
+
+      let progress = 0;
+      progressInterval = setInterval(() => {
+        if (progress < 85) {
+          progress += Math.random() * 8 + 2;
+          if (progress > 85) progress = 85;
+          bar.style.width = progress + '%';
+        }
+      }, 600);
+    }
+
+    function stopProgress() {
+      clearInterval(progressInterval);
+      const container = document.getElementById('progress-container');
+      const bar = document.getElementById('progress-bar');
+      const msg = document.getElementById('loading-msg');
+      bar.style.width = '100%';
+      setTimeout(() => {
+        container.classList.remove('visible');
+        msg.classList.remove('visible');
+        bar.style.width = '0%';
+      }, 500);
+    }
 
     /* ── Generate ─────────────────────────────────────────────── */
     async function generateMaterial(e) {
@@ -1429,7 +1702,6 @@ PFLICHTREGELN – immer einhalten:
       const typeVal = document.querySelector('input[name="material-type"]:checked').value;
       const dauer = document.querySelector('input[name="duration"]:checked').value;
 
-      // Optional fields
       const details = document.getElementById('details').value.trim();
       const goalChips = [...document.querySelectorAll('#goal-chips input[type="checkbox"]:checked')]
         .map(cb => cb.value);
@@ -1437,14 +1709,13 @@ PFLICHTREGELN – immer einhalten:
       const lernzielParts = [...goalChips, ...(goalCustom ? [goalCustom] : [])];
       const lernziel = lernzielParts.join('; ');
 
-      // Determine endpoint: Cloudflare Worker or direct Anthropic API
       let fetchUrl, fetchHeaders;
       if (WORKER_URL) {
         fetchUrl = WORKER_URL;
         fetchHeaders = { 'Content-Type': 'application/json' };
       } else {
         const apiKey = (localStorage.getItem('anthropic_api_key') || apiKeyInput.value).trim();
-        if (!apiKey) { showError('Bitte geben Sie zuerst Ihren Anthropic API-Schlüssel ein und speichern Sie ihn.'); return; }
+        if (!apiKey) { showError('Bitte geben Sie zuerst Ihren API-Schlüssel ein.'); return; }
         fetchUrl = API_URL;
         fetchHeaders = {
           'Content-Type': 'application/json',
@@ -1458,6 +1729,7 @@ PFLICHTREGELN – immer einhalten:
 
       hideError();
       setLoading(true);
+      startProgress();
 
       const userPrompt = MATERIAL_PROMPTS[typeVal](zielgruppe, thema, niveau, dauer, details, lernziel);
 
@@ -1476,9 +1748,9 @@ PFLICHTREGELN – immer einhalten:
         if (!response.ok) {
           const err = await response.json().catch(() => ({}));
           const msg = err?.error?.message || `HTTP ${response.status}`;
-          if (response.status === 401) throw new Error(`Ungültiger API-Schlüssel. (Anthropic: ${msg})`);
-          if (response.status === 429) throw new Error('Anfragelimit erreicht. Bitte warten Sie einen Moment und versuchen Sie es erneut.');
-          throw new Error(`API-Fehler: ${msg}`);
+          if (response.status === 401) throw new Error('Der API-Schlüssel ist ungültig. Bitte prüfen Sie ihn.');
+          if (response.status === 429) throw new Error('Zu viele Anfragen. Bitte warten Sie einen Moment.');
+          throw new Error(`Fehler vom Server: ${msg}`);
         }
 
         const data = await response.json();
@@ -1487,9 +1759,10 @@ PFLICHTREGELN – immer einhalten:
         displayResult(text, MATERIAL_LABELS[typeVal], thema, niveau);
 
       } catch (err) {
-        showError(err.message || 'Ein unbekannter Fehler ist aufgetreten.');
+        showError(err.message || 'Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.');
       } finally {
         setLoading(false);
+        stopProgress();
       }
     }
 
@@ -1508,26 +1781,22 @@ PFLICHTREGELN – immer einhalten:
 
     /* ── Minimal Markdown renderer ────────────────────────────── */
     function renderMarkdown(md) {
-      // Writing lines: convert lines of underscores to styled elements (before escaping)
       md = md.replace(/^_{5,}\s*$/gm, '%%WRITELINE%%');
 
-      // Escape HTML
       let html = md
         .replace(/&/g, '&amp;')
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;');
 
-      // Restore writing lines as styled divs
       html = html.replace(/%%WRITELINE%%/g, '<span class="write-line"></span>');
 
-      // Tables (GFM)
       html = html.replace(
         /(?:^\|.+\|\n)+/gm,
         block => {
           const rows = block.trim().split('\n');
           let table = '<table>';
           rows.forEach((row, i) => {
-            if (/^\|[-| :]+\|$/.test(row.trim())) return; // separator row
+            if (/^\|[-| :]+\|$/.test(row.trim())) return;
             const cells = row.trim().replace(/^\||\|$/g, '').split('|');
             const tag = (i === 0) ? 'th' : 'td';
             table += '<tr>' + cells.map(c => `<${tag}>${c.trim()}</${tag}>`).join('') + '</tr>';
@@ -1536,41 +1805,29 @@ PFLICHTREGELN – immer einhalten:
         }
       );
 
-      // Headings
       html = html.replace(/^### (.+)$/gm, '<h3>$1</h3>');
       html = html.replace(/^## (.+)$/gm, '<h2>$1</h2>');
       html = html.replace(/^# (.+)$/gm, '<h2>$1</h2>');
-
-      // Horizontal rule
       html = html.replace(/^---+$/gm, '<hr>');
-
-      // Bold
       html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-
-      // Italic
       html = html.replace(/\*(.+?)\*/g, '<em>$1</em>');
 
-      // Unordered lists (handle blocks)
       html = html.replace(/((?:^- .+\n?)+)/gm, block => {
         const items = block.trim().split('\n').map(l => `<li>${l.replace(/^- /, '').trim()}</li>`).join('');
         return `<ul>${items}</ul>`;
       });
 
-      // Ordered lists
       html = html.replace(/((?:^\d+\. .+\n?)+)/gm, block => {
         const items = block.trim().split('\n').map(l => `<li>${l.replace(/^\d+\. /, '').trim()}</li>`).join('');
         return `<ol>${items}</ol>`;
       });
 
-      // Paragraphs (lines not already wrapped)
       html = html.replace(/^(?!<[htuo]).+$/gm, line => {
         if (line.trim() === '') return '';
         return `<p>${line}</p>`;
       });
 
-      // Line breaks between block elements
       html = html.replace(/\n{2,}/g, '\n');
-
       return html;
     }
 
@@ -1578,7 +1835,6 @@ PFLICHTREGELN – immer einhalten:
     function copyMaterial() {
       const output = document.getElementById('material-output');
       const text = output.innerText;
-
       if (navigator.clipboard) {
         navigator.clipboard.writeText(text).then(() => flashCopyBtn()).catch(fallbackCopy.bind(null, text));
       } else {
@@ -1604,8 +1860,8 @@ PFLICHTREGELN – immer einhalten:
       const orig = btn.innerHTML;
       btn.innerHTML = '&#10003; Kopiert!';
       btn.style.background = '#dcfce7';
-      btn.style.color = '#16a34a';
-      setTimeout(() => { btn.innerHTML = orig; btn.style.background = ''; btn.style.color = ''; }, 1800);
+      btn.style.color = '#15803d';
+      setTimeout(() => { btn.innerHTML = orig; btn.style.background = ''; btn.style.color = ''; }, 2000);
     }
 
     /* ── Reset ────────────────────────────────────────────────── */
