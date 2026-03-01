@@ -1335,6 +1335,9 @@
           </svg>
           Drucken
         </button>
+        <span style="font-size:.75rem;color:var(--muted);align-self:center;"
+          title="Im Druckdialog: Weitere Einstellungen → Kopf- und Fußzeilen deaktivieren">💡 Kopf-/Fußzeilen im
+          Druckdialog deaktivieren</span>
         <button class="btn btn-secondary" onclick="resetForm()" style="margin-left:auto;">
           Neu erstellen
         </button>
@@ -1802,7 +1805,7 @@ Lösung: 1. guter, 2. dafür, 3. das, 4. eines, 5. Hobbys, 6. Leute, 7. sich, 8.
           headers: fetchHeaders,
           body: JSON.stringify({
             model: MODEL,
-            max_tokens: 4096,
+            max_tokens: 8192,
             system: SYSTEM_PROMPT,
             messages: [{ role: 'user', content: userPrompt }],
           }),
