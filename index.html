@@ -1476,7 +1476,7 @@ PFLICHTREGELN – immer einhalten:
         if (!response.ok) {
           const err = await response.json().catch(() => ({}));
           const msg = err?.error?.message || `HTTP ${response.status}`;
-          if (response.status === 401) throw new Error('Ungültiger API-Schlüssel. Bitte überprüfen Sie Ihren Schlüssel.');
+          if (response.status === 401) throw new Error(`Ungültiger API-Schlüssel. (Anthropic: ${msg})`);
           if (response.status === 429) throw new Error('Anfragelimit erreicht. Bitte warten Sie einen Moment und versuchen Sie es erneut.');
           throw new Error(`API-Fehler: ${msg}`);
         }
