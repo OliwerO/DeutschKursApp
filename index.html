@@ -7,7 +7,8 @@
   <title>DeutschKurs – Materialgenerator</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;800&display=swap"
+    rel="stylesheet" />
   <style>
     /* ── Reset & Base ─────────────────────────────────────────── */
     *,
@@ -66,7 +67,7 @@
     header .logo {
       width: 44px;
       height: 44px;
-      background: rgba(255,255,255,.18);
+      background: rgba(255, 255, 255, .18);
       border-radius: 12px;
       display: flex;
       align-items: center;
@@ -106,7 +107,7 @@
       border-radius: var(--radius);
       box-shadow: var(--shadow);
       padding: 1.75rem 2rem;
-      border: 1px solid rgba(0,0,0,.04);
+      border: 1px solid rgba(0, 0, 0, .04);
     }
 
     .card-title {
@@ -246,7 +247,7 @@
       font-size: 1.8rem;
     }
 
-    .type-option input[type="radio"]:checked + label {
+    .type-option input[type="radio"]:checked+label {
       border-color: var(--primary);
       background: var(--primary-light);
       color: var(--primary);
@@ -267,7 +268,7 @@
       margin-top: .15rem;
     }
 
-    .type-option input[type="radio"]:checked + label .type-desc {
+    .type-option input[type="radio"]:checked+label .type-desc {
       color: #3b82f6;
     }
 
@@ -308,7 +309,7 @@
       min-height: 42px;
     }
 
-    .goal-chip input[type="checkbox"]:checked + label {
+    .goal-chip input[type="checkbox"]:checked+label {
       border-color: var(--primary);
       background: var(--primary-light);
       color: var(--primary);
@@ -438,7 +439,7 @@
       justify-content: center;
     }
 
-    .level-chip input[type="radio"]:checked + label {
+    .level-chip input[type="radio"]:checked+label {
       border-color: var(--primary);
       background: var(--primary-light);
       color: var(--primary);
@@ -457,8 +458,8 @@
       margin-top: .15rem;
     }
 
-    .level-chip input[type="radio"]:checked + label .sub-lbl,
-    .dur-chip input[type="radio"]:checked + label .sub-lbl {
+    .level-chip input[type="radio"]:checked+label .sub-lbl,
+    .dur-chip input[type="radio"]:checked+label .sub-lbl {
       color: #60a5fa;
     }
 
@@ -501,7 +502,7 @@
       justify-content: center;
     }
 
-    .dur-chip input[type="radio"]:checked + label {
+    .dur-chip input[type="radio"]:checked+label {
       border-color: var(--primary);
       background: var(--primary-light);
       color: var(--primary);
@@ -609,7 +610,9 @@
     }
 
     @keyframes spin {
-      to { transform: rotate(360deg); }
+      to {
+        transform: rotate(360deg);
+      }
     }
 
     .progress-bar-container {
@@ -635,8 +638,15 @@
     }
 
     @keyframes progress-pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: .7; }
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: .7;
+      }
     }
 
     .loading-message {
@@ -690,7 +700,9 @@
       margin: .85rem 0 .3rem;
     }
 
-    #material-output p { margin: .45rem 0; }
+    #material-output p {
+      margin: .45rem 0;
+    }
 
     #material-output ul,
     #material-output ol {
@@ -698,8 +710,13 @@
       margin: .45rem 0;
     }
 
-    #material-output li { margin: .3rem 0; }
-    #material-output strong { color: #1e3a8a; }
+    #material-output li {
+      margin: .3rem 0;
+    }
+
+    #material-output strong {
+      color: #1e3a8a;
+    }
 
     #material-output .word-bank {
       background: #f0f9ff;
@@ -790,7 +807,7 @@
       width: 240px;
       line-height: 1.4;
       z-index: 50;
-      box-shadow: 0 4px 16px rgba(0,0,0,.2);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, .2);
     }
 
     .help-icon .tooltip::after {
@@ -850,18 +867,23 @@
       header {
         padding: 1.1rem 1rem;
       }
+
       header h1 {
         font-size: 1.2rem;
       }
+
       main {
         padding: 0 .75rem 4rem;
       }
+
       .card {
         padding: 1.25rem 1.1rem;
       }
+
       .type-grid {
         grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
       }
+
       .btn-lg {
         width: 100%;
       }
@@ -929,8 +951,13 @@
         page-break-after: avoid;
       }
 
-      #material-output p { margin: 3pt 0; }
-      #material-output strong { color: #000; }
+      #material-output p {
+        margin: 3pt 0;
+      }
+
+      #material-output strong {
+        color: #000;
+      }
 
       #material-output hr {
         border: none;
@@ -945,7 +972,9 @@
         page-break-inside: avoid;
       }
 
-      #material-output li { margin: 2pt 0; }
+      #material-output li {
+        margin: 2pt 0;
+      }
 
       #material-output table {
         width: 100%;
@@ -999,8 +1028,10 @@
     <!-- API Key Card -->
     <div class="card" id="api-card">
       <div class="card-title">
-        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z" />
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+          aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z" />
         </svg>
         API-Schlüssel
       </div>
@@ -1020,8 +1051,10 @@
     <!-- Generator Form Card -->
     <div class="card">
       <div class="card-title">
-        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z" />
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+          aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z" />
         </svg>
         Neues Material erstellen
       </div>
@@ -1038,24 +1071,38 @@
           <label>
             Zielgruppe
             <span class="hint">Auswählen oder unten selbst beschreiben</span>
-            <span class="help-icon" tabindex="0">?<span class="tooltip">Beschreiben Sie kurz, wer in Ihrem Kurs lernt – Alter, Herkunft und Vorwissen helfen der KI, passende Materialien zu erstellen.</span></span>
+            <span class="help-icon" tabindex="0">?<span class="tooltip">Beschreiben Sie kurz, wer in Ihrem Kurs lernt –
+                Alter, Herkunft und Vorwissen helfen der KI, passende Materialien zu erstellen.</span></span>
           </label>
           <div class="preset-chips">
-            <button type="button" class="preset-chip" data-val="Hausfrauen, 30–50 Jahre, Herkunft Türkei und Arabien, wenig Schulbildung, lernen Lateinschrift" onclick="setGroup(this)">Hausfrauen TK / AR</button>
-            <button type="button" class="preset-chip" data-val="Männer, 20–45 Jahre, Herkunft Nordafrika und Afghanistan, kaum Schulbildung" onclick="setGroup(this)">Männer Nordafrika / AF</button>
-            <button type="button" class="preset-chip" data-val="Gemischte Gruppe, 18–60 Jahre, verschiedene Herkünfte, gering literalisiert" onclick="setGroup(this)">Gemischte Gruppe</button>
-            <button type="button" class="preset-chip" data-val="Senioren, 55–70 Jahre, Herkunft Osteuropa, Grundkenntnisse Lateinschrift" onclick="setGroup(this)">Senioren</button>
-            <button type="button" class="preset-chip" data-val="Junge Erwachsene, 18–30 Jahre, Herkunft Syrien und Irak, wenig Schulbildung" onclick="setGroup(this)">Junge Erwachsene SY / IQ</button>
+            <button type="button" class="preset-chip"
+              data-val="Hausfrauen, 30–50 Jahre, Herkunft Türkei und Arabien, wenig Schulbildung, lernen Lateinschrift"
+              onclick="setGroup(this)">Hausfrauen TK / AR</button>
+            <button type="button" class="preset-chip"
+              data-val="Männer, 20–45 Jahre, Herkunft Nordafrika und Afghanistan, kaum Schulbildung"
+              onclick="setGroup(this)">Männer Nordafrika / AF</button>
+            <button type="button" class="preset-chip"
+              data-val="Gemischte Gruppe, 18–60 Jahre, verschiedene Herkünfte, gering literalisiert"
+              onclick="setGroup(this)">Gemischte Gruppe</button>
+            <button type="button" class="preset-chip"
+              data-val="Senioren, 55–70 Jahre, Herkunft Osteuropa, Grundkenntnisse Lateinschrift"
+              onclick="setGroup(this)">Senioren</button>
+            <button type="button" class="preset-chip"
+              data-val="Junge Erwachsene, 18–30 Jahre, Herkunft Syrien und Irak, wenig Schulbildung"
+              onclick="setGroup(this)">Junge Erwachsene SY / IQ</button>
           </div>
-          <textarea id="target-group" rows="2" placeholder="z.B. Hausfrauen, 30–50 Jahre, Herkunft Türkei, kaum Schulbildung …"></textarea>
+          <textarea id="target-group" rows="2"
+            placeholder="z.B. Hausfrauen, 30–50 Jahre, Herkunft Türkei, kaum Schulbildung …"></textarea>
         </div>
 
         <div class="form-group">
           <label for="topic">
             Thema
-            <span class="help-icon" tabindex="0">?<span class="tooltip">Was sollen die Teilnehmer üben? Z.B. "Beim Arzt", "Einkaufen", "Wohnung suchen".</span></span>
+            <span class="help-icon" tabindex="0">?<span class="tooltip">Was sollen die Teilnehmer üben? Z.B. "Beim
+                Arzt", "Einkaufen", "Wohnung suchen".</span></span>
           </label>
-          <input type="text" id="topic" placeholder="z.B. Beim Arzt  ·  Einkaufen  ·  Kinder in der Schule …" required />
+          <input type="text" id="topic" placeholder="z.B. Beim Arzt  ·  Einkaufen  ·  Kinder in der Schule …"
+            required />
         </div>
 
         <hr class="step-divider" />
@@ -1166,7 +1213,8 @@
               <label for="dur-90">⏱ 90 min ★<span class="sub-lbl">Doppelstunde</span></label>
             </div>
             <div class="dur-chip">
-              <input type="radio" name="duration" id="dur-hw" value="Hausaufgabe (selbstständiges Arbeiten zu Hause, ca. 20–30 Minuten)" />
+              <input type="radio" name="duration" id="dur-hw"
+                value="Hausaufgabe (selbstständiges Arbeiten zu Hause, ca. 20–30 Minuten)" />
               <label for="dur-hw">🏠 Hausaufgabe<span class="sub-lbl">Zu Hause</span></label>
             </div>
           </div>
@@ -1179,9 +1227,11 @@
         <div class="form-group">
           <label for="details">
             Details und Schwerpunkte
-            <span class="help-icon" tabindex="0">?<span class="tooltip">Hier können Sie bestimmte Vokabeln, Grammatikthemen oder Unterthemen angeben, die im Material vorkommen sollen.</span></span>
+            <span class="help-icon" tabindex="0">?<span class="tooltip">Hier können Sie bestimmte Vokabeln,
+                Grammatikthemen oder Unterthemen angeben, die im Material vorkommen sollen.</span></span>
           </label>
-          <textarea id="details" rows="2" placeholder="z.B. Vokabeln: kaufen, bezahlen; Fokus auf W-Fragen …"></textarea>
+          <textarea id="details" rows="2"
+            placeholder="z.B. Vokabeln: kaufen, bezahlen; Fokus auf W-Fragen …"></textarea>
         </div>
 
         <div class="form-group">
@@ -1211,27 +1261,33 @@
               <label for="goal-vokabular">🔤 Vokabular aufbauen</label>
             </div>
             <div class="goal-chip">
-              <input type="checkbox" id="goal-grammatik" value="Grammatik im Kontext üben (z.B. Verbkonjugation, Artikel)" />
+              <input type="checkbox" id="goal-grammatik"
+                value="Grammatik im Kontext üben (z.B. Verbkonjugation, Artikel)" />
               <label for="goal-grammatik">🧱 Grammatik üben</label>
             </div>
             <div class="goal-chip">
-              <input type="checkbox" id="goal-selbst" value="Selbstvertrauen stärken – einfache Erfolgserlebnisse ermöglichen" />
+              <input type="checkbox" id="goal-selbst"
+                value="Selbstvertrauen stärken – einfache Erfolgserlebnisse ermöglichen" />
               <label for="goal-selbst">💪 Selbstvertrauen</label>
             </div>
             <div class="goal-chip">
-              <input type="checkbox" id="goal-wiederholung" value="Wiederholung und Festigung bereits gelernter Inhalte" />
+              <input type="checkbox" id="goal-wiederholung"
+                value="Wiederholung und Festigung bereits gelernter Inhalte" />
               <label for="goal-wiederholung">🔄 Wiederholung</label>
             </div>
           </div>
-          <textarea id="goal-custom" rows="2" style="margin-top:.7rem;" placeholder="Eigenes Lernziel oder Hinweise … (nicht Pflicht)"></textarea>
+          <textarea id="goal-custom" rows="2" style="margin-top:.7rem;"
+            placeholder="Eigenes Lernziel oder Hinweise … (nicht Pflicht)"></textarea>
         </div>
 
         <!-- Submit -->
         <div class="generate-row" style="margin-top: 1.75rem;">
           <button type="submit" class="btn btn-primary btn-lg" id="generate-btn">
             <span class="btn-text">
-              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" style="vertical-align:middle;margin-right:.25rem" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 010 1.972l-11.54 6.347a1.125 1.125 0 01-1.667-.986V5.653z" />
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"
+                style="vertical-align:middle;margin-right:.25rem" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 010 1.972l-11.54 6.347a1.125 1.125 0 01-1.667-.986V5.653z" />
               </svg>
               Material erstellen
             </span>
@@ -1253,8 +1309,10 @@
     <!-- Result Card -->
     <div class="card" id="result-card">
       <div class="card-title">
-        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z" />
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+          aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z" />
         </svg>
         Fertiges Material
         <span id="result-meta" style="font-weight:400;color:var(--muted);font-size:.85rem;margin-left:.6rem;"></span>
@@ -1262,14 +1320,18 @@
 
       <div class="result-toolbar">
         <button class="btn btn-secondary" onclick="copyMaterial()">
-          <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M15.666 3.888A2.25 2.25 0 0013.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 01-.75.75H9a.75.75 0 01-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 01-2.25 2.25H6.75A2.25 2.25 0 014.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 011.927-.184" />
+          <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+            aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M15.666 3.888A2.25 2.25 0 0013.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 01-.75.75H9a.75.75 0 01-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 01-2.25 2.25H6.75A2.25 2.25 0 014.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 011.927-.184" />
           </svg>
           Kopieren
         </button>
         <button class="btn btn-primary" onclick="window.print()">
-          <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0110.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0l.229 2.523a1.125 1.125 0 01-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0021 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 00-1.913-.247M6.34 18H5.25A2.25 2.25 0 013 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 011.913-.247m10.5 0a48.536 48.536 0 00-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5zm-3 0h.008v.008H15V10.5z" />
+          <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+            aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0110.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0l.229 2.523a1.125 1.125 0 01-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0021 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 00-1.913-.247M6.34 18H5.25A2.25 2.25 0 013 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 011.913-.247m10.5 0a48.536 48.536 0 00-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5zm-3 0h.008v.008H15V10.5z" />
           </svg>
           Drucken
         </button>
@@ -1284,7 +1346,8 @@
   </main>
 
   <!-- Back to Top -->
-  <button class="back-to-top" id="back-to-top" onclick="window.scrollTo({top:0, behavior:'smooth'})" aria-label="Nach oben scrollen">↑</button>
+  <button class="back-to-top" id="back-to-top" onclick="window.scrollTo({top:0, behavior:'smooth'})"
+    aria-label="Nach oben scrollen">↑</button>
 
   <footer>
     DeutschKurs Materialgenerator &mdash; Powered by Claude &mdash; Daten werden nicht gespeichert.
@@ -1739,7 +1802,7 @@ Lösung: 1. guter, 2. dafür, 3. das, 4. eines, 5. Hobbys, 6. Leute, 7. sich, 8.
           headers: fetchHeaders,
           body: JSON.stringify({
             model: MODEL,
-            max_tokens: 2048,
+            max_tokens: 4096,
             system: SYSTEM_PROMPT,
             messages: [{ role: 'user', content: userPrompt }],
           }),
