@@ -18,6 +18,16 @@ export default {
       return corsResponse(null, 204);
     }
 
+    // ── DEBUG endpoint (GET ?debug) – remove after testing ───
+    const url = new URL(request.url);
+    if (request.method === 'GET' && url.searchParams.has('debug')) {
+      const key = env.ANTHROPIC_API_KEY;
+      const info = key
+        ? `SET ✓ — length: ${key.length}, starts with: ${key.substring(0, 14)}...`
+        : 'NOT SET ✗ — env.ANTHROPIC_API_KEY is undefined';
+      return corsResponse(JSON.stringify({ key_status: info }), 200);
+    }
+
     // ── Only allow POST ──────────────────────────────────────
     if (request.method !== 'POST') {
       return corsResponse(JSON.stringify({ error: 'Method not allowed' }), 405);
@@ -44,8 +54,8 @@ export default {
       anthropicResponse = await fetch('https://api.anthropic.com/v1/messages', {
         method: 'POST',
         headers: {
-          'Content-Type':      'application/json',
-          'x-api-key':         env.ANTHROPIC_API_KEY,
+          'Content-Type': 'application/json',
+          'x-api-key': env.ANTHROPIC_API_KEY,
           'anthropic-version': '2023-06-01',
         },
         body,
@@ -67,7 +77,7 @@ function corsResponse(body, status = 200) {
   return new Response(body, {
     status,
     headers: {
-      'Content-Type':                'application/json',
+      'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'POST, OPTIONS',
       'Access-Control-Allow-Headers': 'Content-Type, x-app-token',
