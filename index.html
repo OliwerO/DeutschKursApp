@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;800&display=swap"
     rel="stylesheet" />
-  <style>
+<style>
     /* ── Reset & Base ─────────────────────────────────────────── */
     *,
     *::before,
@@ -942,19 +942,25 @@
 
     /* ══ PRINT STYLES – A4 ═════════════════════════════════════ */
     @media print {
+
+      /*
+       * margin: 0 is the ONLY reliable way to suppress the browser's
+       * built-in URL, date, and title headers/footers.
+       * Content margins come from #material-output padding instead.
+       */
       @page {
         size: A4 portrait;
-        margin: 0; /* Removes browser-added URL/date headers and footers */
+        margin: 0;
       }
 
       body {
         background: #fff;
-        font-size: 11pt;
+        font-size: 11.5pt;
         color: #000;
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
-        padding: 2cm 2.5cm;
-        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
       }
 
       header,
@@ -967,6 +973,12 @@
       .progress-bar-container,
       .loading-message {
         display: none !important;
+      }
+
+      main {
+        margin: 0;
+        padding: 0;
+        max-width: none;
       }
 
       #result-card {
@@ -982,76 +994,109 @@
 
       #material-output {
         border: none;
-        padding: 0;
-        font-size: 11pt;
-        line-height: 1.85;
+        /* These paddings act as page margins since @page margin is 0 */
+        padding: 1.8cm 2.2cm;
+        font-size: 11.5pt;
+        line-height: 2;
         white-space: normal;
       }
 
+      /*
+       * .print-keep wraps each heading + its first content sibling
+       * so they physically can't be split across pages.
+       */
+      .print-keep {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      /* ── Headings ── */
       #material-output h2 {
         font-size: 15pt;
+        font-weight: 800;
         color: #000;
         border-bottom: 1.5pt solid #333;
-        padding-bottom: 4pt;
-        margin: 0 0 10pt;
-        page-break-after: avoid;  /* legacy */
-        page-break-inside: avoid; /* legacy – no mid-heading split */
-        break-after: avoid;       /* modern */
-        break-inside: avoid;      /* modern */
+        padding-top: 16pt;
+        padding-bottom: 6pt;
+        margin: 22pt 0 12pt;
+        /* Every h2 section starts on a new page */
+        break-before: page;
+        page-break-before: always;
+        break-after: avoid;
+        page-break-after: avoid;
+      }
+
+      /* First h2 must NOT force a page break */
+      #material-output h2:first-child,
+      .print-keep:first-child>h2 {
+        break-before: auto;
+        page-break-before: auto;
+        margin-top: 0;
+        padding-top: 0;
       }
 
       #material-output h3 {
-        font-size: 12pt;
-        color: #222;
-        margin: 14pt 0 3pt;
-        page-break-after: avoid;  /* legacy */
-        page-break-inside: avoid; /* legacy */
-        break-after: avoid;       /* modern */
-        break-inside: avoid;      /* modern */
+        font-size: 12.5pt;
+        font-weight: 700;
+        color: #111;
+        margin: 20pt 0 8pt;
+        padding-top: 6pt;
+        break-after: avoid;
+        page-break-after: avoid;
       }
 
+      /* ── Paragraphs ── */
       #material-output p {
-        margin: 3pt 0;
-        orphans: 3; /* min lines kept at bottom of page */
-        widows: 3;  /* min lines kept at top of page */
+        margin: 6pt 0;
+        orphans: 3;
+        widows: 3;
       }
 
       #material-output strong {
         color: #000;
       }
 
+      #material-output em {
+        font-style: italic;
+      }
+
+      /* ── Horizontal rules ── */
       #material-output hr {
         border: none;
         border-top: .75pt solid #bbb;
-        margin: 10pt 0;
+        margin: 16pt 0;
       }
 
+      /* ── Lists ── */
       #material-output ul,
       #material-output ol {
         padding-left: 1.2cm;
-        margin: 4pt 0;
-        page-break-inside: avoid; /* legacy */
-        break-inside: avoid;      /* modern */
+        margin: 8pt 0;
+        page-break-inside: avoid;
+        break-inside: avoid;
       }
 
       #material-output li {
-        margin: 2pt 0;
+        margin: 5pt 0;
+        line-height: 2;
       }
 
+      /* ── Tables ── */
       #material-output table {
         width: 100%;
         border-collapse: collapse;
-        font-size: 10pt;
-        margin: 8pt 0;
-        page-break-inside: avoid; /* legacy */
-        break-inside: avoid;      /* modern */
+        font-size: 10.5pt;
+        margin: 12pt 0;
+        page-break-inside: avoid;
+        break-inside: avoid;
       }
 
       #material-output th,
       #material-output td {
-        border: .75pt solid #bbb;
-        padding: 4pt 6pt;
+        border: .75pt solid #aaa;
+        padding: 6pt 8pt;
         vertical-align: top;
+        line-height: 1.7;
       }
 
       #material-output th {
@@ -1059,18 +1104,23 @@
         font-weight: 700;
       }
 
+      /* ── Write lines ── */
       #material-output .write-line {
         border-bottom: 1pt solid #888;
-        min-height: .7cm;
-        margin: 3pt 0;
+        min-height: 1cm;
+        margin: 6pt 0;
         display: block;
       }
 
+      /* ── Word bank ── */
       #material-output .word-bank {
-        page-break-inside: avoid; /* keep word-box on one page */
+        margin: 10pt 0;
+        padding: 10pt 14pt;
+        page-break-inside: avoid;
         break-inside: avoid;
       }
 
+      /* ── Image placeholder ── */
       #material-output .img-placeholder {
         display: inline-flex;
         align-items: center;
@@ -1089,11 +1139,14 @@
         color: #000;
       }
 
+      /* ── Multi-type section break ── */
       hr.section-break {
         border: none;
-        border-top: 3px solid #3b5fc0;
-        margin: 2rem 0;
+        border-top: 2pt solid #333;
+        margin: 0;
+        padding: 0;
         page-break-before: always;
+        break-before: page;
       }
     }
 
@@ -1466,15 +1519,21 @@
           </svg>
           Kopieren
         </button>
-        <button class="btn btn-primary" onclick="window.print()">
+        <button class="btn btn-primary" onclick="printMaterial()">
           <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
             aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round"
               d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0110.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0l.229 2.523a1.125 1.125 0 01-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0021 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 00-1.913-.247M6.34 18H5.25A2.25 2.25 0 013 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 011.913-.247m10.5 0a48.536 48.536 0 00-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5zm-3 0h.008v.008H15V10.5z" />
           </svg>
-          Drucken
+          PDF speichern
         </button>
 
+        <button class="btn btn-secondary" onclick="saveAsWord()">
+          <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+          </svg>
+          Word speichern
+        </button>
         <button class="btn btn-secondary" onclick="resetForm()" style="margin-left:auto;">
           Neu erstellen
         </button>
@@ -1587,7 +1646,7 @@ Anweisungen:
 
 Format:
 ## Lückentext: [Thema]
-**Niveau:** [Niveau] | **Zielgruppe:** [kurze Beschreibung]
+**Niveau:** [Niveau]
 
 ---
 
@@ -1623,7 +1682,7 @@ Anweisungen:
 
 Format:
 ## Dialog: [Thema]
-**Niveau:** [Niveau] | **Zielgruppe:** [kurze Beschreibung]
+**Niveau:** [Niveau]
 
 ---
 
@@ -1658,7 +1717,7 @@ Anweisungen:
 
 Format:
 ## Schreibübung: [Thema]
-**Niveau:** [Niveau] | **Zielgruppe:** [kurze Beschreibung]
+**Niveau:** [Niveau]
 
 ---
 
@@ -1704,7 +1763,7 @@ Anweisungen:
 
 Format:
 ## Wortschatz: [Thema]
-**Niveau:** [Niveau] | **Zielgruppe:** [kurze Beschreibung]
+**Niveau:** [Niveau]
 
 ---
 
@@ -1985,6 +2044,41 @@ Lösung: 1. guter, 2. dafür, 3. das, 4. eines, 5. Hobbys, 6. Leute, 7. sich, 8.
 
       output.innerHTML = combinedHtml;
 
+      // Post-process: wrap each heading + next siblings in .print-keep
+      // so they physically can't be split across pages
+      output.querySelectorAll('h2, h3').forEach(heading => {
+        if (heading.parentNode.classList?.contains('print-keep')) return;
+        const siblings = [];
+        let el = heading.nextElementSibling;
+        while (el && siblings.length < 3 && !el.matches('h2, h3, hr')) {
+          siblings.push(el);
+          el = el.nextElementSibling;
+        }
+        if (siblings.length > 0) {
+          const wrap = document.createElement('div');
+          wrap.className = 'print-keep';
+          heading.parentNode.insertBefore(wrap, heading);
+          wrap.appendChild(heading);
+          siblings.forEach(s => wrap.appendChild(s));
+        }
+      });
+
+      // Also wrap bold paragraphs (sub-headers like "Nützliche Redemittel:") with next sibling
+      output.querySelectorAll('p > strong:first-child').forEach(strong => {
+        const p = strong.parentNode;
+        if (p.parentNode.classList?.contains('print-keep')) return;
+        if (p.childNodes.length <= 2) { // just <strong> + maybe text
+          const next = p.nextElementSibling;
+          if (next && !next.matches('h2, h3, hr, p > strong')) {
+            const wrap = document.createElement('div');
+            wrap.className = 'print-keep';
+            p.parentNode.insertBefore(wrap, p);
+            wrap.appendChild(p);
+            wrap.appendChild(next);
+          }
+        }
+      });
+
       document.getElementById('result-meta').textContent =
         `${typeLabels} · ${thema} · ${niveau}`;
 
@@ -1999,6 +2093,14 @@ Lösung: 1. guter, 2. dafür, 3. das, 4. eines, 5. Hobbys, 6. Leute, 7. sich, 8.
     /* ── Minimal Markdown renderer ────────────────────────────── */
     function renderMarkdown(md) {
       md = md.replace(/^_{5,}\s*$/gm, '%%WRITELINE%%');
+      // Strip any "Zielgruppe" lines or inline mentions Claude may still include
+      md = md.replace(/\s*\|\s*\*\*Zielgruppe:\*\*[^\n]*/g, '');
+      md = md.replace(/^\*\*Zielgruppe:\*\*[^\n]*\n?/gm, '');
+      // Strip "Ende des Materials" and similar ending markers
+      md = md.replace(/^#{1,3}\s*Ende\b.*$/gm, '');
+      md = md.replace(/^\*\*Ende\b.*\*\*\s*$/gm, '');
+      md = md.replace(/^---+\s*$/gm, m => m); // keep normal HRs but trim trailing ones
+      md = md.replace(/(\n---+\s*)+$/g, ''); // remove trailing HRs at end of document
 
       let html = md
         .replace(/&/g, '&amp;')
@@ -2025,6 +2127,7 @@ Lösung: 1. guter, 2. dafür, 3. das, 4. eines, 5. Hobbys, 6. Leute, 7. sich, 8.
         }
       );
 
+      html = html.replace(/^#### (.+)$/gm, '<h4>$1</h4>');
       html = html.replace(/^### (.+)$/gm, '<h3>$1</h3>');
       html = html.replace(/^## (.+)$/gm, '<h2>$1</h2>');
       html = html.replace(/^# (.+)$/gm, '<h2>$1</h2>');
@@ -2110,6 +2213,92 @@ Lösung: 1. guter, 2. dafür, 3. das, 4. eines, 5. Hobbys, 6. Leute, 7. sich, 8.
       btn.style.background = '#dcfce7';
       btn.style.color = '#15803d';
       setTimeout(() => { btn.innerHTML = orig; btn.style.background = ''; btn.style.color = ''; }, 2000);
+    }
+
+    /* ── PDF via print popup ──────────────────────────────────── */
+    function printMaterial() {
+      const content = document.getElementById('material-output').innerHTML;
+      const win = window.open('', '_blank', 'width=900,height=700');
+      if (!win) { alert('Bitte Popups für diese Seite erlauben.'); return; }
+      win.document.write(`<!DOCTYPE html>
+<html lang="de"><head>
+<meta charset="UTF-8">
+<title></title>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  @page { size: A4 portrait; margin: 0mm; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Source Sans 3', 'Segoe UI', Arial, sans-serif;
+    font-size: 11.5pt;
+    line-height: 2;
+    color: #000;
+    background: #fff;
+    padding: 1.5cm 2.2cm 1.2cm;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  h2 { font-size:15pt; font-weight:800; border-bottom:1.5pt solid #333; padding-bottom:6pt; margin:22pt 0 12pt; break-after:avoid; page-break-after:avoid; }
+  h2:first-child { margin-top:0; }
+  h3 { font-size:12.5pt; font-weight:700; color:#111; margin:20pt 0 8pt; padding-top:6pt; break-after:avoid; page-break-after:avoid; }
+  h4 { font-size:11.5pt; font-weight:700; color:#111; margin:16pt 0 6pt; break-after:avoid; page-break-after:avoid; }
+  p { margin:6pt 0; orphans:3; widows:3; }
+  strong { color:#000; }
+  em { font-style:italic; }
+  hr { border:none; border-top:.75pt solid #bbb; margin:16pt 0; }
+  ul, ol { padding-left:1.2cm; margin:8pt 0; }
+  li { margin:5pt 0; line-height:2; }
+  table { width:100%; border-collapse:collapse; font-size:10.5pt; margin:12pt 0; page-break-inside:avoid; break-inside:avoid; }
+  th, td { border:.75pt solid #aaa; padding:6pt 8pt; vertical-align:top; line-height:1.7; }
+  th { background:#f0f0f0; font-weight:700; }
+  .write-line { border-bottom:1pt solid #888; min-height:1cm; margin:6pt 0; display:block; }
+  .word-bank { margin:10pt 0; padding:10pt 14pt; border:1.5pt solid #bae6fd; border-radius:8px; background:#f0f9ff; page-break-inside:avoid; break-inside:avoid; }
+  .print-keep { break-inside:avoid; page-break-inside:avoid; }
+  a { text-decoration:none; color:#000; }
+  hr.section-break { display:none; }
+</style>
+</head><body>${content}</body></html>`);
+      win.document.close();
+      win.focus();
+      setTimeout(() => { win.print(); win.close(); }, 600);
+    }
+
+    /* ── Word download via native Word HTML format (no library) ── */
+    function saveAsWord() {
+      const content = document.getElementById('material-output').innerHTML;
+
+      const html = `<html xmlns:o="urn:schemas-microsoft-com:office:office"
+        xmlns:w="urn:schemas-microsoft-com:office:word"
+        xmlns="http://www.w3.org/TR/REC-html40">
+        <head><meta charset="UTF-8">
+        <style>
+          body { font-family: Arial, sans-serif; font-size: 11.5pt; line-height: 2; margin: 2cm; }
+          h2 { font-size: 15pt; font-weight: bold; border-bottom: 1px solid #333; margin: 22pt 0 12pt; padding-bottom: 4pt; }
+          h3 { font-size: 12.5pt; font-weight: bold; margin: 20pt 0 8pt; }
+          p { margin: 6pt 0; }
+          ul, ol { margin: 8pt 0; padding-left: 1.2cm; }
+          li { margin: 5pt 0; }
+          table { width: 100%; border-collapse: collapse; font-size: 10.5pt; margin: 12pt 0; }
+          th, td { border: 1px solid #aaa; padding: 6pt 8pt; vertical-align: top; }
+          th { background: #f0f0f0; font-weight: bold; }
+          .write-line { border-bottom: 1px solid #888; display: block; min-height: 20pt; margin: 6pt 0; }
+          .word-bank { border: 1px solid #7dd3fc; padding: 10pt 14pt; margin: 10pt 0; }
+          hr { border: none; border-top: 1px solid #bbb; margin: 16pt 0; }
+          hr.section-break { display: none; }
+          a { text-decoration: none; color: #000; }
+        </style></head>
+        <body>${content}</body>
+      </html>`;
+
+      const blob = new Blob(['\ufeff' + html], { type: 'application/msword' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'DeutschKurs_Material.doc';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
     }
 
     /* ── Reset ────────────────────────────────────────────────── */
