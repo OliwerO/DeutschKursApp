@@ -265,7 +265,19 @@ async function readSSEStream(response, { onText, onError }) {
         let event;
         try { event = JSON.parse(data); } catch { continue; }
 
-        if (event.type === 'content_block_delta' && event.delta?.type === 'text_delta') {
+        if (event.type === 'message_start' && event.message?.usage) {
+          const u = event.message.usage;
+          const created = u.cache_creation_input_tokens || 0;
+          const read = u.cache_read_input_tokens || 0;
+          const input = u.input_tokens || 0;
+          if (created > 0) {
+            console.log(`[Prompt Cache] MISS – created ${created} cached tokens, ${input} input tokens`);
+          } else if (read > 0) {
+            console.log(`[Prompt Cache] HIT – read ${read} cached tokens, ${input} input tokens`);
+          } else {
+            console.log(`[Prompt Cache] No cache activity – ${input} input tokens`);
+          }
+        } else if (event.type === 'content_block_delta' && event.delta?.type === 'text_delta') {
           const chunk = event.delta.text;
           fullText += chunk;
           onText(chunk, fullText);
@@ -297,7 +309,7 @@ async function streamRequest(fetchUrl, fetchHeaders, userPrompt, onChunk) {
       model: MODEL,
       max_tokens: 8192,
       stream: true,
-      system: SYSTEM_PROMPT,
+      system: [{ type: 'text', text: SYSTEM_PROMPT, cache_control: { type: 'ephemeral' } }],
       messages: [{ role: 'user', content: userPrompt }],
     }),
   });
