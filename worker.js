@@ -2,7 +2,7 @@
  * DeutschKurs – Cloudflare Worker
  * ─────────────────────────────────────────────────────────────
  * Proxies requests from the browser to the Anthropic API.
- * The API key is stored securely as a Worker environment secret.
+ * Supports both regular JSON and SSE streaming responses.
  *
  * Environment variables (set in Cloudflare dashboard):
  *   ANTHROPIC_API_KEY  – your Anthropic API key (required)
@@ -31,7 +31,7 @@ export default {
       }
     }
 
-    // ── Forward request to Anthropic ─────────────────────────
+    // ── Read request body ────────────────────────────────────
     let body;
     try {
       body = await request.text();
@@ -39,6 +39,14 @@ export default {
       return corsResponse(JSON.stringify({ error: 'Invalid request body' }), 400);
     }
 
+    // ── Detect streaming request ─────────────────────────────
+    let isStream = false;
+    try {
+      const parsed = JSON.parse(body);
+      isStream = parsed.stream === true;
+    } catch { /* non-JSON body falls through to Anthropic error */ }
+
+    // ── Forward request to Anthropic ─────────────────────────
     let anthropicResponse;
     try {
       anthropicResponse = await fetch('https://api.anthropic.com/v1/messages', {
@@ -57,6 +65,22 @@ export default {
       );
     }
 
+    // ── Streaming: proxy the SSE stream with CORS headers ────
+    if (isStream && anthropicResponse.ok && anthropicResponse.body) {
+      return new Response(anthropicResponse.body, {
+        status: anthropicResponse.status,
+        headers: {
+          'Content-Type': 'text/event-stream',
+          'Cache-Control': 'no-cache',
+          'Connection': 'keep-alive',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'POST, OPTIONS',
+          'Access-Control-Allow-Headers': 'Content-Type, x-app-token',
+        },
+      });
+    }
+
+    // ── Non-streaming: return buffered JSON ──────────────────
     const responseText = await anthropicResponse.text();
     return corsResponse(responseText, anthropicResponse.status);
   },

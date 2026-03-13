@@ -221,40 +221,6 @@ Format:
 ${optionalSection(details, lernziel)}`,
 };
 
-/* ── Progress simulation ──────────────────────────────────── */
-let progressInterval;
-
-function startProgress() {
-  const container = document.getElementById('progress-container');
-  const bar = document.getElementById('progress-bar');
-  const msg = document.getElementById('loading-msg');
-  container.classList.add('visible');
-  msg.classList.add('visible');
-  bar.style.width = '0%';
-
-  let progress = 0;
-  progressInterval = setInterval(() => {
-    if (progress < 85) {
-      progress += Math.random() * 8 + 2;
-      if (progress > 85) progress = 85;
-      bar.style.width = progress + '%';
-    }
-  }, 600);
-}
-
-function stopProgress() {
-  clearInterval(progressInterval);
-  const container = document.getElementById('progress-container');
-  const bar = document.getElementById('progress-bar');
-  const msg = document.getElementById('loading-msg');
-  bar.style.width = '100%';
-  setTimeout(() => {
-    container.classList.remove('visible');
-    msg.classList.remove('visible');
-    bar.style.width = '0%';
-  }, 500);
-}
-
 /* ── Selection order tracking ───────────────────────────── */
 const materialTypeOrder = ['lueckentext']; // pre-checked item
 document.querySelectorAll('input[name="material-type"]').forEach(cb => {
@@ -267,6 +233,93 @@ document.querySelectorAll('input[name="material-type"]').forEach(cb => {
     }
   });
 });
+
+/* ── SSE Stream Parser ───────────────────────────────────── */
+
+/**
+ * Reads an SSE stream from a fetch Response and calls onText for each
+ * content_block_delta text chunk. Returns the full accumulated text.
+ * Calls onError if an error event is received mid-stream.
+ */
+async function readSSEStream(response, { onText, onError }) {
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder();
+  let buffer = '';
+  let fullText = '';
+
+  try {
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+
+      buffer += decoder.decode(value, { stream: true });
+      const lines = buffer.split('\n');
+      // Keep the last potentially incomplete line in the buffer
+      buffer = lines.pop() || '';
+
+      for (const line of lines) {
+        if (!line.startsWith('data: ')) continue;
+        const data = line.slice(6);
+        if (data === '[DONE]') continue;
+
+        let event;
+        try { event = JSON.parse(data); } catch { continue; }
+
+        if (event.type === 'content_block_delta' && event.delta?.type === 'text_delta') {
+          const chunk = event.delta.text;
+          fullText += chunk;
+          onText(chunk, fullText);
+        } else if (event.type === 'error') {
+          const msg = event.error?.message || 'Stream error';
+          onError(new Error(msg));
+        }
+      }
+    }
+  } catch (err) {
+    onError(err);
+  }
+
+  return fullText;
+}
+
+/* ── Streaming request helper ────────────────────────────── */
+
+/**
+ * Makes a streaming API request and returns the full text.
+ * onChunk(fullTextSoFar) is called as each token arrives.
+ * Throws on HTTP errors or stream errors.
+ */
+async function streamRequest(fetchUrl, fetchHeaders, userPrompt, onChunk) {
+  const response = await fetch(fetchUrl, {
+    method: 'POST',
+    headers: fetchHeaders,
+    body: JSON.stringify({
+      model: MODEL,
+      max_tokens: 8192,
+      stream: true,
+      system: SYSTEM_PROMPT,
+      messages: [{ role: 'user', content: userPrompt }],
+    }),
+  });
+
+  if (!response.ok) {
+    const err = await response.json().catch(() => ({}));
+    const msg = err?.error?.message || `HTTP ${response.status}`;
+    if (response.status === 401) throw new Error('Der API-Schlüssel ist ungültig. Bitte prüfen Sie ihn.');
+    if (response.status === 429) throw new Error('Zu viele Anfragen. Bitte warten Sie einen Moment.');
+    throw new Error(`Fehler vom Server: ${msg}`);
+  }
+
+  let streamError = null;
+  const fullText = await readSSEStream(response, {
+    onText: (_chunk, fullText) => onChunk(fullText),
+    onError: (err) => { streamError = err; },
+  });
+
+  if (streamError && !fullText) throw streamError;
+  // If we got partial content + error, return what we have (caller handles it)
+  return { text: fullText, error: streamError };
+}
 
 /* ── Generate ─────────────────────────────────────────────── */
 async function generateMaterial(e) {
@@ -308,53 +361,117 @@ async function generateMaterial(e) {
 
   hideError();
   setLoading(true);
-  startProgress();
 
+  const output = document.getElementById('material-output');
+  const card = document.getElementById('result-card');
   const loadingMsg = document.getElementById('loading-msg');
+  const progressContainer = document.getElementById('progress-container');
+  const progressBar = document.getElementById('progress-bar');
+
+  // Show result card immediately for streaming display
+  card.style.display = 'block';
+  output.innerHTML = '';
+
+  // Show initial progress
+  progressContainer.classList.add('visible');
+  loadingMsg.classList.add('visible');
+  progressBar.style.width = '5%';
+
   const results = [];
+  let hadStreamError = false;
 
   try {
     for (let i = 0; i < selectedTypes.length; i++) {
       const typeVal = selectedTypes[i];
       const typeLabel = MATERIAL_LABELS[typeVal];
+
       if (selectedTypes.length > 1) {
         loadingMsg.textContent = `Erstelle ${typeLabel} (${i + 1}/${selectedTypes.length}) …`;
+      } else {
+        loadingMsg.textContent = `Erstelle ${typeLabel} …`;
       }
+
+      // Calculate progress range for this material type
+      const progressStart = (i / selectedTypes.length) * 90 + 5;
+      const progressEnd = ((i + 1) / selectedTypes.length) * 90 + 5;
+      progressBar.style.width = progressStart + '%';
 
       const userPrompt = MATERIAL_PROMPTS[typeVal](zielgruppe, thema, niveau, dauer, details, lernziel);
 
-      const response = await fetch(fetchUrl, {
-        method: 'POST',
-        headers: fetchHeaders,
-        body: JSON.stringify({
-          model: MODEL,
-          max_tokens: 8192,
-          system: SYSTEM_PROMPT,
-          messages: [{ role: 'user', content: userPrompt }],
-        }),
-      });
-
-      if (!response.ok) {
-        const err = await response.json().catch(() => ({}));
-        const msg = err?.error?.message || `HTTP ${response.status}`;
-        if (response.status === 401) throw new Error('Der API-Schlüssel ist ungültig. Bitte prüfen Sie ihn.');
-        if (response.status === 429) throw new Error('Zu viele Anfragen. Bitte warten Sie einen Moment.');
-        throw new Error(`Fehler vom Server: ${msg}`);
+      // Add separator before non-first sections
+      if (i > 0) {
+        const sep = document.createElement('hr');
+        sep.className = 'section-break';
+        output.appendChild(sep);
       }
 
-      const data = await response.json();
-      results.push({ typeVal, typeLabel, text: data?.content?.[0]?.text || '' });
+      // Create a container for this streaming section
+      const sectionEl = document.createElement('div');
+      sectionEl.className = 'streaming-section';
+      output.appendChild(sectionEl);
+
+      // Scroll to the result card on first chunk
+      let scrolledToResult = false;
+
+      const { text, error } = await streamRequest(fetchUrl, fetchHeaders, userPrompt, (fullText) => {
+        // Render incrementally
+        const html = renderMarkdown(fullText);
+        sectionEl.innerHTML = DOMPurify.sanitize(html, {
+          ADD_TAGS: ['span'],
+          ADD_ATTR: ['class'],
+        });
+
+        // Scroll to result on first visible content
+        if (!scrolledToResult && fullText.length > 20) {
+          card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          scrolledToResult = true;
+        }
+
+        // Update progress based on token flow (rough estimate)
+        const estimatedProgress = Math.min(progressEnd, progressStart + (progressEnd - progressStart) * 0.9);
+        progressBar.style.width = estimatedProgress + '%';
+      });
+
+      results.push({ typeVal, typeLabel, text });
+      progressBar.style.width = progressEnd + '%';
+
+      if (error) {
+        hadStreamError = true;
+        showError('Die Generierung wurde unterbrochen. Das bisher erstellte Material wird angezeigt.');
+      }
     }
 
-    const typeLabels = results.map(r => r.typeLabel).join(' + ');
-    displayResult(results, typeLabels, thema, niveau);
+    // Final render: re-render all sections cleanly for post-processing (print-keep wrapping, etc.)
+    finishDisplay(results, selectedTypes, thema, niveau, output, card);
+
+    if (hadStreamError) {
+      // Keep the error visible but don't throw
+    }
 
   } catch (err) {
-    showError(err.message || 'Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.');
+    // If we have partial results, show them
+    if (results.length > 0) {
+      finishDisplay(results, selectedTypes, thema, niveau, output, card);
+      showError(err.message + ' — Das bisher erstellte Material wird angezeigt.');
+    } else {
+      card.style.display = 'none';
+      showError(err.message || 'Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.');
+    }
   } finally {
     setLoading(false);
-    stopProgress();
+    progressBar.style.width = '100%';
+    setTimeout(() => {
+      progressContainer.classList.remove('visible');
+      loadingMsg.classList.remove('visible');
+      progressBar.style.width = '0%';
+    }, 500);
   }
+}
+
+/* ── Finish display: final render + post-processing ──────── */
+function finishDisplay(results, selectedTypes, thema, niveau, output, card) {
+  const typeLabels = results.map(r => r.typeLabel).join(' + ');
+  displayResult(results, typeLabels, thema, niveau);
 }
 
 /* ── Display result ───────────────────────────────────────── */
@@ -413,7 +530,6 @@ function displayResult(results, typeLabels, thema, niveau) {
 
   const card = document.getElementById('result-card');
   card.style.display = 'block';
-  card.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
   const combinedMarkdown = results.map(r => r.text).join('\n\n---\n\n');
   saveToHistory({ typeLabel: typeLabels, thema, niveau, markdown: combinedMarkdown, html: combinedHtml });
