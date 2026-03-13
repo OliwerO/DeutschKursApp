@@ -1006,3 +1006,132 @@ document.addEventListener('click', (e) => {
 
 // Initialise history on page load
 renderHistoryPanel();
+
+/* ── Template Library ─────────────────────────────────────── */
+const TEMPLATES_KEY = 'deutschkurs_templates';
+
+const BUILTIN_TEMPLATES = [
+  { id: 'builtin-1', name: 'A1 Arztbesuch Lückentext', builtin: true, zielgruppe: 'Erwachsene mit geringen Deutschkenntnissen', thema: 'Beim Arzt', niveau: 'A1', materialTypes: ['lueckentext'], dauer: '90 Minuten (Doppelstunde)' },
+  { id: 'builtin-2', name: 'A2 Einkaufen Dialog', builtin: true, zielgruppe: 'Gemischte Gruppe, 18–60 Jahre, verschiedene Herkünfte', thema: 'Einkaufen im Supermarkt', niveau: 'A2', materialTypes: ['dialog'], dauer: '45 Minuten (eine Unterrichtsstunde)' },
+  { id: 'builtin-3', name: 'B1 Wohnung suchen Schreibübung', builtin: true, zielgruppe: 'Erwachsene mit Grundkenntnissen', thema: 'Wohnung suchen und Mietvertrag', niveau: 'B1', materialTypes: ['schreibuebung'], dauer: '90 Minuten (Doppelstunde)' },
+  { id: 'builtin-4', name: 'A1 Begrüßung Wortschatz', builtin: true, zielgruppe: 'Hausfrauen, 30–50 Jahre, Herkunft Türkei und Arabien, wenig Schulbildung', thema: 'Begrüßung und Vorstellung', niveau: 'A1', materialTypes: ['wortschatz'], dauer: '30 Minuten' },
+  { id: 'builtin-5', name: 'B2 Bewerbung C-Test', builtin: true, zielgruppe: 'Erwachsene mit guten Deutschkenntnissen', thema: 'Bewerbung und Vorstellungsgespräch', niveau: 'B2', materialTypes: ['ctest'], dauer: '45 Minuten (eine Unterrichtsstunde)' },
+];
+
+function loadTemplates() {
+  try { return JSON.parse(localStorage.getItem(TEMPLATES_KEY) || '[]'); } catch { return []; }
+}
+
+function saveTemplates(templates) {
+  try { localStorage.setItem(TEMPLATES_KEY, JSON.stringify(templates)); } catch (e) { }
+}
+
+function getAllTemplates() {
+  return [...BUILTIN_TEMPLATES, ...loadTemplates()];
+}
+
+function saveCurrentAsTemplate() {
+  const name = prompt('Vorlage benennen:');
+  if (!name || !name.trim()) return;
+
+  const niveau = document.querySelector('input[name="niveau"]:checked')?.value || 'A1';
+  const checkedTypes = [...document.querySelectorAll('input[name="material-type"]:checked')].map(cb => cb.value);
+  const dauer = document.querySelector('input[name="duration"]:checked')?.value || '';
+
+  const template = {
+    id: 'custom-' + Date.now(),
+    name: name.trim(),
+    builtin: false,
+    zielgruppe: document.getElementById('target-group').value.trim(),
+    thema: document.getElementById('topic').value.trim(),
+    niveau,
+    materialTypes: checkedTypes,
+    dauer,
+  };
+
+  const templates = loadTemplates();
+  templates.unshift(template);
+  saveTemplates(templates);
+  renderTemplateUI();
+}
+
+function loadTemplate(id) {
+  const tmpl = getAllTemplates().find(t => t.id === id);
+  if (!tmpl) return;
+
+  document.getElementById('target-group').value = tmpl.zielgruppe || '';
+  document.getElementById('topic').value = tmpl.thema || '';
+
+  // Set niveau
+  const niveauRadio = document.querySelector(`input[name="niveau"][value="${tmpl.niveau}"]`);
+  if (niveauRadio) niveauRadio.checked = true;
+  updateCTestVisibility();
+
+  // Set material types
+  document.querySelectorAll('input[name="material-type"]').forEach(cb => { cb.checked = false; });
+  materialTypeOrder.length = 0;
+  (tmpl.materialTypes || []).forEach(val => {
+    const cb = document.querySelector(`input[name="material-type"][value="${val}"]`);
+    if (cb) { cb.checked = true; materialTypeOrder.push(val); }
+  });
+
+  // Set duration
+  const durRadio = document.querySelector(`input[name="duration"][value="${tmpl.dauer}"]`);
+  if (durRadio) durRadio.checked = true;
+
+  // Scroll to top of form
+  document.getElementById('generator-form').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function deleteTemplate(id) {
+  const templates = loadTemplates().filter(t => t.id !== id);
+  saveTemplates(templates);
+  renderTemplateUI();
+}
+
+function renderTemplateUI() {
+  const container = document.getElementById('template-bar');
+  if (!container) return;
+
+  const all = getAllTemplates();
+  const select = container.querySelector('.template-select');
+  select.innerHTML = '<option value="">-- Vorlage wählen --</option>';
+  all.forEach(t => {
+    const opt = document.createElement('option');
+    opt.value = t.id;
+    opt.textContent = t.name + (t.builtin ? '' : ' (eigene)');
+    select.appendChild(opt);
+  });
+
+  // Update delete button state
+  const deleteBtn = container.querySelector('.template-delete-btn');
+  deleteBtn.style.display = 'none';
+  select.onchange = () => {
+    const sel = select.value;
+    const tmpl = all.find(t => t.id === sel);
+    deleteBtn.style.display = (tmpl && !tmpl.builtin) ? 'inline-flex' : 'none';
+    if (sel) loadTemplate(sel);
+  };
+}
+
+function initTemplateUI() {
+  const form = document.getElementById('generator-form');
+  if (!form) return;
+
+  const bar = document.createElement('div');
+  bar.id = 'template-bar';
+  bar.className = 'template-bar';
+  bar.innerHTML = `
+    <select class="template-select" aria-label="Vorlage auswählen"></select>
+    <button type="button" class="btn btn-secondary template-save-btn" onclick="saveCurrentAsTemplate()">+ Vorlage speichern</button>
+    <button type="button" class="btn btn-secondary template-delete-btn" style="display:none;color:var(--danger)" onclick="deleteTemplate(document.querySelector('.template-select').value); document.querySelector('.template-select').value='';">Löschen</button>
+  `;
+
+  // Insert before the first form-step
+  const firstStep = form.querySelector('.form-step');
+  form.insertBefore(bar, firstStep);
+
+  renderTemplateUI();
+}
+
+document.addEventListener('DOMContentLoaded', initTemplateUI);
