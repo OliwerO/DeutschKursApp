@@ -57,6 +57,7 @@ const MATERIAL_LABELS = {
   dialog: 'Einfacher Dialog',
   schreibuebung: 'Schreibübung',
   wortschatz: 'Wortschatz-Liste',
+  ctest: 'C-Test',
 };
 
 function optionalSection(details, lernziel) {
@@ -219,7 +220,68 @@ Format:
 2. _________________
 3. _________________
 ${optionalSection(details, lernziel)}`,
+
+  ctest: (zielgruppe, thema, niveau, dauer, details = '', lernziel = '') => `
+Erstelle einen **C-Test** auf Deutsch.
+
+Zielgruppe: ${zielgruppe}
+Thema: ${thema}
+Sprachniveau: ${niveau}
+Unterrichtsdauer: ${dauer} – passe die Anzahl der Texte und Lücken entsprechend an.
+
+Anweisungen:
+- Schreibe 2–4 kurze zusammenhängende Texte zum Thema (je 4–6 Sätze).
+- Der erste und der letzte Satz jedes Textes bleiben vollständig.
+- Ab dem zweiten Satz: Bei jedem zweiten Wort wird die zweite Hälfte getilgt (bei ungerader Buchstabenanzahl einen Buchstaben mehr tilgen).
+- Ersetze die getilgten Buchstaben durch einen Unterstrich pro fehlendem Buchstaben.
+- KEINE Wörterbox – die Lernenden müssen die Wörter selbst ergänzen.
+- Schreibe danach einen **Lösungsschlüssel** mit allen vollständigen Sätzen.
+
+Format:
+## C-Test: [Thema]
+**Niveau:** [Niveau]
+
+---
+
+### Text 1: [Titel]
+
+[Erster Satz vollständig.] [Zweiter Satz mit C-Test-Lücken.] [Weitere Sätze mit Lücken.] [Letzter Satz vollständig.]
+
+### Text 2: [Titel]
+
+[Wie oben …]
+
+---
+
+## Lösung
+### Text 1
+[Alle Sätze vollständig]
+
+### Text 2
+[Alle Sätze vollständig]
+${optionalSection(details, lernziel)}`,
 };
+
+/* ── C-Test visibility based on level ─────────────────── */
+function updateCTestVisibility() {
+  const niveau = document.querySelector('input[name="niveau"]:checked')?.value || 'A1';
+  const ctestOption = document.getElementById('ctest-option');
+  const ctestCheckbox = document.getElementById('type-ctest');
+  if (!ctestOption) return;
+  const show = niveau === 'B1' || niveau === 'B2';
+  ctestOption.style.display = show ? '' : 'none';
+  if (!show && ctestCheckbox.checked) {
+    ctestCheckbox.checked = false;
+    const idx = materialTypeOrder.indexOf('ctest');
+    if (idx > -1) materialTypeOrder.splice(idx, 1);
+  }
+}
+
+document.querySelectorAll('input[name="niveau"]').forEach(radio => {
+  radio.addEventListener('change', updateCTestVisibility);
+});
+// Run once on load
+document.addEventListener('DOMContentLoaded', updateCTestVisibility);
 
 /* ── Selection order tracking ───────────────────────────── */
 const materialTypeOrder = ['lueckentext']; // pre-checked item
@@ -294,48 +356,119 @@ async function readSSEStream(response, { onText, onError }) {
   return fullText;
 }
 
+/* ── Error classification ────────────────────────────────── */
+
+function classifyError(status, errorBody) {
+  const msg = errorBody?.error?.message || '';
+  if (status === 401) return {
+    message: 'Der API-Schlüssel ist ungültig oder abgelaufen.',
+    action: 'Bitte prüfen Sie Ihren Schlüssel und geben Sie ihn erneut ein.',
+    retryable: false,
+  };
+  if (status === 403) return {
+    message: 'Zugriff verweigert.',
+    action: 'Prüfen Sie, ob Ihr API-Schlüssel die richtigen Berechtigungen hat.',
+    retryable: false,
+  };
+  if (status === 429) return {
+    message: 'Zu viele Anfragen (Rate Limit erreicht).',
+    action: 'Bitte warten Sie einen Moment und versuchen Sie es dann erneut.',
+    retryable: true,
+  };
+  if (status === 529) return {
+    message: 'Die API ist derzeit überlastet.',
+    action: 'Bitte versuchen Sie es in ein paar Minuten erneut.',
+    retryable: true,
+  };
+  if (status >= 500) return {
+    message: `Serverfehler (${status}).`,
+    action: 'Das Problem liegt beim Anbieter. Bitte versuchen Sie es in wenigen Minuten erneut.',
+    retryable: true,
+  };
+  if (status === 0 || !status) return {
+    message: 'Netzwerkfehler – keine Verbindung zum Server.',
+    action: 'Bitte prüfen Sie Ihre Internetverbindung und versuchen Sie es erneut.',
+    retryable: true,
+  };
+  return {
+    message: `Unbekannter Fehler (${status}): ${msg}`,
+    action: 'Bitte versuchen Sie es erneut oder wenden Sie sich an den Support.',
+    retryable: false,
+  };
+}
+
+function formatErrorMessage(classified) {
+  return `${classified.message} ${classified.action}`;
+}
+
 /* ── Streaming request helper ────────────────────────────── */
 
+const MAX_RETRIES = 2;
+const BASE_DELAY_MS = 1000;
+
 /**
- * Makes a streaming API request and returns the full text.
+ * Makes a streaming API request with retry logic.
+ * Retries up to MAX_RETRIES times with exponential backoff for transient errors.
  * onChunk(fullTextSoFar) is called as each token arrives.
- * Throws on HTTP errors or stream errors.
  */
 async function streamRequest(fetchUrl, fetchHeaders, userPrompt, onChunk) {
-  const response = await fetch(fetchUrl, {
-    method: 'POST',
-    headers: fetchHeaders,
-    body: JSON.stringify({
-      model: MODEL,
-      max_tokens: 8192,
-      stream: true,
-      system: [{ type: 'text', text: SYSTEM_PROMPT, cache_control: { type: 'ephemeral' } }],
-      messages: [{ role: 'user', content: userPrompt }],
-    }),
-  });
+  let lastError;
 
-  if (!response.ok) {
-    const err = await response.json().catch(() => ({}));
-    const msg = err?.error?.message || `HTTP ${response.status}`;
-    if (response.status === 401) throw new Error('Der API-Schlüssel ist ungültig. Bitte prüfen Sie ihn.');
-    if (response.status === 429) throw new Error('Zu viele Anfragen. Bitte warten Sie einen Moment.');
-    throw new Error(`Fehler vom Server: ${msg}`);
+  for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
+    if (attempt > 0) {
+      const delay = BASE_DELAY_MS * Math.pow(2, attempt - 1);
+      console.log(`[Retry] Attempt ${attempt + 1}/${MAX_RETRIES + 1} after ${delay}ms`);
+      await new Promise(r => setTimeout(r, delay));
+    }
+
+    let response;
+    try {
+      response = await fetch(fetchUrl, {
+        method: 'POST',
+        headers: fetchHeaders,
+        body: JSON.stringify({
+          model: MODEL,
+          max_tokens: 8192,
+          stream: true,
+          system: [{ type: 'text', text: SYSTEM_PROMPT, cache_control: { type: 'ephemeral' } }],
+          messages: [{ role: 'user', content: userPrompt }],
+        }),
+      });
+    } catch (networkErr) {
+      const classified = classifyError(0);
+      lastError = new Error(formatErrorMessage(classified));
+      if (attempt < MAX_RETRIES) continue;
+      throw lastError;
+    }
+
+    if (!response.ok) {
+      const errBody = await response.json().catch(() => ({}));
+      const classified = classifyError(response.status, errBody);
+      lastError = new Error(formatErrorMessage(classified));
+      if (classified.retryable && attempt < MAX_RETRIES) continue;
+      throw lastError;
+    }
+
+    let streamError = null;
+    const fullText = await readSSEStream(response, {
+      onText: (_chunk, fullText) => onChunk(fullText),
+      onError: (err) => { streamError = err; },
+    });
+
+    if (streamError && !fullText) throw streamError;
+    return { text: fullText, error: streamError };
   }
 
-  let streamError = null;
-  const fullText = await readSSEStream(response, {
-    onText: (_chunk, fullText) => onChunk(fullText),
-    onError: (err) => { streamError = err; },
-  });
-
-  if (streamError && !fullText) throw streamError;
-  // If we got partial content + error, return what we have (caller handles it)
-  return { text: fullText, error: streamError };
+  throw lastError;
 }
 
 /* ── Generate ─────────────────────────────────────────────── */
+let _generating = false;
+
 async function generateMaterial(e) {
   e.preventDefault();
+  if (_generating) return;
+  _generating = true;
 
   const zielgruppe = document.getElementById('target-group').value.trim() || 'Erwachsene mit geringen Deutschkenntnissen';
   const thema = document.getElementById('topic').value.trim();
@@ -470,6 +603,7 @@ async function generateMaterial(e) {
       showError(err.message || 'Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.');
     }
   } finally {
+    _generating = false;
     setLoading(false);
     progressBar.style.width = '100%';
     setTimeout(() => {
@@ -857,6 +991,18 @@ function deleteHistoryItem(id) {
   try { localStorage.setItem(HISTORY_KEY, JSON.stringify(history)); } catch (e) { }
   renderHistoryPanel();
 }
+
+/* ── Touch-friendly tooltips ──────────────────────────────── */
+document.addEventListener('click', (e) => {
+  const icon = e.target.closest('.help-icon');
+  document.querySelectorAll('.help-icon.active').forEach(el => {
+    if (el !== icon) el.classList.remove('active');
+  });
+  if (icon) {
+    e.preventDefault();
+    icon.classList.toggle('active');
+  }
+});
 
 // Initialise history on page load
 renderHistoryPanel();

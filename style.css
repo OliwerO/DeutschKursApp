@@ -860,7 +860,8 @@ hr.section-break {
 }
 
 .help-icon:hover .tooltip,
-.help-icon:focus .tooltip {
+.help-icon:focus .tooltip,
+.help-icon.active .tooltip {
   display: block;
 }
 
